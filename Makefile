@@ -35,6 +35,7 @@ CHECKFILES=	checks.d/*
 
 post-patch:
 		@${REINPLACE_CMD} -e 's|/etc/dd-agent|${ETCDIR}|g' ${WRKSRC}/config.py
+		@${REINPLACE_CMD} -e 's|/etc/dd-agent|${ETCDIR}|g' ${WRKSRC}/datadog.conf.example
 
 post-stage:
 		${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}

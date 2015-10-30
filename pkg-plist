@@ -1,3 +1,4 @@
+%%ETCDIR%%/datadog.conf.sample
 %%ETCDIR%%/conf.d/activemq.yaml.example
 %%ETCDIR%%/conf.d/activemq_58.yaml.example
 %%ETCDIR%%/conf.d/activemq_xml.yaml.example

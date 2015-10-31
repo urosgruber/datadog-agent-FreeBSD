@@ -1,0 +1,10 @@
+=========================================================================
+
+The dd-agent port has been installed with an example config file, located
+in %%PREFIX%%/etc/dd-agent.conf.sample.
+
+Before starting the daemon, copy %%PREFIX%%/etc/dd-agent.conf.sample to
+%%PREFIX%%/etc/dd-agent.conf and update "api_key" with DataDog API key
+avaliable https://app.datadoghq.com/account/settings#api
+
+=========================================================================

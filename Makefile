@@ -49,8 +49,7 @@ post-install:
 		${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
 		${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/conf.d
 		${MKDIR} ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}/checks.d
-	        ${INSTALL_DATA} ${WRKSRC}/datadog.conf.example ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/datadog.conf.sample
-
+	        ${INSTALL_DATA} ${WRKSRC}/datadog.conf.example ${STAGEDIR}${PREFIX}/etc/${PORTNAME}.conf.sample
 		${INSTALL_DATA} ${WRKSRC}/datadog-cert.pem ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}
 
 		${MKDIR} ${STAGEDIR}${DOCSDIR}

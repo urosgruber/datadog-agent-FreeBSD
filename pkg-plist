@@ -1,4 +1,4 @@
-@sample etc/dd-agent.conf.sample
+%%ETCDIR%%.conf.sample
 %%ETCDIR%%/conf.d/activemq.yaml.example
 %%ETCDIR%%/conf.d/activemq_58.yaml.example
 %%ETCDIR%%/conf.d/activemq_xml.yaml.example
@@ -129,4 +129,5 @@
 %%PYTHON_SITELIBDIR%%/dd-agent/checks.d/windows_service.py
 %%PYTHON_SITELIBDIR%%/dd-agent/checks.d/wmi_check.py
 %%PYTHON_SITELIBDIR%%/dd-agent/checks.d/zk.py
-
+@dir %%LOGDIR%%
+@dir %%PIDDIR%%

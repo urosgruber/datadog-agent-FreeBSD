@@ -30,6 +30,11 @@ GH_ACCOUNT=     DataDog
 USES=		python
 USE_PYTHON=	autoplist distutils
 
+PIDDIR?=        /var/run/${PORTNAME}
+LOGDIR?=        /var/log/${PORTNAME}
+
+PLIST_SUB=      PIDDIR=${PIDDIR} LOGDIR=${LOGDIR}
+
 CONFFILES=	conf.d/*
 CHECKFILES=	checks.d/*
 
@@ -42,15 +47,13 @@ post-patch:
 		@${REINPLACE_CMD} -e 's|datadog.conf|../${PORTNAME}.conf|g' ${WRKSRC}/config.py
 		@${REINPLACE_CMD} -e 's|/etc/dd-agent|${ETCDIR}|g' ${WRKSRC}/datadog.conf.example
 
-post-stage:
-		${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
-		${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/conf.d
-
 post-install:
-		${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
-		${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/conf.d
+		${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d
+		${MKDIR} ${STAGEDIR}${PIDDIR}
+		${MKDIR} ${STAGEDIR}${LOGDIR}
 		${MKDIR} ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}/checks.d
-	        ${INSTALL_DATA} ${WRKSRC}/datadog.conf.example ${STAGEDIR}${PREFIX}/etc/${PORTNAME}.conf.sample
+
+		${INSTALL_DATA} ${WRKSRC}/datadog.conf.example ${STAGEDIR}${PREFIX}/etc/${PORTNAME}.conf.sample
 		${INSTALL_DATA} ${WRKSRC}/datadog-cert.pem ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}
 
 		${MKDIR} ${STAGEDIR}${DOCSDIR}
@@ -60,11 +63,11 @@ post-install:
 .endfor
 
 .for i in ${CONFFILES}
-	        ${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/conf.d
+	        ${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${ETCDIR}/conf.d
 .endfor
 
 .for i in ${PORTDOCS}
-		${INSTALL_MAN} ${WRKSRC}/${i} ${STAGEDIR}${DOCSDIR}
+		${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${DOCSDIR}
 .endfor
 
 regression-test: build

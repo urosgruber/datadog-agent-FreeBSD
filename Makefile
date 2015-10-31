@@ -33,7 +33,7 @@ USE_PYTHON=	autoplist distutils
 PIDDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}
 
-SUB_FILES=	supervisord.conf
+SUB_FILES=	supervisord.conf pkg-message
 SUB_LIST=	PIDDIR=${PIDDIR} \
 		LOGDIR=${LOGDIR} \
 		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \

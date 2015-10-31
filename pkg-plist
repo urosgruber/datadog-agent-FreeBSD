@@ -67,6 +67,7 @@
 %%ETCDIR%%/conf.d/windows_service.yaml.example
 %%ETCDIR%%/conf.d/wmi_check.yaml.example
 %%ETCDIR%%/conf.d/zk.yaml.example
+%%PYTHON_SITELIBDIR%%/dd-agent/datadog-cert.pem
 %%PYTHON_SITELIBDIR%%/dd-agent/checks.d/activemq_xml.py
 %%PYTHON_SITELIBDIR%%/dd-agent/checks.d/agent_metrics.py
 %%PYTHON_SITELIBDIR%%/dd-agent/checks.d/apache.py

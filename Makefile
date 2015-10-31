@@ -33,6 +33,10 @@ USE_PYTHON=	autoplist distutils
 CONFFILES=	conf.d/*
 CHECKFILES=	checks.d/*
 
+PORTDOCS=	README.md CHANGELOG.md CONTRIBUTING.md LICENSE
+
+OPTIONS_DEFINE= DOCS
+
 post-patch:
 		@${REINPLACE_CMD} -e 's|/etc/dd-agent|${ETCDIR}|g' ${WRKSRC}/config.py
 		@${REINPLACE_CMD} -e 's|/etc/dd-agent|${ETCDIR}|g' ${WRKSRC}/datadog.conf.example
@@ -49,12 +53,18 @@ post-install:
 
 		${INSTALL_DATA} ${WRKSRC}/datadog-cert.pem ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}
 
+		${MKDIR} ${STAGEDIR}${DOCSDIR}
+
 .for i in ${CHECKFILES}
 		${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}/checks.d
 .endfor
 
 .for i in ${CONFFILES}
 	        ${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/conf.d
+.endfor
+
+.for i in ${PORTDOCS}
+		${INSTALL_MAN} ${WRKSRC}/${i} ${STAGEDIR}${DOCSDIR}
 .endfor
 
 regression-test: build

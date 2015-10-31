@@ -11,16 +11,20 @@ COMMENT=	Data Dog agent
 LICENSE=	BSD4CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}boto>0:${PORTSDIR}/devel/py-boto \
-		${PYTHON_PKGNAMEPREFIX}ntplib>0:${PORTSDIR}/net/py-ntplib \
-		${PYTHON_PKGNAMEPREFIX}yaml>0:${PORTSDIR}/devel/py-yaml \
-		${PYTHON_PKGNAMEPREFIX}simplejson>=2.1.1:${PORTSDIR}/devel/py-simplejson \
-		${PYTHON_PKGNAMEPREFIX}requests>1:${PORTSDIR}/www/py-requests \
-		${PYTHON_PKGNAMEPREFIX}tornado>0:${PORTSDIR}/www/py-tornado \
-		${PYTHON_PKGNAMEPREFIX}supervisor>0:${PORTSDIR}/sysutils/py-supervisor
-
-TEST_DEPENDS:=	${PYTHON_PKGNAMEPREFIX}mock>0:${PORTSDIR}/devel/py-mock \
-		${PYTHON_PKGNAMEPREFIX}nose>0:${PORTSDIR}/devel/py-nose
+BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>=3.11:${PORTSDIR}/devel/py-yaml \
+		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.3:${PORTSDIR}/devel/py-simplejson \
+		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:${PORTSDIR}/www/py-tornado
+RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>=3.11:${PORTSDIR}/devel/py-yaml \
+		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.3:${PORTSDIR}/devel/py-simplejson \
+		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:${PORTSDIR}/www/py-tornado \
+		${PYTHON_PKGNAMEPREFIX}boto>=2.36.0:${PORTSDIR}/devel/py-boto \
+		${PYTHON_PKGNAMEPREFIX}ntplib>=0.3.3:${PORTSDIR}/net/py-ntplib \
+		${PYTHON_PKGNAMEPREFIX}requests>=2.6.0:${PORTSDIR}/www/py-requests \
+		${PYTHON_PKGNAMEPREFIX}supervisor>=3.0:${PORTSDIR}/sysutils/py-supervisor \
+		${PYTHON_PKGNAMEPREFIX}psutil>=2.1.1:${PORTSDIR}/sysutils/py-psutil
+TEST_DEPENDS:=	${PYTHON_PKGNAMEPREFIX}mock>=1.0.1:${PORTSDIR}/devel/py-mock \
+		${PYTHON_PKGNAMEPREFIX}nose>=1.3.4:${PORTSDIR}/devel/py-nose \
+		${PYTHON_PKGNAMEPREFIX}flake8>=2.3.0:${PORTSDIR}/devel/py-flake8
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	DataDog

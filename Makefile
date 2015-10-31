@@ -24,16 +24,22 @@ TEST_DEPENDS:=  ${RUN_DEPENDS} \
 		${PYTHON_PKGNAMEPREFIX}mock>0:${PORTSDIR}/devel/py-mock \
 		${PYTHON_PKGNAMEPREFIX}nose>0:${PORTSDIR}/devel/py-nose
 
-USE_GITHUB=     yes
-GH_ACCOUNT=     DataDog
+USE_GITHUB=	yes
+GH_ACCOUNT=	DataDog
 
 USES=		python
 USE_PYTHON=	autoplist distutils
 
-PIDDIR?=        /var/run/${PORTNAME}
-LOGDIR?=        /var/log/${PORTNAME}
+PIDDIR?=	/var/run/${PORTNAME}
+LOGDIR?=	/var/log/${PORTNAME}
 
-PLIST_SUB=      PIDDIR=${PIDDIR} LOGDIR=${LOGDIR}
+SUB_FILES=	supervisord.conf
+SUB_LIST=	PIDDIR=${PIDDIR} \
+		LOGDIR=${LOGDIR} \
+		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \
+		PYTHON_CMD=${PYTHON_CMD}
+
+PLIST_SUB=	PIDDIR=${PIDDIR} LOGDIR=${LOGDIR}
 
 CONFFILES=	conf.d/*
 CHECKFILES=	checks.d/*
@@ -57,6 +63,8 @@ post-install:
 		${INSTALL_DATA} ${WRKSRC}/datadog-cert.pem ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}
 
 		${MKDIR} ${STAGEDIR}${DOCSDIR}
+
+		${INSTALL_DATA} ${WRKDIR}/supervisord.conf ${STAGEDIR}${ETCDIR}
 
 .for i in ${CHECKFILES}
 		${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}/checks.d

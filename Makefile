@@ -17,7 +17,7 @@ RUN_DEPENDS=    ${PYTHON_PKGNAMEPREFIX}boto>0:${PORTSDIR}/devel/py-boto \
 		${PYTHON_PKGNAMEPREFIX}simplejson>=2.1.1:${PORTSDIR}/devel/py-simplejson \
 		${PYTHON_PKGNAMEPREFIX}requests>1:${PORTSDIR}/www/py-requests \
 		${PYTHON_PKGNAMEPREFIX}tornado>0:${PORTSDIR}/www/py-tornado \
-		${PYTHON_PKGNAMEPREFIX}py-docker>0:${PORTSDIR}/devel/py-docker \
+#		${PYTHON_PKGNAMEPREFIX}py-docker>0:${PORTSDIR}/devel/py-docker \
 		${PYTHON_PKGNAMEPREFIX}supervisor>0:${PORTSDIR}/sysutils/py-supervisor
 
 TEST_DEPENDS:=  ${RUN_DEPENDS} \

@@ -1,8 +1,8 @@
 [supervisord]
 logfile = %%LOGDIR%%/supervisord.log
 logfile_maxbytes = 50MB
-loglevel = info
-nodaemon = true
+loglevel = warn
+nodaemon = false
 identifier = supervisor
 nocleanup = true
 pidfile = %%PIDDIR%%/supervisord.pid
@@ -18,29 +18,32 @@ prompt = datadog
 serverurl = unix://%%PIDDIR%%/agent-supervisor.sock
 
 [program:collector]
-command=python %%PYTHON_SITELIBDIR%%/dd-agent/agent.py foreground --use-local-forwarder
+command=%%PYTHON_CMD%% %%PYTHON_SITELIBDIR%%/datadog/agent.py foreground --use-local-forwarder
+process_name=%(program_name)s
 stdout_logfile=%%LOGDIR%%/collector.log
 redirect_stderr=true
 priority=999
 startsecs=2
-environment=LANG=POSIX,PYTHONPATH='agent/checks/libs:$PYTHONPATH'
+environment=LANG=POSIX,PYTHONPATH='datadog/checks/libs:$PYTHONPATH'
 
 [program:forwarder]
-command=python %%PYTHON_SITELIBDIR%%/dd-agent/ddagent.py --use_simple_http_client=1
+command=%%PYTHON_CMD%% %%PYTHON_SITELIBDIR%%/datadog/ddagent.py --use_simple_http_client=1
+process_name=%(program_name)s
 stdout_logfile=%%LOGDIR%%/forwarder.log
 redirect_stderr=true
 priority=998
 startsecs=3
 
 [program:dogstatsd]
-command=python %%PYTHON_SITELIBDIR%%/dd-agent/dogstatsd.py --use-local-forwarder
+command=%%PYTHON_CMD%% %%PYTHON_SITELIBDIR%%/datadog/dogstatsd.py --use-local-forwarder
+process_name=%(program_name)s
 stdout_logfile=%%LOGDIR%%/dogstatsd.log
 redirect_stderr=true
 priority=998
 startsecs=3
 
 [program:jmxfetch]
-command=python %%PYTHON_SITELIBDIR%%/dd-agent/jmxfetch.py
+command=%%PYTHON_CMD%% %%PYTHON_SITELIBDIR%%/datadog/jmxfetch.py
 stdout_logfile=%%LOGDIR%%/jmxfetch.log
 redirect_stderr=true
 priority=999

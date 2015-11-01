@@ -1,9 +1,8 @@
 # $FreeBSD$
 
-PORTNAME=	dd-agent
+PORTNAME=	datadog
 PORTVERSION=	5.5.2
 CATEGORIES=	sysutils
-PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
 
 MAINTAINER=	uros@gruber.si
 COMMENT=	Data Dog agent
@@ -28,6 +27,7 @@ TEST_DEPENDS:=	${PYTHON_PKGNAMEPREFIX}mock>=1.0.1:${PORTSDIR}/devel/py-mock \
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	DataDog
+GH_PROJECT=	dd-agent
 
 USES=		python
 USE_PYTHON=	autoplist distutils
@@ -51,9 +51,11 @@ PORTDOCS=	README.md CHANGELOG.md CONTRIBUTING.md LICENSE
 OPTIONS_DEFINE=	DOCS
 
 post-patch:
-		@${REINPLACE_CMD} -e 's|/etc/dd-agent|${ETCDIR}|g' ${WRKSRC}/config.py
+		@${REINPLACE_CMD} -e 's|/etc/dd-agent|${ETCDIR}|g' \
+			${WRKSRC}/config.py \
+			${WRKSRC}/utils/flare.py \
+			${WRKSRC}/datadog.conf.example
 		@${REINPLACE_CMD} -e 's|datadog.conf|../${PORTNAME}.conf|g' ${WRKSRC}/config.py
-		@${REINPLACE_CMD} -e 's|/etc/dd-agent|${ETCDIR}|g' ${WRKSRC}/datadog.conf.example
 
 post-install:
 		${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d

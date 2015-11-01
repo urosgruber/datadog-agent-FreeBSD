@@ -1,0 +1,13 @@
+--- datadog.conf.example.orig	2015-10-31 20:13:58 UTC
++++ datadog.conf.example
+@@ -55,10 +55,6 @@ gce_updated_hostname: yes
+ # Defaults to 30 seconds if no value is provided
+ # recent_point_threshold: 30
+ 
+-# Use mount points instead of volumes to track disk and fs metrics
+-# DEPRECATED: use conf.d/disk.yaml instead to configure it
+-use_mount: no
+-
+ # Change port the Agent is listening to
+ # listen_port: 17123
+ 

@@ -29,8 +29,10 @@ USE_GITHUB=	yes
 GH_ACCOUNT=	DataDog
 GH_PROJECT=	dd-agent
 
-USES=		python
+USES=		python shebangfix
 USE_PYTHON=	autoplist distutils
+SHEBANG_FILES=	agent.py ddagent.py dogstatsd.py
+python_OLD_CMD=	/opt/datadog-agent/embedded/bin/python
 
 PIDDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}

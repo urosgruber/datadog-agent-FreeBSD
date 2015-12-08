@@ -1,0 +1,90 @@
+#!/bin/sh
+
+# $FreeBSD$
+#
+# PROVIDE: datadog
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+#
+# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# datadog_enable (bool):	Set to NO by default.
+#				Set it to YES to enable datadog.
+# datadog_config (path):	Set to %%ETCDIR%%.conf
+#				by default.
+# datadog_user (username):      Set to root by default.
+#
+
+. /etc/rc.subr
+
+name=datadog
+rcvar=datadog_enable
+
+load_rc_config $name
+
+: ${datadog_enable:="NO"}
+: ${datadog_config="%%ETCDIR%%.conf"}
+: ${datadog_user="root"}
+
+supervisord_config="%%ETCDIR%%/supervisord.conf"
+
+command="%%PREFIX%%/bin/supervisord"
+command_args="-u ${datadog_user} -c ${supervisord_config}"
+command_interpreter="%%PYTHON_CMD%%"
+
+pidfile="%%PIDDIR%%/supervisord.pid"
+
+agent="%%PYTHON_SITELIBDIR%%/datadog/agent.py"
+dogstatsd="%%PYTHON_SITELIBDIR%%/datadog/dogstatsd.py"
+ddagent="%%PYTHON_SITELIBDIR%%/datadog/ddagent.py"
+
+required_files="${supervisord_config} ${datadog_config}"
+
+extra_commands="reload info configcheck check jmx"
+
+reload_cmd="${name}_reload"
+info_cmd="${name}_info"
+configcheck_cmd="${name}_configcheck"
+check_cmd="${name}_check"
+jmx_cmd="${name}_jmx"
+
+datadog_reload()
+{
+	echo "Not implemented"
+}
+
+datadog_info()
+{
+	${command_interpreter} ${agent} info $@
+        RETURN_VALUE=$?
+        ${command_interpreter} ${dogstatsd} info
+        RETURN_VALUE=$(($RETURN_VALUE || $?))
+        ${command_interpreter} ${ddagent} info
+        RETURN_VALUE=$(($RETURN_VALUE || $?))
+	echo $RETURN_VALUE
+        exit $RETURN_VALUE
+}
+
+datadog_configcheck()
+{
+	${command_interpreter} ${agent} configcheck
+	exit $?
+}
+
+datadog_check()
+{	
+	#shift
+	${command_interpreter} ${agent} check $@
+	exit $?
+}
+
+datadog_jmx()
+{
+        #shift
+        ${command_interpreter} ${agent} jmx $@
+        exit $?
+}
+
+run_rc_command "$@"
+

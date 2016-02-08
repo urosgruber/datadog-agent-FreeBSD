@@ -38,6 +38,7 @@ USE_RC_SUBR=	${PORTNAME}
 
 PIDDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}
+APPNAME=	datadog-agent
 
 GID_FILES=	${PATCHDIR}/GIDs
 UID_FILES=	${PATCHDIR}/UIDs
@@ -73,17 +74,17 @@ post-install:
 		${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d
 		${MKDIR} ${STAGEDIR}${PIDDIR}
 		${MKDIR} ${STAGEDIR}${LOGDIR}
-		${MKDIR} ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}/checks.d
+		${MKDIR} ${STAGEDIR}${PYTHON_SITELIBDIR}/${APPNAME}/checks.d
 
 		${INSTALL_DATA} ${WRKSRC}/datadog.conf.example ${STAGEDIR}${PREFIX}/etc/${PORTNAME}.conf.sample
-		${INSTALL_DATA} ${WRKSRC}/datadog-cert.pem ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}
+		${INSTALL_DATA} ${WRKSRC}/datadog-cert.pem ${STAGEDIR}${PYTHON_SITELIBDIR}/${APPNAME}
 
 		${MKDIR} ${STAGEDIR}${DOCSDIR}
 
 		${INSTALL_DATA} ${WRKDIR}/supervisord.conf ${STAGEDIR}${ETCDIR}
 
 .for i in ${CHECKFILES}
-		${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}/checks.d
+		${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${PYTHON_SITELIBDIR}/${APPNAME}/checks.d
 .endfor
 
 .for i in ${CONFFILES}

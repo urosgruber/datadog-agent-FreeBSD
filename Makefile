@@ -12,7 +12,8 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>=3.11:${PORTSDIR}/devel/py-yaml \
 		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.3:${PORTSDIR}/devel/py-simplejson \
-		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:${PORTSDIR}/www/py-tornado
+		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:${PORTSDIR}/www/py-tornado \
+                ${PYTHON_PKGNAMEPREFIX}requests>=2.9.1:${PORTSDIR}/www/py-requests
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>=3.11:${PORTSDIR}/devel/py-yaml \
 		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.3:${PORTSDIR}/devel/py-simplejson \
 		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:${PORTSDIR}/www/py-tornado \

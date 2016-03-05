@@ -14,7 +14,7 @@ To install:
    supervisord_enable="YES"
    datadog_enable="YES"
    ```
-2. Edit /usr/local/etc/datadog.conf to include your API Key.
+2. Copy /usr/local/etc/datadog.conf to /usr/local/etc/datadog.conf and edit to include your API Key.
 3. Start the supervisord and datadog services.
    
    ```

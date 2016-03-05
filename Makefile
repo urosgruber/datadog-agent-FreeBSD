@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	datadog
-PORTVERSION=	5.6.1
+PORTVERSION=	5.6.3
 CATEGORIES=	sysutils
 
 MAINTAINER=	uros@gruber.si
@@ -12,7 +12,8 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>=3.11:${PORTSDIR}/devel/py-yaml \
 		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.3:${PORTSDIR}/devel/py-simplejson \
-		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:${PORTSDIR}/www/py-tornado
+		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:${PORTSDIR}/www/py-tornado \
+                ${PYTHON_PKGNAMEPREFIX}requests>=2.9.1:${PORTSDIR}/www/py-requests
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>=3.11:${PORTSDIR}/devel/py-yaml \
 		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.3:${PORTSDIR}/devel/py-simplejson \
 		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:${PORTSDIR}/www/py-tornado \
@@ -38,6 +39,9 @@ USE_RC_SUBR=	${PORTNAME}
 
 PIDDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}
+
+GID_FILES=	${PATCHDIR}/GIDs
+UID_FILES=	${PATCHDIR}/UIDs
 
 DATADOGUSER?=	datadog
 DATADOGGROUP?=	datadog

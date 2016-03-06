@@ -1,4 +1,4 @@
---- dogstatsd.py.orig	2015-12-05 17:31:20 UTC
+--- dogstatsd.py.orig	2016-03-06 14:21:29 UTC
 +++ dogstatsd.py
 @@ -46,6 +46,9 @@ requests_log.propagate = True
  

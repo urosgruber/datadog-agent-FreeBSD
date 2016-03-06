@@ -1,6 +1,6 @@
---- setup.py.orig	2015-10-26 18:27:01 UTC
+--- setup.py.orig	2015-12-09 17:04:46 UTC
 +++ setup.py
-@@ -20,7 +20,7 @@ setup_requires = []
+@@ -21,7 +21,7 @@ setup_requires = []
  install_requires = []
  
  # Modified on mac
@@ -9,7 +9,7 @@
  # plist (used only on mac)
  plist = None
  
-@@ -155,7 +155,13 @@ setup(
+@@ -158,7 +158,13 @@ setup(
      url='http://www.datadoghq.com',
      install_requires=install_requires,
      setup_requires=setup_requires,

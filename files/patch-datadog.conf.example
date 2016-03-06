@@ -1,6 +1,16 @@
---- datadog.conf.example.orig	2015-10-31 20:13:58 UTC
+--- datadog.conf.example.orig	2016-03-06 14:21:08 UTC
 +++ datadog.conf.example
-@@ -55,10 +55,6 @@ gce_updated_hostname: yes
+@@ -30,9 +30,6 @@ api_key:
+ # and dice per monitored app (= running Agent Check) on Datadog's backend.
+ # create_dd_check_tags: no
+ 
+-# Collect AWS EC2 custom tags as agent tags
+-# collect_ec2_tags: no
+-
+ # Enable Agent Developer Mode
+ # Agent Developer Mode collects and sends more fine-grained metrics about agent and check performance
+ # developer_mode: no
+@@ -55,10 +52,6 @@ gce_updated_hostname: yes
  # Defaults to 30 seconds if no value is provided
  # recent_point_threshold: 30
  
@@ -11,3 +21,12 @@
  # Change port the Agent is listening to
  # listen_port: 17123
  
+@@ -66,7 +59,7 @@ use_mount: no
+ # graphite_listen_port: 17124
+ 
+ # Additional directory to look for Datadog checks
+-# additional_checksd: /etc/dd-agent/checks.d/
++# additional_checksd: /usr/local/etc/datadog/checks.d/
+ 
+ # Allow non-local traffic to this Agent
+ # This is required when using this Agent as a proxy for other Agents

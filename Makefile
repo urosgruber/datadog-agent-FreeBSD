@@ -70,7 +70,7 @@ post-patch:
 
 post-install:
 		${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d
-#		${MKDIR} ${STAGEDIR}${ETCDIR}/checks.d
+		${MKDIR} ${STAGEDIR}${ETCDIR}/checks.d
 		${MKDIR} ${STAGEDIR}${PIDDIR}
 		${MKDIR} ${STAGEDIR}${LOGDIR}
 		${MKDIR} ${STAGEDIR}${DOCSDIR}
@@ -78,7 +78,6 @@ post-install:
 		${MKDIR} ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}/checks.d
 
 .for i in ${CHECKFILES}
-#		${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${ETCDIR}/checks.d
 		${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${PYTHON_SITELIBDIR}/${PORTNAME}/checks.d
 .endfor
 

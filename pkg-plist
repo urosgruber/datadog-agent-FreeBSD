@@ -133,6 +133,7 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/wmi_check.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/zk.yaml.example
 %%PYTHON_SITELIBDIR%%/datadog/datadog-cert.pem
+@dir(%%DATADOGUSER%%,%%DATADOGGROUP%%,0750) %%ETCDIR%%/checks.d
 @dir(%%DATADOGUSER%%,%%DATADOGGROUP%%,0750) %%ETCDIR%%/conf.d
 @dir(%%DATADOGUSER%%,%%DATADOGGROUP%%,0750) %%LOGDIR%%
 @dir(%%DATADOGUSER%%,%%DATADOGGROUP%%,0750) %%PIDDIR%%

@@ -66,10 +66,9 @@ datadog_info()
 	su -m ${datadog_user} -c "${command_interpreter} ${agent} info $@"
         RETURN_VALUE=$?
         #${command_interpreter} ${dogstatsd} info
-        RETURN_VALUE=$(($RETURN_VALUE || $?))
+        #RETURN_VALUE=$(($RETURN_VALUE || $?))
         #${command_interpreter} ${ddagent} info
         #RETURN_VALUE=$(($RETURN_VALUE || $?))
-	echo $RETURN_VALUE
         exit $RETURN_VALUE
 }
 

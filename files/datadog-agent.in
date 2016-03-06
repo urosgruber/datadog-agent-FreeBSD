@@ -1,0 +1,89 @@
+#!/bin/sh
+
+# $FreeBSD$
+#
+# PROVIDE: datadog
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+#
+# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# datadog_enable (bool):	Set to NO by default.
+#				Set it to YES to enable datadog.
+# datadog_user (username):      Set to root by default.
+#
+
+. /etc/rc.subr
+
+name=datadog
+rcvar=datadog_enable
+
+load_rc_config $name
+
+: ${datadog_enable:="NO"}
+: ${datadog_config="%%ETCDIR%%/datadog.conf"}
+: ${datadog_user="datadog"}
+
+command_args="-m ${datadog_user} -c "
+command_interpreter="%%PYTHON_CMD%%"
+
+required_files="${datadog_config}"
+pidfile="/var/run/datadog/agent.pid"
+
+agent="%%PYTHON_SITELIBDIR%%/datadog/agent.py"
+#dogstatsd="%%PYTHON_SITELIBDIR%%/datadog/dogstatsd.py"
+#ddagent="%%PYTHON_SITELIBDIR%%/datadog/ddagent.py"
+
+required_files="${datadog_config}"
+
+extra_commands="reload info configcheck check"
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+reload_cmd="${name}_reload"
+info_cmd="${name}_info"
+configcheck_cmd="${name}_configcheck"
+check_cmd="${name}_check"
+
+datadog_reload()
+{
+	echo "Not implemented"
+}
+
+datadog_start()
+{
+	su -m ${datadog_user} -c "${command_interpreter} ${agent} start"
+}
+
+datadog_stop()
+{
+        su -m ${datadog_user} -c "${command_interpreter} ${agent} stop"
+}
+
+datadog_info()
+{
+	su -m ${datadog_user} -c "${command_interpreter} ${agent} info $@"
+        RETURN_VALUE=$?
+        #${command_interpreter} ${dogstatsd} info
+        RETURN_VALUE=$(($RETURN_VALUE || $?))
+        #${command_interpreter} ${ddagent} info
+        #RETURN_VALUE=$(($RETURN_VALUE || $?))
+	echo $RETURN_VALUE
+        exit $RETURN_VALUE
+}
+
+datadog_configcheck()
+{
+	su -m ${datadog_user} -c "${command_interpreter} ${agent} configcheck"
+	exit $?
+}
+
+datadog_check()
+{	
+	#shift
+	su -m ${datadog_user} -c "${command_interpreter} ${agent} check $@"
+	exit $?
+}
+
+run_rc_command "$@"

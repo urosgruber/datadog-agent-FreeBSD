@@ -1,4 +1,4 @@
-@sample %%ETCDIR%%/datadog.conf.sample
+@sample(%%DATADOGUSER%%,%%DATADOGGROUP%%,640) %%ETCDIR%%/datadog.conf.sample
 %%ETCDIR%%/checks.d/activemq_xml.py
 %%ETCDIR%%/checks.d/agent_metrics.py
 %%ETCDIR%%/checks.d/apache.py
@@ -133,6 +133,6 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/wmi_check.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/zk.yaml.example
 %%PYTHON_SITELIBDIR%%/datadog/datadog-cert.pem
-@dir %%ETCDIR%%/conf.d
-@dir %%LOGDIR%%
-@dir %%PIDDIR%%
+@dir(%%DATADOGUSER%%,%%DATADOGGROUP%%,0750) %%ETCDIR%%/conf.d
+@dir(%%DATADOGUSER%%,%%DATADOGGROUP%%,0750) %%LOGDIR%%
+@dir(%%DATADOGUSER%%,%%DATADOGGROUP%%,0750) %%PIDDIR%%

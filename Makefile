@@ -34,14 +34,18 @@ USE_PYTHON=	autoplist distutils
 SHEBANG_FILES=	agent.py ddagent.py dogstatsd.py
 python_OLD_CMD=	/opt/datadog-agent/embedded/bin/python
 
+USE_RC_SUBR=	${PORTNAME}-agent
+
 PIDDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}
 
 GID_FILES=	${PATCHDIR}/GIDs
 UID_FILES=	${PATCHDIR}/UIDs
 
-USERS=		datadog
-GROUPS=         datadog
+DATADOGUSER?=	datadog
+DATADOGGROUP?=	datadog
+USERS=		${DATADOGUSER}
+GROUPS=         ${DATADOGGROUP}
 
 SUB_FILES=	pkg-message
 SUB_LIST=	PIDDIR=${PIDDIR} \
@@ -49,7 +53,7 @@ SUB_LIST=	PIDDIR=${PIDDIR} \
 		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \
 		PYTHON_CMD=${PYTHON_CMD}
 
-PLIST_SUB=	PIDDIR=${PIDDIR} LOGDIR=${LOGDIR}
+PLIST_SUB=	PIDDIR=${PIDDIR} LOGDIR=${LOGDIR} DATADOGUSER=${DATADOGUSER} DATADOGGROUP=${DATADOGGROUP}
 
 CONFFILES=	conf.d/*
 CHECKFILES=	checks.d/*

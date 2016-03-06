@@ -37,12 +37,13 @@ python_OLD_CMD=	/opt/datadog-agent/embedded/bin/python
 PIDDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}
 
-DATADOGUSER?=	datadog
-DATADOGGROUP?=	datadog
-USERS=		${DATADOGUSER}
-GROUPS=		${DATADOGGROUP}
+GID_FILES=	${PATCHDIR}/GIDs
+UID_FILES=	${PATCHDIR}/UIDs
 
-SUB_FILES=	supervisord.conf pkg-message
+USERS=		datadog
+GROUPS=         datadog
+
+SUB_FILES=	pkg-message
 SUB_LIST=	PIDDIR=${PIDDIR} \
 		LOGDIR=${LOGDIR} \
 		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \

@@ -62,10 +62,13 @@
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/windows_service.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/wmi_check.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/zk.py
+%%ETCDIR%%/conf.d/network.yaml.default
+%%ETCDIR%%/conf.d/agent_metrics.yaml.default
+%%ETCDIR%%/conf.d/disk.yaml.default
+%%ETCDIR%%/conf.d/ntp.yaml.default
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/activemq.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/activemq_58.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/activemq_xml.yaml.example
-%%PORTEXAMPLES%%%%EXAMPLESDIR%%/agent_metrics.yaml.default
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/apache.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/btrfs.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/cacti.yaml.example
@@ -74,7 +77,6 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/couch.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/couchbase.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/directory.yaml.example
-%%PORTEXAMPLES%%%%EXAMPLESDIR%%/disk.yaml.default
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/docker.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/docker_daemon.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/elastic.yaml.example
@@ -102,9 +104,7 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/mongo.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/mysql.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/nagios.yaml.example
-%%PORTEXAMPLES%%%%EXAMPLESDIR%%/network.yaml.default
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/nginx.yaml.example
-%%PORTEXAMPLES%%%%EXAMPLESDIR%%/ntp.yaml.default
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/openstack.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/pgbouncer.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/php_fpm.yaml.example

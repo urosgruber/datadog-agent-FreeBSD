@@ -84,7 +84,8 @@ post-install:
 		${INSTALL_DATA} ${WRKSRC}/datadog.conf.example ${STAGEDIR}${ETCDIR}/${PORTNAME}.conf.sample
 
 .for i in ${CONFFILES}
-	        ${INSTALL_DATA} ${WRKSRC}/${i} ${STAGEDIR}${EXAMPLESDIR}
+	        ${INSTALL_DATA} ${WRKSRC}/${i}.example ${STAGEDIR}${EXAMPLESDIR}
+	        ${INSTALL_DATA} ${WRKSRC}/${i}.default ${STAGEDIR}${ETCDIR}/conf.d/
 .endfor
 
 .for i in ${PORTDOCS}

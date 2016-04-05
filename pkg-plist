@@ -4,11 +4,13 @@
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/apache.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/btrfs.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/cacti.py
+%%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/ceph.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/consul.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/couch.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/couchbase.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/directory.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/disk.py
+%%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/dns_check.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/docker.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/docker_daemon.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/elastic.py
@@ -19,6 +21,8 @@
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/gunicorn.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/haproxy.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/hdfs.py
+%%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/hdfs_datanode.py
+%%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/hdfs_namenode.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/http_check.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/iis.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/jenkins.py
@@ -26,6 +30,8 @@
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/kubernetes.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/kyototycoon.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/lighttpd.py
+%%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/linux_proc_extras.py
+%%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/mapreduce.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/marathon.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/mcache.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/mesos.py
@@ -50,6 +56,7 @@
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/snmp.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/sqlserver.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/ssh_check.py
+%%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/statsd.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/supervisord.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/system_core.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/system_swap.py
@@ -61,6 +68,7 @@
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/win32_event_log.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/windows_service.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/wmi_check.py
+%%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/yarn.py
 %%PYTHON_SITELIBDIR%%/%%DATADOGUSER%%/checks.d/zk.py
 %%ETCDIR%%/conf.d/network.yaml.default
 %%ETCDIR%%/conf.d/agent_metrics.yaml.default
@@ -73,20 +81,25 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/btrfs.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/cacti.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/cassandra.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/ceph.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/consul.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/couch.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/couchbase.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/directory.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/dns_check.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/docker.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/docker_daemon.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/elastic.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/etcd.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/fluentd.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/gearmand.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/go-metro.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/go_expvar.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/gunicorn.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/haproxy.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/hdfs.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/hdfs_datanode.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/hdfs_namenode.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/http_check.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/iis.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/jenkins.yaml.example
@@ -96,6 +109,8 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/kubernetes.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/kyototycoon.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/lighttpd.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/linux_proc_extras.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/mapreduce.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/marathon.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/mcache.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/mesos.yaml.example
@@ -119,6 +134,7 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/solr.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/sqlserver.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/ssh_check.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/statsd.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/supervisord.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/system_core.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/system_swap.yaml.example
@@ -131,6 +147,7 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/win32_event_log.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/windows_service.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/wmi_check.yaml.example
+%%PORTEXAMPLES%%%%EXAMPLESDIR%%/yarn.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/zk.yaml.example
 %%PYTHON_SITELIBDIR%%/datadog/datadog-cert.pem
 @dir(%%DATADOGUSER%%,%%DATADOGGROUP%%,0750) %%ETCDIR%%/checks.d

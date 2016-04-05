@@ -11,16 +11,17 @@ LICENSE=	BSD4CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>=3.11:devel/py-yaml \
-		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.3:devel/py-simplejson \
+		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.5:devel/py-simplejson \
 		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:www/py-tornado \
 		${PYTHON_PKGNAMEPREFIX}requests>=2.6.0:www/py-requests
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>=3.11:devel/py-yaml \
-		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.3:devel/py-simplejson \
+		${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.5:devel/py-simplejson \
 		${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:www/py-tornado \
 		${PYTHON_PKGNAMEPREFIX}boto>=2.36.0:devel/py-boto \
 		${PYTHON_PKGNAMEPREFIX}ntplib>=0.3.3:net/py-ntplib \
 		${PYTHON_PKGNAMEPREFIX}requests>=2.6.0:www/py-requests \
-		${PYTHON_PKGNAMEPREFIX}psutil>=2.1.1:sysutils/py-psutil
+		${PYTHON_PKGNAMEPREFIX}psutil>=2.1.1:sysutils/py-psutil \
+		${PYTHON_PKGNAMEPREFIX}uptime>=3.0.1:sysutils/py-uptime
 TEST_DEPENDS:=	${PYTHON_PKGNAMEPREFIX}mock>=1.0.1:devel/py-mock \
 		${PYTHON_PKGNAMEPREFIX}nose>=1.3.4:devel/py-nose \
 		${PYTHON_PKGNAMEPREFIX}flake8>=2.3.0:devel/py-flake8

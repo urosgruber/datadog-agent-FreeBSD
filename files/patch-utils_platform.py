@@ -1,4 +1,4 @@
---- utils/platform.py.orig	2015-12-09 17:04:46 UTC
+--- utils/platform.py.orig	2016-03-31 15:25:24 UTC
 +++ utils/platform.py
 @@ -1,10 +1,7 @@
  # stdlib

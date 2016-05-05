@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	datadog
-PORTVERSION=	5.7.3
+PORTVERSION=	5.7.4
 CATEGORIES=	sysutils
 
 MAINTAINER=	uros@gruber.si

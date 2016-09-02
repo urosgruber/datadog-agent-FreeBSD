@@ -1,6 +1,6 @@
 =========================================================================
 
-The dd-agent port has been installed with an example config file, located
+The DataDog port has been installed with an example config file, located
 in %%ETCDIR%%/datadog.conf.sample.
 
 Before starting the daemon, edit %%ETCDIR%%/datadog.conf and 

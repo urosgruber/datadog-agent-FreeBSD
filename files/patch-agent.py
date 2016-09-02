@@ -1,6 +1,6 @@
---- agent.py.orig	2016-04-05 16:49:39 UTC
+--- agent.py.orig	2016-08-04 21:32:19 UTC
 +++ agent.py
-@@ -46,7 +46,7 @@ from utils.profile import AgentProfiler
+@@ -49,7 +49,7 @@ from utils.service_discovery.sd_backend 
  
  # Constants
  PID_NAME = "dd-agent"

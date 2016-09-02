@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	datadog
-PORTVERSION=	5.7.4
+PORTVERSION=	5.8.5
 CATEGORIES=	sysutils
 
 MAINTAINER=	uros@gruber.si
@@ -30,7 +30,7 @@ USE_GITHUB=	yes
 GH_ACCOUNT=	DataDog
 GH_PROJECT=	dd-agent
 
-USES=		python shebangfix
+USES=		python:2.7+ shebangfix
 USE_PYTHON=	autoplist distutils
 SHEBANG_FILES=	agent.py ddagent.py dogstatsd.py
 python_OLD_CMD=	/opt/datadog-agent/embedded/bin/python
@@ -40,21 +40,19 @@ USE_RC_SUBR=	${PORTNAME}-agent
 PIDDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}
 
-GID_FILES=	${PATCHDIR}/GIDs
-UID_FILES=	${PATCHDIR}/UIDs
+USERS=          datadog
+GROUPS=         ${USERS}
 
-DATADOGUSER?=	datadog
-DATADOGGROUP?=	datadog
-USERS=		${DATADOGUSER}
-GROUPS=		${DATADOGGROUP}
-
-SUB_FILES=	pkg-message
+SUB_FILES=	pkg-message datadog-agent
 SUB_LIST=	PIDDIR=${PIDDIR} \
 		LOGDIR=${LOGDIR} \
 		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \
 		PYTHON_CMD=${PYTHON_CMD}
 
-PLIST_SUB=	PIDDIR=${PIDDIR} LOGDIR=${LOGDIR} DATADOGUSER=${DATADOGUSER} DATADOGGROUP=${DATADOGGROUP}
+PLIST_SUB+=	PIDDIR=${PIDDIR} \
+		LOGDIR=${LOGDIR} \
+		USERS=${USERS} \
+		GROUPS=${GROUPS}
 
 CONFFILES=	conf.d/*
 CHECKFILES=	checks.d/*

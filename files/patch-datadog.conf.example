@@ -1,4 +1,4 @@
---- datadog.conf.example.orig	2016-03-31 15:25:24 UTC
+--- datadog.conf.example.orig	2016-07-25 21:41:43 UTC
 +++ datadog.conf.example
 @@ -30,9 +30,6 @@ api_key:
  # and dice per monitored app (= running Agent Check) on Datadog's backend.
@@ -10,7 +10,7 @@
  # Incorporate security-groups into tags collected from AWS EC2
  # collect_security_groups: no
  
-@@ -58,10 +55,6 @@ gce_updated_hostname: yes
+@@ -50,10 +47,6 @@ gce_updated_hostname: yes
  # Defaults to 30 seconds if no value is provided
  # recent_point_threshold: 30
  
@@ -21,7 +21,7 @@
  # Change port the Agent is listening to
  # listen_port: 17123
  
-@@ -69,7 +62,7 @@ use_mount: no
+@@ -61,7 +54,7 @@ use_mount: no
  # graphite_listen_port: 17124
  
  # Additional directory to look for Datadog checks

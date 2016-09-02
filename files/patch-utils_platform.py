@@ -5,7 +5,7 @@
  import sys
  
 -# project
--from utils.dockerutil import get_client
+-from utils.dockerutil import DockerUtil
 -
 -_is_ecs = None
 +_is_ecs = False

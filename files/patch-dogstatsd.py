@@ -1,6 +1,6 @@
---- dogstatsd.py.orig	2016-04-05 16:49:39 UTC
+--- dogstatsd.py.orig	2016-08-04 21:32:19 UTC
 +++ dogstatsd.py
-@@ -48,7 +48,7 @@ requests_log.propagate = True
+@@ -53,7 +53,7 @@ requests_log.propagate = True
  log = logging.getLogger('dogstatsd')
  
  PID_NAME = "dogstatsd"

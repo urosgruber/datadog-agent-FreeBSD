@@ -39,6 +39,7 @@ extra_commands="reload info configcheck check"
 
 start_cmd="${name}_start"
 stop_cmd="${name}_stop"
+status_cmd="${name}_status"
 reload_cmd="${name}_reload"
 info_cmd="${name}_info"
 configcheck_cmd="${name}_configcheck"
@@ -57,6 +58,18 @@ datadog_start()
 datadog_stop()
 {
     su -m ${datadog_user} -c "${command_interpreter} ${agent} stop"
+}
+
+datadog_status()
+{
+       	rc_pid=`check_pidfile ${pidfile} ${command} ${command_interpreter}`
+
+       	if [ -n "${rc_pid}" ]; then
+               	echo "${name} is running as pid ${rc_pid}."
+       	else
+               	echo "${name} is not running."
+               	return 1
+       	fi
 }
 
 datadog_info()

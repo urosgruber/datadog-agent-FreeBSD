@@ -35,7 +35,7 @@ USE_PYTHON=    	autoplist distutils
 SHEBANG_FILES= 	agent.py ddagent.py dogstatsd.py
 python_OLD_CMD=	/opt/datadog-agent/embedded/bin/python
 
-USE_RC_SUBR=   	${PORTNAME}-agent
+USE_RC_SUBR=   	${PORTNAME}-collector
 
 RUNDIR?=       	/var/run/${PORTNAME}
 LOGDIR?=       	/var/log/${PORTNAME}
@@ -43,7 +43,7 @@ LOGDIR?=       	/var/log/${PORTNAME}
 USERS=          datadog
 GROUPS=         ${USERS}
 
-SUB_FILES=     	pkg-message datadog-agent
+SUB_FILES=     	pkg-message pkg-deinstall
 SUB_LIST=      	RUNDIR=${RUNDIR} \
        		LOGDIR=${LOGDIR} \
        		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \

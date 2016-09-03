@@ -2,40 +2,37 @@
 
 # $FreeBSD$
 #
-# PROVIDE: datadog
+# PROVIDE: datadog_collector
 # REQUIRE: LOGIN
 # KEYWORD: shutdown
 #
 # Add these lines to /etc/rc.conf.local or /etc/rc.conf
 # to enable this service:
 #
-# datadog_enable (bool):       	Set to NO by default.
+# datadog_collector (bool):    	Set to NO by default.
 #      				Set it to YES to enable datadog.
-# datadog_user (username):     	Set to root by default.
 #
 
 . /etc/rc.subr
 
-name=datadog
-rcvar=datadog_enable
+name=datadog_collector
+rcvar=datadog_collector_enable
 
 load_rc_config $name
 
-: ${datadog_enable:="NO"}
-: ${datadog_config="%%ETCDIR%%/datadog.conf"}
-: ${datadog_user="datadog"}
+: ${datadog_collector:="NO"}
+: ${datadog_collector_config="%%ETCDIR%%/datadog.conf"}
+: ${datadog_collector_user="datadog"}
 
 command_args="-m ${datadog_user} -c "
 command_interpreter="%%PYTHON_CMD%%"
 
-required_files="${datadog_config}"
-pidfile="%%RUNDIR%%/agent.pid"
+required_files=%%ETCDIR%%/datadog.conf
+pidfile="%%RUNDIR%%/collector.pid"
 
 agent="%%PYTHON_SITELIBDIR%%/%%PORTNAME%%/agent.py"
 
-required_files="${datadog_config}"
-
-extra_commands="status reload info configcheck check"
+extra_commands="status restart info configcheck check"
 
 start_cmd="${name}_start"
 stop_cmd="${name}_stop"
@@ -67,7 +64,7 @@ datadog_status()
        	fi
 }
 
-datadog_reload()
+datadog_restart()
 {
         su -m ${datadog_user} -c "${command_interpreter} ${agent} restart"
 }

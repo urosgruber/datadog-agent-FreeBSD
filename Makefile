@@ -68,6 +68,9 @@ post-patch:
        			${WRKSRC}/config.py \
        			${WRKSRC}/utils/flare.py \
        			${WRKSRC}/datadog.conf.example
+       		@${REINPLACE_CMD} -e 's|%%RUNDIR%%|${RUNDIR}|g' \
+                        ${WRKSRC}/agent.py \
+                        ${WRKSRC}/dogstatsd.py
 
 post-install:
        		${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d

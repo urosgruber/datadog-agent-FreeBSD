@@ -37,19 +37,19 @@ python_OLD_CMD=	/opt/datadog-agent/embedded/bin/python
 
 USE_RC_SUBR=	${PORTNAME}-agent
 
-PIDDIR?=	/var/run/${PORTNAME}
+RUNDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}
 
 USERS=          datadog
 GROUPS=         ${USERS}
 
 SUB_FILES=	pkg-message datadog-agent
-SUB_LIST=	PIDDIR=${PIDDIR} \
+SUB_LIST=	RUNDIR=${RUNDIR} \
 		LOGDIR=${LOGDIR} \
 		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \
 		PYTHON_CMD=${PYTHON_CMD}
 
-PLIST_SUB+=	PIDDIR=${PIDDIR} \
+PLIST_SUB+=	RUNDIR=${RUNDIR} \
 		LOGDIR=${LOGDIR} \
 		USERS=${USERS} \
 		GROUPS=${GROUPS} \
@@ -71,7 +71,7 @@ post-patch:
 post-install:
 		${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d
 		${MKDIR} ${STAGEDIR}${ETCDIR}/checks.d
-		${MKDIR} ${STAGEDIR}${PIDDIR}
+		${MKDIR} ${STAGEDIR}${RUNDIR}
 		${MKDIR} ${STAGEDIR}${LOGDIR}
 		${MKDIR} ${STAGEDIR}${DOCSDIR}
 		${MKDIR} ${STAGEDIR}${EXAMPLESDIR}

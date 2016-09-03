@@ -153,4 +153,4 @@
 @dir(%%USERS%%,%%GROUPS%%,0750) %%ETCDIR%%/checks.d
 @dir(%%USERS%%,%%GROUPS%%,0750) %%ETCDIR%%/conf.d
 @dir(%%USERS%%,%%GROUPS%%,0750) %%LOGDIR%%
-@dir(%%USERS%%,%%GROUPS%%,0750) %%PIDDIR%%
+@dir(%%USERS%%,%%GROUPS%%,0750) %%RUNDIR%%

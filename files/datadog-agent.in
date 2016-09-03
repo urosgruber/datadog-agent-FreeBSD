@@ -46,7 +46,7 @@ check_cmd="${name}_check"
 
 datadog_reload()
 {
-	echo "Not implemented"
+	su -m ${datadog_user} -c "${command_interpreter} ${agent} restart"
 }
 
 datadog_start()
@@ -56,14 +56,13 @@ datadog_start()
 
 datadog_stop()
 {
-        su -m ${datadog_user} -c "${command_interpreter} ${agent} stop"
+    su -m ${datadog_user} -c "${command_interpreter} ${agent} stop"
 }
 
 datadog_info()
 {
 	su -m ${datadog_user} -c "${command_interpreter} ${agent} info $@"
-        RETURN_VALUE=$?
-        exit $RETURN_VALUE
+    exit $?
 }
 
 datadog_configcheck()

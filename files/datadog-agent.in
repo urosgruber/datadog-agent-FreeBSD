@@ -9,9 +9,9 @@
 # Add these lines to /etc/rc.conf.local or /etc/rc.conf
 # to enable this service:
 #
-# datadog_enable (bool):	Set to NO by default.
-#				Set it to YES to enable datadog.
-# datadog_user (username):      Set to root by default.
+# datadog_enable (bool):       	Set to NO by default.
+#      				Set it to YES to enable datadog.
+# datadog_user (username):     	Set to root by default.
 #
 
 . /etc/rc.subr
@@ -35,7 +35,7 @@ agent="%%PYTHON_SITELIBDIR%%/%%PORTNAME%%/agent.py"
 
 required_files="${datadog_config}"
 
-extra_commands="reload info configcheck check"
+extra_commands="status reload info configcheck check"
 
 start_cmd="${name}_start"
 stop_cmd="${name}_stop"
@@ -45,19 +45,14 @@ info_cmd="${name}_info"
 configcheck_cmd="${name}_configcheck"
 check_cmd="${name}_check"
 
-datadog_reload()
-{
-	su -m ${datadog_user} -c "${command_interpreter} ${agent} restart"
-}
-
 datadog_start()
 {
-	su -m ${datadog_user} -c "${command_interpreter} ${agent} start"
+       	su -m ${datadog_user} -c "${command_interpreter} ${agent} start"
 }
 
 datadog_stop()
 {
-    su -m ${datadog_user} -c "${command_interpreter} ${agent} stop"
+       	su -m ${datadog_user} -c "${command_interpreter} ${agent} stop"
 }
 
 datadog_status()
@@ -72,22 +67,27 @@ datadog_status()
        	fi
 }
 
+datadog_reload()
+{
+        su -m ${datadog_user} -c "${command_interpreter} ${agent} restart"
+}
+
 datadog_info()
 {
-	su -m ${datadog_user} -c "${command_interpreter} ${agent} info $@"
-    exit $?
+       	su -m ${datadog_user} -c "${command_interpreter} ${agent} info $@"
+       	exit $?
 }
 
 datadog_configcheck()
 {
-	su -m ${datadog_user} -c "${command_interpreter} ${agent} configcheck"
-	exit $?
+       	su -m ${datadog_user} -c "${command_interpreter} ${agent} configcheck"
+       	exit $?
 }
 
 datadog_check()
-{	
-	su -m ${datadog_user} -c "${command_interpreter} ${agent} check $@"
-	exit $?
+{
+       	su -m ${datadog_user} -c "${command_interpreter} ${agent} check $@"
+       	exit $?
 }
 
 run_rc_command "$@"

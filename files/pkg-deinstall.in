@@ -1,0 +1,25 @@
+#!/bin/sh
+# $FreeBSD$
+
+if [ "$2" != "POST-DEINSTALL" ]; then
+	exit 0
+fi
+
+USERS=%%USERS%%
+
+echo
+echo "===================================================="
+echo
+echo "If you want remove datadog permanently from you system"
+echo "execute following commands:"
+echo
+echo " # rm -rf %%LOGDIR%%"
+echo " # rm -rf %%RUNDIR%%"
+if pw usershow "${USERS}" 2>/dev/null 1>&2; then
+	echo " # pw userdel ${USERS}"
+fi
+echo
+echo "===================================================="
+echo
+
+exit 0

@@ -29,9 +29,9 @@ command_args="-m ${datadog_user} -c "
 command_interpreter="%%PYTHON_CMD%%"
 
 required_files="${datadog_config}"
-pidfile="/var/run/datadog/agent.pid"
+pidfile="%%RUNDIR%%/agent.pid"
 
-agent="%%PYTHON_SITELIBDIR%%/datadog/agent.py"
+agent="%%PYTHON_SITELIBDIR%%/%%PORTNAME%%/agent.py"
 
 required_files="${datadog_config}"
 

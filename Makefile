@@ -35,7 +35,7 @@ USE_PYTHON=	autoplist distutils
 SHEBANG_FILES=	agent.py ddagent.py dogstatsd.py
 python_OLD_CMD=	/opt/datadog-agent/embedded/bin/python
 
-USE_RC_SUBR=   	${PORTNAME}-collector
+USE_RC_SUBR=   	${PORTNAME}-collector ${PORTNAME}-dogstatsd
 
 RUNDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}

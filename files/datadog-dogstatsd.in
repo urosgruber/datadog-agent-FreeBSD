@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# $FreeBSD$
+#
+# PROVIDE: datadog_dogstatsd
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+#
+# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# datadog_dogstatsd (bool):    	Set to NO by default.
+#      				Set it to YES to enable datadog dogstatsd.
+#
+
+. /etc/rc.subr
+
+name=datadog_dogstatsd
+rcvar=datadog_dogstatsd_enable
+
+load_rc_config $name
+
+: ${datadog_dogstatsd_enable:="NO"}
+: ${datadog_dogstatsd_user="datadog"}
+
+command="%%PYTHON_SITELIBDIR%%/%%PORTNAME%%/dogstatsd.py"
+command_interpreter="%%PYTHON_CMD%%"
+
+required_files=%%ETCDIR%%/datadog.conf
+pidfile="%%RUNDIR%%/dogstatsd.pid"
+
+extra_commands="restart status restart info"
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+restart_cmd="${name}_restart"
+status_cmd="${name}_status"
+info_cmd="${name}_info"
+
+datadog_dogstatsd_start()
+{
+	su -m %%USER%% -c "${command_interpreter} ${command} start"
+}
+
+datadog_dogstatsd_stop()
+{
+	su -m %%USER%% -c "${command_interpreter} ${command} stop"
+}
+
+datadog_dogstatsd_status()
+{		
+	rc_pid=`check_pidfile ${pidfile} ${command} ${command_interpreter}`
+	if [ -n "${rc_pid}" ]; then
+		echo "Datadog dogstatsd is running as pid ${rc_pid}."
+	else
+		echo "Datadog dogstatsd is not running."
+		return 1
+	fi
+}
+
+datadog_dogstatsd_restart()
+{
+	su -m %%USER%% -c "${command_interpreter} ${command} restart"
+}
+
+datadog_dogstatsd_info()
+{
+	su -m %%USER%% -c "${command_interpreter} ${command} info $@"
+	exit $?
+}
+
+run_rc_command "$@"
+

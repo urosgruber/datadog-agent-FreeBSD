@@ -1,8 +1,8 @@
---- agent.py.orig      	2016-09-03 10:51:39 UTC
+--- agent.py.orig	2016-09-03 10:51:39 UTC
 +++ agent.py
 @@ -48,8 +48,8 @@ from utils.service_discovery.config_stor
  from utils.service_discovery.sd_backend import get_sd_backend
-
+ 
  # Constants
 -PID_NAME = "dd-agent"
 -PID_DIR = None

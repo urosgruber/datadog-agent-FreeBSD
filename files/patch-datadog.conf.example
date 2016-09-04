@@ -1,32 +1,32 @@
---- datadog.conf.example.orig  	2016-09-03 09:55:24 UTC
+--- datadog.conf.example.orig	2016-09-03 09:55:24 UTC
 +++ datadog.conf.example
 @@ -30,9 +30,6 @@ api_key:
  # and dice per monitored app (= running Agent Check) on Datadog's backend.
  # create_dd_check_tags: no
-
+ 
 -# Collect AWS EC2 custom tags as agent tags (requires an IAM role associated with the instance)
 -# collect_ec2_tags: no
 -
  # Incorporate security-groups into tags collected from AWS EC2
  # collect_security_groups: no
-
+ 
 @@ -50,10 +47,6 @@ gce_updated_hostname: yes
  # Defaults to 30 seconds if no value is provided
  # recent_point_threshold: 30
-
+ 
 -# Use mount points instead of volumes to track disk and fs metrics
 -# DEPRECATED: use conf.d/disk.yaml instead to configure it
 -use_mount: no
 -
  # Change port the Agent is listening to
  # listen_port: 17123
-
+ 
 @@ -213,7 +206,7 @@ use_mount: no
  # Logging
  # ========================================================================== #
-
+ 
 -# log_level: INFO
 +log_level: WARNING
-
+ 
  # collector_log_file: /var/log/datadog/collector.log
  # forwarder_log_file: /var/log/datadog/forwarder.log

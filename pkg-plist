@@ -1,4 +1,4 @@
-@sample(%%USERS%%,%%GROUPS%%,640) %%ETCDIR%%/datadog.conf.sample
+@sample(%%USER%%,%%GROUP%%,640) %%ETCDIR%%/datadog.conf.sample
 %%PYTHON_SITELIBDIR%%/%%PORTNAME%%/checks.d/activemq_xml.py
 %%PYTHON_SITELIBDIR%%/%%PORTNAME%%/checks.d/agent_metrics.py
 %%PYTHON_SITELIBDIR%%/%%PORTNAME%%/checks.d/apache.py
@@ -150,7 +150,8 @@
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/yarn.yaml.example
 %%PORTEXAMPLES%%%%EXAMPLESDIR%%/zk.yaml.example
 %%PYTHON_SITELIBDIR%%/datadog/datadog-cert.pem
-@dir(%%USERS%%,%%GROUPS%%,0750) %%ETCDIR%%/checks.d
-@dir(%%USERS%%,%%GROUPS%%,0750) %%ETCDIR%%/conf.d
-@dir(%%USERS%%,%%GROUPS%%,0750) %%LOGDIR%%
-@dir(%%USERS%%,%%GROUPS%%,0750) %%RUNDIR%%
+@dir(%%USER%%,%%GROUP%%,0750) %%ETCDIR%%/checks.d
+@dir(%%USER%%,%%GROUP%%,0750) %%ETCDIR%%/conf.d
+@dir(%%USER%%,%%GROUP%%,0750) %%LOGDIR%%
+@dir(%%USER%%,%%GROUP%%,0750) %%RUNDIR%%
+

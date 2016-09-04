@@ -29,7 +29,6 @@ command_interpreter="%%PYTHON_CMD%%"
 required_files=%%ETCDIR%%/datadog.conf
 pidfile="%%RUNDIR%%/collector.pid"
 
-
 extra_commands="status restart info configcheck check"
 
 start_cmd="${name}_start"
@@ -42,19 +41,17 @@ check_cmd="${name}_check"
 
 datadog_collector_start()
 {
-	su -m $%%USER%% -c '${command_interpreter} ${command} start'
+	su -m %%USER%% -c "${command_interpreter} ${command} start"
 }
 
 datadog_collector_stop()
 {
-	su -m $%%USER%% -c '${command_interpreter} ${command} stop'
+	su -m %%USER%% -c "${command_interpreter} ${command} stop"
 }
 
 datadog_collector_status()
 {		
-	echo "check_pidfile ${pidfile} ${command} ${command_interpreter}"
 	rc_pid=`check_pidfile ${pidfile} ${command} ${command_interpreter}`
-
 	if [ -n "${rc_pid}" ]; then
 		echo "${name} is running as pid ${rc_pid}."
 	else
@@ -65,25 +62,26 @@ datadog_collector_status()
 
 datadog_collector_restart()
 {
-	su -m $%%USER%% -c '${command_interpreter} ${agent} restart'
+	su -m %%USER%% -c "${command_interpreter} ${command} restart"
 }
 
 datadog_collector_info()
 {
-	su -m $%%USER%% -c '${command_interpreter} ${agent} info $@'
+	su -m %%USER%% -c "${command_interpreter} ${command} info $@"
 	exit $?
 }
 
 datadog_collector_configcheck()
 {
-	su -m $%%USER%% -c '${command_interpreter} ${agent} configcheck'
+	su -m %%USER%% -c "${command_interpreter} ${command} configcheck"
 	exit $?
 }
 
 datadog_collector_check()
 {
-	su -m $%%USER%% -c '${command_interpreter} ${agent} check $@'
+	su -m %%USER%% -c "${command_interpreter} ${command} check $@"
 	exit $?
 }
 
 run_rc_command "$@"
+

@@ -5,7 +5,7 @@ if [ "$2" != "POST-DEINSTALL" ]; then
 	exit 0
 fi
 
-USERS=%%USERS%%
+USER=%%USER%%
 
 echo
 echo "===================================================="
@@ -15,8 +15,9 @@ echo "execute following commands:"
 echo
 echo " # rm -rf %%LOGDIR%%"
 echo " # rm -rf %%RUNDIR%%"
-if pw usershow "${USERS}" 2>/dev/null 1>&2; then
-	echo " # pw userdel ${USERS}"
+echo " # rm -rf %%ETCDIR%%"
+if pw usershow "${USER}" 2>/dev/null 1>&2; then
+	echo " # pw userdel ${USER}"
 fi
 echo
 echo "===================================================="

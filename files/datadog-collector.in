@@ -34,7 +34,7 @@ extra_commands="status restart info configcheck check"
 start_cmd="${name}_start"
 stop_cmd="${name}_stop"
 status_cmd="${name}_status"
-reload_cmd="${name}_reload"
+restart_cmd="${name}_restart"
 info_cmd="${name}_info"
 configcheck_cmd="${name}_configcheck"
 check_cmd="${name}_check"
@@ -53,9 +53,9 @@ datadog_collector_status()
 {		
 	rc_pid=`check_pidfile ${pidfile} ${command} ${command_interpreter}`
 	if [ -n "${rc_pid}" ]; then
-		echo "${name} is running as pid ${rc_pid}."
+		echo "Datadog collector is running as pid ${rc_pid}."
 	else
-		echo "${name} is not running."
+		echo "Datadog collector is not running."
 		return 1
 	fi
 }

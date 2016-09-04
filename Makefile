@@ -48,12 +48,13 @@ SUB_LIST=      	RUNDIR=${RUNDIR} \
        		LOGDIR=${LOGDIR} \
        		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \
        		PYTHON_CMD=${PYTHON_CMD} \
+       		USER=${USERS} \
        		PORTNAME=${PORTNAME}
 
 PLIST_SUB+=    	RUNDIR=${RUNDIR} \
        		LOGDIR=${LOGDIR} \
-       		USERS=${USERS} \
-       		GROUPS=${GROUPS} \
+       		USER=${USERS} \
+       		GROUP=${GROUPS} \
        		PORTNAME=${PORTNAME}
 
 CONFFILES=     	conf.d/*

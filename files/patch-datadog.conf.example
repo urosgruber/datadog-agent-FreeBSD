@@ -1,27 +1,29 @@
---- datadog.conf.example.orig	2016-09-03 09:55:24 UTC
+--- datadog.conf.example.orig	2016-10-04 20:30:36 UTC
 +++ datadog.conf.example
-@@ -30,9 +30,6 @@ api_key:
+@@ -42,11 +42,6 @@ api_key:
  # and dice per monitored app (= running Agent Check) on Datadog's backend.
  # create_dd_check_tags: no
  
 -# Collect AWS EC2 custom tags as agent tags (requires an IAM role associated with the instance)
 -# collect_ec2_tags: no
+-# Incorporate security-groups into tags collected from AWS EC2
+-# collect_security_groups: no
 -
- # Incorporate security-groups into tags collected from AWS EC2
- # collect_security_groups: no
- 
-@@ -50,10 +47,6 @@ gce_updated_hostname: yes
- # Defaults to 30 seconds if no value is provided
+ # Enable Agent Developer Mode
+ # Agent Developer Mode collects and sends more fine-grained metrics about agent and check performance
+ # developer_mode: no
+@@ -61,10 +56,6 @@ gce_updated_hostname: yes
+ # within recent_point_threshold seconds (default: 30)
  # recent_point_threshold: 30
  
 -# Use mount points instead of volumes to track disk and fs metrics
 -# DEPRECATED: use conf.d/disk.yaml instead to configure it
--use_mount: no
+-# use_mount: no
 -
- # Change port the Agent is listening to
+ # Forwarder listening port
  # listen_port: 17123
  
-@@ -213,7 +206,7 @@ use_mount: no
+@@ -232,7 +223,7 @@ gce_updated_hostname: yes
  # Logging
  # ========================================================================== #
  

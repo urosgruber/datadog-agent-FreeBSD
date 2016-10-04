@@ -6,7 +6,7 @@
      def is_ecs_instance():
 -        from utils.dockerutil import DockerUtil
 -        return DockerUtil().is_ecs()
-+        return false
++        return False
  
      @staticmethod
      def is_containerized():

@@ -40,6 +40,9 @@ USE_RC_SUBR=   	${PORTNAME}-collector ${PORTNAME}-dogstatsd
 RUNDIR?=	/var/run/${PORTNAME}
 LOGDIR?=	/var/log/${PORTNAME}
 
+GID_FILES=	${PATCHDIR}/GIDs
+UID_FILES=	${PATCHDIR}/UIDs
+
 USERS=		datadog
 GROUPS=		${USERS}
 

@@ -10,7 +10,7 @@ USER=%%USER%%
 echo
 echo "===================================================="
 echo
-echo "If you want remove datadog permanently from you system"
+echo "If you want remove DataDog permanently from you system"
 echo "execute following commands:"
 echo
 echo " # rm -rf %%LOGDIR%%"

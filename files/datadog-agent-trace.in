@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# $FreeBSD$
+#
+# PROVIDE: datadog_agent_trace
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+#
+# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# datadog_agent_trace_enable (bool):  Set to NO by default.
+#      																	Set it to YES to enable DataDog trace Agent.
+#
+
+. /etc/rc.subr
+
+name=datadog_agent_trace
+rcvar=datadog_agent_trace_enable
+
+load_rc_config $name
+
+: ${datadog_agent_trace_enable:="NO"}
+: ${datadog_agent_trace_user="%%USER%%"}
+: ${datadog_agent_trace_config:="%%ETCDIR%%/datadog.yaml"}
+
+command="/opt/datadog-agent/embedded/bin/trace-agent"
+command_args="-c ${datadog_agent_trace_config}"
+
+required_files=%%ETCDIR%%/datadog.yaml
+pidfile="%%RUNDIR%%/datadog-agent-trace.pid"
+
+start_cmd="${name}_command start $@"
+stop_cmd="${name}_command stop $@"
+status_cmd="${name}_status"
+
+datadog_agent_trace_status()
+{
+	rc_pid=`check_pidfile ${pidfile} ${command}`
+	if [ -n "${rc_pid}" ]; then
+		echo "DataDog trace agent is running as pid ${rc_pid}."
+	else
+		echo "DataDog trace agent is not running."
+		return 1
+	fi
+}
+
+datadog_agent_trace_start() {
+	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_user} ${command}
+	return $?
+}
+
+datadog_agent_trace_stop() {
+	rc_pid=`check_pidfile ${pidfile} ${command}`
+	if [ -n "${rc_pid}" ]; then
+		kill ${rc_pid}
+	else
+		echo "DataDog trace agent is not running."
+	fi
+}
+
+run_rc_command "$@"

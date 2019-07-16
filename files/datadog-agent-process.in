@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# $FreeBSD$
+#
+# PROVIDE: datadog_agent_process
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+#
+# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# datadog_agent_process_enable (bool):  Set to NO by default.
+#      																	Set it to YES to enable DataDog Process Agent.
+#
+
+. /etc/rc.subr
+
+name=datadog_agent_process
+rcvar=datadog_agent_process_enable
+
+load_rc_config $name
+
+: ${datadog_agent_process_enable:="NO"}
+: ${datadog_agent_process_user="%%USER%%"}
+: ${datadog_agent_process_config:="%%ETCDIR%%/datadog.yaml"}
+
+command="/opt/datadog-agent/embedded/bin/process-agent"
+command_args="-c ${datadog_agent_process_config}"
+
+required_files=%%ETCDIR%%/datadog.yaml
+pidfile="%%RUNDIR%%/datadog-agent-process.pid"
+
+start_cmd="${name}_command start $@"
+stop_cmd="${name}_command stop $@"
+status_cmd="${name}_status"
+
+datadog_agent_process_status()
+{
+	rc_pid=`check_pidfile ${pidfile} ${command}`
+	if [ -n "${rc_pid}" ]; then
+		echo "DataDog process agent is running as pid ${rc_pid}."
+	else
+		echo "DataDog process agent is not running."
+		return 1
+	fi
+}
+
+datadog_agent_process_start() {
+	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_user} ${command}
+	return $?
+}
+
+datadog_agent_process_stop() {
+	rc_pid=`check_pidfile ${pidfile} ${command}`
+	if [ -n "${rc_pid}" ]; then
+		kill ${rc_pid}
+	else
+		echo "DataDog process agent is not running."
+	fi
+}
+
+run_rc_command "$@"

@@ -1,6 +1,6 @@
 =========================================================================
 
-The DataDog port has been installed with an example config file, located
+The Datadog port has been installed with an example config file, located
 in %%ETCDIR%%/datadog.yaml.example.
 
 Before starting the daemon, edit %%ETCDIR%%/datadog.yaml and

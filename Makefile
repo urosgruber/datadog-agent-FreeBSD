@@ -13,10 +13,9 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 BUILD_DEPENDS=	go>=1.15:lang/go \
-		cmake>=3.18:devel/cmake \
-		python>=3.7:lang/python
+		cmake>=3.18:devel/cmake
 
-USES=		go python:3.7
+USES=		go python:3.7+
 
 DATADOG_PREFIX=	/var/db/datadog
 LOGDIR=		/var/log/${PORTNAME}
@@ -199,10 +198,11 @@ do-install:
 	${MKDIR} ${STAGEDIR}${DATADOG_PREFIX}/embedded/datadog_checks
 	${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d
 	${MKDIR} ${STAGEDIR}${LOGDIR}
+	${MKDIR} ${STAGEDIR}${DOCSDIR}
 	${MKDIR} ${STAGEDIR}${RUNDIR}
 
 .for doc in README.md CHANGELOG.rst CONTRIBUTING.md LICENSE
-	(${INSTALL_MAN} ${WRKSRC}/${doc} ${STAGEDIR}${DATADOG_PREFIX})
+	(${INSTALL_MAN} ${WRKSRC}/${doc} ${STAGEDIR}${DOCSDIR})
 .endfor
 
 	# Install binaries

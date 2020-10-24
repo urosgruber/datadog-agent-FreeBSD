@@ -322,11 +322,59 @@ LD_FLAG_STRING=		-s ${LD_FLAG_X_PREFIX}.AgentVersion=${DISTVERSION}
 DATADOG_BINARIES=	agent dogstatsd process-agent trace-agent
 
 # find integrations-core -name setup.py | awk -F\/ '{print $2}' | sort | uniq | grep -v datadog_checks_dev | tr '\n' ' '
-INTEGRATIONS=	active_directory activemq activemq_xml aerospike agent_metrics ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cisco_aci cockroachdb consul coredns couch couchbase crio datadog_checks_base datadog_checks_downloader datadog_checks_tests_helper directory disk dns_check docker_daemon dotnetclr ecs_fargate elastic envoy etcd exchange_server fluentd gearmand gitlab gitlab_runner go-metro go_expvar gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios network nfsstat nginx nginx_ingress_controller ntp openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vsphere win32_event_log windows_service wmi_check yarn zk
+INTEGRATIONS=	active_directory activemq activemq_xml aerospike \
+			agent_metrics ambari apache aspdotnet btrfs cacti \
+			cassandra cassandra_nodetool ceph cisco_aci \
+			cockroachdb consul coredns couch couchbase crio \
+			datadog_checks_base datadog_checks_downloader \
+			datadog_checks_tests_helper directory disk \
+			dns_check dotnetclr ecs_fargate \
+			elastic envoy etcd exchange_server fluentd \
+			gearmand gitlab gitlab_runner go-metro go_expvar \
+			gunicorn haproxy harbor hdfs_datanode hdfs_namenode \
+			hive http_check hyperv ibm_db2 ibm_mq ibm_was iis \
+			istio jboss_wildfly kafka kafka_consumer kong \
+			kube_apiserver_metrics kube_controller_manager \
+			kube_dns kube_metrics_server kube_proxy \
+			kube_scheduler kubelet kubernetes kubernetes_state \
+			kyototycoon lighttpd linkerd linux_proc_extras \
+			mapreduce marathon mcache mesos_master mesos_slave \
+			mongo mysql nagios network nfsstat nginx \
+			nginx_ingress_controller ntp openldap openmetrics \
+			openstack openstack_controller oracle pdh_check \
+			pgbouncer php_fpm postfix postgres powerdns_recursor \
+			presto process prometheus rabbitmq redisdb riak \
+			riakcs snmp solr spark sqlserver squid ssh_check \
+			statsd supervisord system_core system_swap tcp_check \
+			teamcity tls tokumx tomcat twemproxy twistlock \
+			varnish vault vsphere win32_event_log windows_service \
+			wmi_check yarn zk
 
 # find integrations-core -name conf.yaml.example | awk -F\/ '{print $2}' | sort | uniq | grep -v datadog_checks_dev | tr '\n' ' '
-CONFFILES=	active_directory activemq activemq_xml aerospike ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cisco_aci cockroachdb consul coredns couch couchbase crio directory dns_check docker_daemon dotnetclr ecs_fargate elastic envoy etcd exchange_server fluentd gearmand gitlab gitlab_runner go-metro go_expvar gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vsphere win32_event_log windows_service wmi_check yarn zk
-
+CONFFILES=	active_directory activemq activemq_xml aerospike ambari \
+			apache aspdotnet btrfs cacti cassandra \
+			cassandra_nodetool ceph cisco_aci cockroachdb consul \
+			coredns couch couchbase crio directory dns_check \
+			dotnetclr ecs_fargate elastic envoy etcd \
+			exchange_server fluentd gearmand gitlab gitlab_runner \
+			go-metro go_expvar gunicorn haproxy harbor \
+			hdfs_datanode hdfs_namenode hive http_check hyperv \
+			ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka \
+			kafka_consumer kong kube_apiserver_metrics \
+			kube_controller_manager kube_dns kube_metrics_server \
+			kube_proxy kube_scheduler kubelet kubernetes \
+			kubernetes_state kyototycoon lighttpd linkerd \
+			linux_proc_extras mapreduce marathon mcache \
+			mesos_master mesos_slave mongo mysql nagios \
+			nfsstat nginx nginx_ingress_controller openldap \
+			openmetrics openstack openstack_controller oracle \
+			pdh_check pgbouncer php_fpm postfix postgres \
+			powerdns_recursor presto process prometheus rabbitmq \
+			redisdb riak riakcs snmp solr spark sqlserver squid \
+			ssh_check statsd supervisord system_core system_swap \
+			tcp_check teamcity tls tokumx tomcat twemproxy \
+			twistlock varnish vault vsphere win32_event_log \
+			windows_service wmi_check yarn zk
 do-build:
 # Build rtloader (Previously called six)
 	(cd ${WRKSRC}/rtloader && ${SETENV} ${MAKE_ENV} ${BUILD_ENV} \

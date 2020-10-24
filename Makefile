@@ -99,7 +99,7 @@ UID_FILES=	${PATCHDIR}/UIDs
 USERS=	dd-agent
 GROUPS=	${USERS}
 
-SUB_FILES=	pkg-message pkg-deinstall
+SUB_FILES=	pkg-message
 SUB_LIST=	RUNDIR=${RUNDIR} \
 		LOGDIR=${LOGDIR} \
 		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \
@@ -188,7 +188,7 @@ do-build:
 .endfor
 
 # Generate config files
-	go run ${GO_WRKSRC}/pkg/config/render_config.go agent \
+	go run ${GO_WRKSRC}/pkg/config/render_config.go agent-py3 \
 	${GO_WRKSRC}/pkg/config/config_template.yaml \
 	${GO_WRKSRC}/cmd/agent/dist/datadog.yaml
 

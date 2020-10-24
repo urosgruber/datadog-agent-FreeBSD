@@ -175,7 +175,7 @@ do-build:
 # Build rtloader (Previously called six)
 	(cd ${WRKSRC}/rtloader && ${SETENV} ${MAKE_ENV} ${BUILD_ENV} \
 		cmake -DBUILD_DEMO:BOOL=OFF \
-		-DCMAKE_INSTALL_PREFIX:PATH=${DATADOG_PREFIX}/embedded \
+		-DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
 		-DDISABLE_PYTHON2=ON && make -C .)
 
 # Build go binaries
@@ -206,22 +206,22 @@ do-install:
 .endfor
 
 	# Install binaries
-	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/process-agent/process-agent ${STAGEDIR}${DATADOG_PREFIX}/embedded/bin/process-agent
-	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/trace-agent/trace-agent ${STAGEDIR}${DATADOG_PREFIX}/embedded/bin/trace-agent
-	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/agent/agent	${STAGEDIR}${DATADOG_PREFIX}/bin/agent
-	cd ${GO_WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}/bin/agent
-	cd ${GO_WRKSRC}/pkg/status/dist && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/bin/agent/dist
+	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/process-agent/process-agent ${STAGEDIR}${PREFIX}/bin/datadog-process-agent
+	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/trace-agent/trace-agent ${STAGEDIR}${PREFIX}/bin/datadog-trace-agent
+	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/agent/agent	${STAGEDIR}${PREFIX}/bin/datadog-agent
+	#cd ${GO_WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}/bin/agent
+	#cd ${GO_WRKSRC}/pkg/status/dist && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/bin/agent/dist
 
 	# Install core-integrations
 .for dir in ${CONFFILES}
-	(cd ${WRKSRC_integrations}/${dir}; \
-	${MV} datadog_checks/${dir}/data ${STAGEDIR}${ETCDIR}/conf.d/${dir}.d)
+#	(cd ${WRKSRC_integrations}/${dir}; \
+#	${MV} datadog_checks/${dir}/data ${STAGEDIR}${ETCDIR}/conf.d/${dir}.d)
 .endfor
 
 .for dir in ${INTEGRATIONS}
-	(cd ${WRKSRC_integrations}/${dir}; \
-	${PYTHON_CMD} setup.py bdist; \
-	${TAR} -xzf dist/*.tar.gz -C ${STAGEDIR})
+#	(cd ${WRKSRC_integrations}/${dir}; \
+#	${PYTHON_CMD} setup.py bdist; \
+#	${TAR} -xzf dist/*.tar.gz -C ${STAGEDIR})
 .endfor
 
 	# Install rtloader library
@@ -232,5 +232,9 @@ do-install:
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
 	${SED} -ie 's/^# confd_path\: ""/confd_path: "\/usr\/local\/etc\/datadog\/conf.d"/g' \
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
+
+post-install:
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/libdatadog-agent-rtloader.so.0.1.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/libdatadog-agent-three.so
 
 .include <bsd.port.mk>

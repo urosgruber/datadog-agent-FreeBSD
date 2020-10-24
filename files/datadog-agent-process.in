@@ -6,12 +6,15 @@
 # REQUIRE: LOGIN
 # KEYWORD: shutdown
 #
-# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
 # to enable this service:
 #
 # datadog_agent_process_enable (bool):  Set to NO by default.
-#      																	Set it to YES to enable DataDog Process Agent.
-#
+#				Set it to YES to enable DataDog Process Agent.
+# datadog_agent_process_user (user):	Set user to run DataDog Process Agent.
+#				Default is "%%USER%%".
+# datadog_agent_process_conf (path):	Path to DataDog Process Agent configuration file.
+#				Default is %%ETCDIR%%/datadog.yaml
 
 . /etc/rc.subr
 
@@ -22,10 +25,10 @@ load_rc_config $name
 
 : ${datadog_agent_process_enable:="NO"}
 : ${datadog_agent_process_user="%%USER%%"}
-: ${datadog_agent_process_config:="%%ETCDIR%%/datadog.yaml"}
+: ${datadog_agent_process_conf:="%%ETCDIR%%/datadog.yaml"}
 
-command="/opt/datadog-agent/embedded/bin/process-agent"
-command_args="-c ${datadog_agent_process_config}"
+command="%%PREFIX%%/bin/process-agent"
+command_args="-c ${datadog_agent_process_conf}"
 
 required_files=%%ETCDIR%%/datadog.yaml
 pidfile="%%RUNDIR%%/datadog-agent-process.pid"
@@ -46,7 +49,7 @@ datadog_agent_process_status()
 }
 
 datadog_agent_process_start() {
-	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_user} ${command}
+	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_user} ${command} ${command_args}
 	return $?
 }
 

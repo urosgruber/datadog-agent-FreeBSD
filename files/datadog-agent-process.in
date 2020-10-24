@@ -10,10 +10,10 @@
 # to enable this service:
 #
 # datadog_agent_process_enable (bool):  Set to NO by default.
-#				Set it to YES to enable DataDog Process Agent.
-# datadog_agent_process_user (user):	Set user to run DataDog Process Agent.
+#				Set it to YES to enable Datadog Process Agent.
+# datadog_agent_process_user (user):	Set user to run Datadog Process Agent.
 #				Default is "%%USER%%".
-# datadog_agent_process_conf (path):	Path to DataDog Process Agent configuration file.
+# datadog_agent_process_conf (path):	Path to Datadog Process Agent configuration file.
 #				Default is %%ETCDIR%%/datadog.yaml
 
 . /etc/rc.subr
@@ -41,9 +41,9 @@ datadog_agent_process_status()
 {
 	rc_pid=`check_pidfile ${pidfile} ${command}`
 	if [ -n "${rc_pid}" ]; then
-		echo "DataDog process agent is running as pid ${rc_pid}."
+		echo "Datadog process agent is running as pid ${rc_pid}."
 	else
-		echo "DataDog process agent is not running."
+		echo "Datadog process agent is not running."
 		return 1
 	fi
 }
@@ -58,7 +58,7 @@ datadog_agent_process_stop() {
 	if [ -n "${rc_pid}" ]; then
 		kill ${rc_pid}
 	else
-		echo "DataDog process agent is not running."
+		echo "Datadog process agent is not running."
 	fi
 }
 

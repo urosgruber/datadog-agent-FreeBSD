@@ -10,10 +10,10 @@
 # to enable this service:
 #
 # datadog_agent_enable (bool):	Set to NO by default.
-#				Set it to YES to enable DataDog Agent.
-# datadog_agent_user (user):	Set user to run DataDog Agent.
+#				Set it to YES to enable Datadog Agent.
+# datadog_agent_user (user):	Set user to run Datadog Agent.
 #				Default is "%%USER%%".
-# datadog_agent_conf (path):	Path to DataDog Agent configuration file.
+# datadog_agent_conf (path):	Path to Datadog Agent configuration file.
 #				Default is %%ETCDIR%%/datadog.yaml
 
 . /etc/rc.subr
@@ -54,9 +54,9 @@ datadog_agent_status()
 {
 	rc_pid=`check_pidfile ${pidfile} ${command}`
 	if [ -n "${rc_pid}" ]; then
-		echo "DataDog agent is running as pid ${rc_pid}."
+		echo "Datadog agent is running as pid ${rc_pid}."
 	else
-		echo "DataDog agent is not running."
+		echo "Datadog agent is not running."
 		return 1
 	fi
 }
@@ -68,7 +68,7 @@ datadog_agent_restart()
 }
 
 datadog_agent_start() {
-	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_user} ${command} ${command_args} start
+	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_user} ${command} ${command_args} run
 	return $?
 }
 

@@ -6,14 +6,14 @@
 # REQUIRE: LOGIN
 # KEYWORD: shutdown
 #
-# Add these lines to /etc/rc.conf.local or /etc/rc.conf
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
 # to enable this service:
 #
 # datadog_agent_trace_enable (bool):	Set to NO by default.
-#				Set it to YES to enable DataDog trace Agent.
-# datadog_agent_trace_user (user):	Set user to run DataDog trace Agent.
+#				Set it to YES to enable Datadog trace Agent.
+# datadog_agent_trace_user (user):	Set user to run Datadog trace Agent.
 #				Default is "%%USER%%".
-# datadog_agent_trace_conf (path):	Path to DataDog trace Agent configuration file.
+# datadog_agent_trace_conf (path):	Path to Datadog trace Agent configuration file.
 #				Default is %%ETCDIR%%/datadog.yaml
 
 . /etc/rc.subr
@@ -41,9 +41,9 @@ datadog_agent_trace_status()
 {
 	rc_pid=`check_pidfile ${pidfile} ${command}`
 	if [ -n "${rc_pid}" ]; then
-		echo "DataDog trace agent is running as pid ${rc_pid}."
+		echo "Datadog trace agent is running as pid ${rc_pid}."
 	else
-		echo "DataDog trace agent is not running."
+		echo "Datadog trace agent is not running."
 		return 1
 	fi
 }
@@ -58,7 +58,7 @@ datadog_agent_trace_stop() {
 	if [ -n "${rc_pid}" ]; then
 		kill ${rc_pid}
 	else
-		echo "DataDog trace agent is not running."
+		echo "Datadog trace agent is not running."
 	fi
 }
 

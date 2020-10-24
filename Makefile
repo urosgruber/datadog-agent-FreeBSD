@@ -18,7 +18,7 @@ BUILD_DEPENDS=	go>=1.15:lang/go \
 
 USES=		go:modules python:3.7+
 
-DATADOG_PREFIX=	/opt/datadog-agent
+DATADOG_PREFIX=	/var/db/datadog
 LOGDIR=		/var/log/${PORTNAME}
 
 USE_GITHUB=	yes

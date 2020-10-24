@@ -54,8 +54,8 @@ GH_TUPLE=	DataDog:agent-payload:4.24.0:DataDog_agent_payload/vendor/github.com/D
 		dustin:go-humanize:9f541cc:dustin_go_humanize/vendor/github.com/dustin/go-humanize \
 		fatih:color:v1.7.0:fatih_color/vendor/github.com/fatih/color \
 		fsnotify:fsnotify:v1.4.7:fsnotify_fsnotify/vendor/github.com/fsnotify/fsnotify \
-		go-ini:ini:v1.37.0:go-ini_ini/vendor/github.com/go-ini/ini \
-		go-yaml:yaml:v2.2.2:go-yaml_yaml/vendor/gopkg.in/yaml.v2 \
+		go-ini:ini:v1.37.0:go_ini_ini/vendor/github.com/go-ini/ini \
+		go-yaml:yaml:v2.2.2:go_yaml_yaml/vendor/gopkg.in/yaml.v2 \
 		gogo:protobuf:v1.0.0:gogo_protobuf/vendor/github.com/gogo/protobuf \
 		golang:net:97aa3a5:golang_net/vendor/golang.org/x/net \
 		golang:snappy:2e65f85:golang_snappy/vendor/github.com/golang/snappy \
@@ -64,15 +64,15 @@ GH_TUPLE=	DataDog:agent-payload:4.24.0:DataDog_agent_payload/vendor/github.com/D
 		gorilla:mux:v1.6.2:gorilla_mux/vendor/github.com/gorilla/mux \
 		hashicorp:consul:v1.0.7:hashicorp_consul/vendor/github.com/hashicorp/consul \
 		hashicorp:hcl:ef8a98b:hashicorp_hcl/vendor/github.com/hashicorp/hcl \
-		json-iterator:go:v1.1.5:json-iterator_go/vendor/github.com/json-iterator/go \
+		json-iterator:go:v1.1.5:json_iterator_go/vendor/github.com/json-iterator/go \
 		kardianos:osext:ae77be6:kardianos_osext/vendor/github.com/kardianos/osext \
 		kubernetes:apimachinery:def12e6:kubernetes_apimachinery/vendor/k8s.io/apimachinery \
 		magiconair:properties:v1.8.0:magiconair_properties/vendor/github.com/magiconair/properties \
 		mholt:archiver:26cf5bb:mholt_archiver/vendor/github.com/mholt/archiver \
 		mitchellh:mapstructure:bb74f1d:mitchellh_mapstructure/vendor/github.com/mitchellh/mapstructure \
 		moby:moby:v1.13.1:moby_moby/vendor/github.com/docker/docker \
-		modern-go:concurrent:1.0.3:modern-go_concurrent/vendor/github.com/modern-go/concurrent \
-		modern-go:reflect2:1.0.1:modern-go_reflect2/vendor/github.com/modern-go/reflect2 \
+		modern-go:concurrent:1.0.3:modern_go_concurrent/vendor/github.com/modern-go/concurrent \
+		modern-go:reflect2:1.0.1:modern_go_reflect2/vendor/github.com/modern-go/reflect2 \
 		nwaples:rardecode:e06696f:nwaples_rardecode/vendor/github.com/nwaples/rardecode \
 		patrickmn:go-cache:v2.1.0:patrickmn_go_cache/vendor/github.com/patrickmn/go-cache \
 		pelletier:go-toml:v1.2.0:pelletier_go_toml/vendor/github.com/pelletier/go-toml \
@@ -216,9 +216,9 @@ CONFFILES=	active_directory activemq activemq_xml aerospike ambari \
 			twistlock varnish vault vsphere win32_event_log \
 			windows_service wmi_check yarn zk
 
-post-extract:
-	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda
-	@${RLN} ${WRKSRC_mdlayher_netlink} ${WRKSRC}/vendor/github.com/vishvananda/netlink
+#post-extract:
+#	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda
+#	@${RLN} ${WRKSRC_mdlayher_netlink} ${WRKSRC}/vendor/github.com/vishvananda/netlink
 
 do-build:
 # Build rtloader (Previously called six)
@@ -230,7 +230,7 @@ do-build:
 # Build go binaries
 .for bin in ${DATADOG_BINARIES}
 	(cd ${GO_WRKSRC}/cmd/${bin}; \
-		${SETENV} ${MAKE_ENV} ${BUILD_ENV} GOPATH=${GO_WRKSRC} \
+		${SETENV} ${MAKE_ENV} ${BUILD_ENV} GOPATH=${WRKSRC} \
 		CGO_CFLAGS="-w -I${WRKSRC}/rtloader/include -I${WRKSRC}/rtloader/common" \
 		CGO_LDFLAGS="-L${WRKSRC}/rtloader/rtloader" go build -tags \
 		'${AGENT_BUILD_TAGS}' -o ${GO_WRKSRC}/cmd/${bin}/${bin} -ldflags "${LD_FLAG_STRING}")

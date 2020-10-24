@@ -94,8 +94,8 @@ GH_TUPLE=	DataDog:agent-payload:v4.44.0:datadog_agent_payload/vendor/github.com/
 		dsnet:compress:v0.0.1:dsnet_compress/vendor/github.com/dsnet/compress \
 		dustin:go-humanize:v1.0.0:dustin_go_humanize/vendor/github.com/dustin/go-humanize \
 		elastic:go-libaudit:v0.4.0:elastic_go_libaudit/vendor/github.com/elastic/go-libaudit \
-		emicklei:go-restful-swagger12:7524189396c6:emicklei_go_restful_swagger12/vendor/github.com/emicklei/go-restful-swagger12 \
 		emicklei:go-restful:v2.9.6:emicklei_go_restful/vendor/github.com/emicklei/go-restful \
+		emicklei:go-restful-swagger12:7524189396c6:emicklei_go_restful_swagger12/vendor/github.com/emicklei/go-restful-swagger12 \
 		etcd-io:etcd:3cf2f69b5738:etcd_io_etcd/vendor/go.etcd.io/etcd \
 		evanphx:json-patch:v4.5.0:evanphx_json_patch/vendor/github.com/evanphx/json-patch \
 		fatih:color:v1.9.0:fatih_color/vendor/github.com/fatih/color \

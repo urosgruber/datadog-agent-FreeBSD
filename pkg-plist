@@ -49,7 +49,6 @@ bin/%%PORTNAME%%/dist/utils/subprocess_output.py
 bin/%%PORTNAME%%/dist/utils/tailfile.py
 bin/%%PORTNAME%%/dist/utils/timeout.py
 %%ETCDIR%%/%%PORTNAME%%.yaml.example
-%%ETCDIR%%/%%PORTNAME%%.yaml.examplee
 etc/rc.d/%%PORTNAME%%-agent
 etc/rc.d/%%PORTNAME%%-agent-process
 etc/rc.d/%%PORTNAME%%-agent-trace

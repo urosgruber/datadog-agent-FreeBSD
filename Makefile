@@ -16,7 +16,7 @@ BUILD_DEPENDS=	go>=1.15:lang/go \
 		cmake>=3.18:devel/cmake \
 		python>=3.7:lang/python
 
-USES=		go:modules python:3.7+
+USES=		go python:3.7
 
 DATADOG_PREFIX=	/var/db/datadog
 LOGDIR=		/var/log/${PORTNAME}
@@ -30,67 +30,68 @@ GH_TAGNAME=	${DISTVERSION}
 
 # For list of modules you can check:
 # https://github.com/DataDog/datadog-agent/blob/${DISTVERSION}/Gopkg.toml
-GH_TUPLE=	DataDog:agent-payload:4.24.0:DataDog_agent_payload/vendor/github.com/DataDog/agent-payload \
-		DataDog:cast:1ee8c8b:DataDog_cast/vendor/github.com/spf13/cast \
-		DataDog:datadog-go:2.1.0:DataDog_datadog_go/vendor/github.com/DataDog/datadog-go \
-		DataDog:gohai:master:DataDog_gohai/vendor/github.com/DataDog/gohai \
-		DataDog:gopsutil:3ca45fa:DataDog_gopsutil/vendor/github.com/DataDog/gopsutil \
-		DataDog:mmh3:2cfb684:DataDog_mmh3/vendor/github.com/DataDog/mmh3 \
-		DataDog:viper:v1.7.0:DataDog_viper/vendor/github.com/DataDog/viper \
-		DataDog:zstd:2b373cb:DataDog_zstd/vendor/github.com/DataDog/zstd.v0.5 \
-		aws:aws-sdk-go:v1.12.79:aws_aws_sdk_go/vendor/github.com/aws/aws-sdk-go \
-		beevik:ntp:v0.2.0:beevik_ntp/vendor/github.com/beevik/ntp \
-		benesch:cgosymbolizer:bec6fe6:benesch_cgosymbolizer/vendor/github.com/benesch/cgosymbolizer \
-		blabber:go-freebsd-sysctl:dcd5a22:blabber_go_freebsd_sysctl/vendor/github.com/blabber/go-freebsd-sysctl \
-		cihub:seelog:v2.6:cihub_seelog/vendor/github.com/cihub/seelog \
-		clbanning:mxj:v1.8:clbanning_mxj/vendor/github.com/clbanning/mxj \
-		containerd:containerd:v1.2.2:containerd_containerd/vendor/github.com/containerd/containerd \
-		coreos:etcd:v3.2.23:coreos_etcd/vendor/github.com/coreos/etcd \
-		coreos:go-semver:v0.2.0:coreos_go_semver/vendor/github.com/coreos/go-semver \
-		coreos:go-systemd:v16:coreos_go_systemd/vendor/github.com/coreos/go-systemd \
-		coreos:pkg:v4:coreos_pkg/vendor/github.com/coreos/pkg \
-		docker:go-connections:v0.3.0:docker_go_connections/vendor/github.com/docker/go-connections \
-		dsnet:compress:cc9eb1d:dsnet_compress/vendor/github.com/dsnet/compress \
-		dustin:go-humanize:9f541cc:dustin_go_humanize/vendor/github.com/dustin/go-humanize \
-		fatih:color:v1.7.0:fatih_color/vendor/github.com/fatih/color \
-		fsnotify:fsnotify:v1.4.7:fsnotify_fsnotify/vendor/github.com/fsnotify/fsnotify \
-		go-ini:ini:v1.37.0:go_ini_ini/vendor/github.com/go-ini/ini \
-		go-yaml:yaml:v2.2.2:go_yaml_yaml/vendor/gopkg.in/yaml.v2 \
-		gogo:protobuf:v1.0.0:gogo_protobuf/vendor/github.com/gogo/protobuf \
-		golang:net:97aa3a5:golang_net/vendor/golang.org/x/net \
-		golang:snappy:2e65f85:golang_snappy/vendor/github.com/golang/snappy \
-		golang:sys:61b9204:golang_sys/vendor/golang.org/x/sys \
-		golang:text:v0.3.0:golang_text/vendor/golang.org/x/text \
-		gorilla:mux:v1.6.2:gorilla_mux/vendor/github.com/gorilla/mux \
-		hashicorp:consul:v1.0.7:hashicorp_consul/vendor/github.com/hashicorp/consul \
-		hashicorp:hcl:ef8a98b:hashicorp_hcl/vendor/github.com/hashicorp/hcl \
-		json-iterator:go:v1.1.5:json_iterator_go/vendor/github.com/json-iterator/go \
-		kardianos:osext:ae77be6:kardianos_osext/vendor/github.com/kardianos/osext \
-		kubernetes:apimachinery:def12e6:kubernetes_apimachinery/vendor/k8s.io/apimachinery \
-		magiconair:properties:v1.8.0:magiconair_properties/vendor/github.com/magiconair/properties \
-		mholt:archiver:26cf5bb:mholt_archiver/vendor/github.com/mholt/archiver \
-		mitchellh:mapstructure:bb74f1d:mitchellh_mapstructure/vendor/github.com/mitchellh/mapstructure \
-		moby:moby:v1.13.1:moby_moby/vendor/github.com/docker/docker \
-		modern-go:concurrent:1.0.3:modern_go_concurrent/vendor/github.com/modern-go/concurrent \
-		modern-go:reflect2:1.0.1:modern_go_reflect2/vendor/github.com/modern-go/reflect2 \
-		nwaples:rardecode:e06696f:nwaples_rardecode/vendor/github.com/nwaples/rardecode \
-		patrickmn:go-cache:v2.1.0:patrickmn_go_cache/vendor/github.com/patrickmn/go-cache \
-		pelletier:go-toml:v1.2.0:pelletier_go_toml/vendor/github.com/pelletier/go-toml \
-		philhofer:fwd:v1.0.0:philhofer_fwd/vendor/github.com/philhofer/fwd \
-		pierrec:lz4:v2.0.3:pierrec_lz4/vendor/github.com/pierrec/lz4 \
-		pkg:errors:v0.8.0:pkg_errors/vendor/github.com/pkg/errors \
-		samuel:go-zookeeper:c4fab1a:samuel_go_zookeeper/vendor/github.com/samuel/go-zookeeper \
-		shirou:gopsutil:v2.18.12:shirou_gopsutil/vendor/github.com/shirou/gopsutil \
-		spf13:afero:v1.1.1:spf13_afero/vendor/github.com/spf13/afero \
-		spf13:cobra:v0.0.3:spf13_cobra/vendor/github.com/spf13/cobra \
-		spf13:jwalterweatherman:7c0cea3:spf13_jwalterweatherman/vendor/github.com/spf13/jwalterweatherman \
-		spf13:pflag:v1.0.1:spf13_pflag/vendor/github.com/spf13/pflag \
-		stretchr:testify:v1.2.2:stretchr_testify/vendor/github.com/stretchr/testify \
-		tinylib:msgp:v1.1.0:tinylib_msgp/vendor/github.com/tinylib/msgp \
-		ugorji:go:8c0409f:ugorji_go/vendor/github.com/ugorji/go \
-		ulikunitz:xz:v0.5.4:ulikunitz_xz/vendor/github.com/ulikunitz/xz \
-		urfave:negroni:v0.3.0:urfave_negroni/vendor/github.com/urfave/negroni
-
+GH_TUPLE=	DataDog:agent-payload:4.24.0:agent_payload/src/github.com/DataDog/agent-payload \
+					DataDog:gohai:master:gohai/src/github.com/DataDog/gohai \
+					DataDog:zstd:v1.3.0:zstd/src/github.com/DataDog/zstd \
+					DataDog:zstd:2b373cb:zstd_v0_5/src/github.com/DataDog/zstd.v0.5 \
+					DataDog:integrations-core:7.16.0:integrations \
+					hashicorp:consul:v1.0.7:consul/src/github.com/hashicorp/consul \
+					beevik:ntp:v0.2.0:ntp/src/github.com/beevik/ntp \
+					cihub:seelog:v2.6:seelog/src/github.com/cihub/seelog \
+					coreos:etcd:v3.2.23:etcd/src/github.com/coreos/etcd \
+					coreos:go-semver:v0.2.0:go_semver/src/github.com/coreos/go-semver \
+					moby:moby:v1.13.1:docker/src/github.com/docker/docker \
+					containerd:containerd:v1.2.2:containerd/src/github.com/containerd/containerd \
+					gogo:protobuf:v1.0.0:protobuf/src/github.com/gogo/protobuf \
+					DataDog:mmh3:2cfb684:mmh3/src/github.com/DataDog/mmh3 \
+					DataDog:viper:v1.7.0:viper/src/github.com/DataDog/viper \
+					aws:aws-sdk-go:v1.12.79:aws_sdk_go/src/github.com/aws/aws-sdk-go \
+					clbanning:mxj:v1.8:mxj/src/github.com/clbanning/mxj \
+					dustin:go-humanize:9f541cc:go_humanize/src/github.com/dustin/go-humanize \
+					fatih:color:v1.7.0:color/src/github.com/fatih/color \
+					go-ini:ini:v1.37.0:ini/src/github.com/go-ini/ini \
+					gorilla:mux:v1.6.2:mux/src/github.com/gorilla/mux \
+					json-iterator:go:v1.1.5:json_iterator/src/github.com/json-iterator/go \
+					kardianos:osext:ae77be6:osext/src/github.com/kardianos/osext \
+					mholt:archiver:26cf5bb:archiver/src/github.com/mholt/archiver \
+					patrickmn:go-cache:v2.1.0:go_cache/src/github.com/patrickmn/go-cache \
+					shirou:gopsutil:v2.18.12:gopsutil/src/github.com/shirou/gopsutil \
+					dsnet:compress:cc9eb1d:compress/src/github.com/dsnet/compress \
+					fsnotify:fsnotify:v1.4.7:fsnotify/src/github.com/fsnotify/fsnotify \
+					golang:snappy:2e65f85:snappy/src/github.com/golang/snappy \
+					hashicorp:hcl:ef8a98b:hcl/src/github.com/hashicorp/hcl \
+					magiconair:properties:v1.8.0:properties/src/github.com/magiconair/properties \
+					mitchellh:mapstructure:bb74f1d:mapstructure/src/github.com/mitchellh/mapstructure \
+					modern-go:concurrent:1.0.3:concurrent/src/github.com/modern-go/concurrent \
+					modern-go:reflect2:1.0.1:reflect2/src/github.com/modern-go/reflect2 \
+					nwaples:rardecode:e06696f:rardecode/src/github.com/nwaples/rardecode \
+					pelletier:go-toml:v1.2.0:go_toml/src/github.com/pelletier/go-toml \
+					pierrec:lz4:v2.0.3:lz4/src/github.com/pierrec/lz4 \
+					spf13:afero:v1.1.1:afero/src/github.com/spf13/afero \
+					DataDog:cast:1ee8c8b:cast/src/github.com/spf13/cast \
+					spf13:cobra:v0.0.3:cobra/src/github.com/spf13/cobra \
+					spf13:jwalterweatherman:7c0cea3:jwalterweatherman/src/github.com/spf13/jwalterweatherman \
+					spf13:pflag:v1.0.1:pflag/src/github.com/spf13/pflag \
+					stretchr:testify:v1.2.2:testify/src/github.com/stretchr/testify \
+					ulikunitz:xz:v0.5.4:xz/src/github.com/ulikunitz/xz \
+					urfave:negroni:v0.3.0:negroni/src/github.com/urfave/negroni \
+					golang:net:97aa3a5:net/src/golang.org/x/net \
+					golang:sys:61b9204:sys/src/golang.org/x/sys \
+					golang:text:v0.3.0:text/src/golang.org/x/text \
+					go-yaml:yaml:v2.2.2:yaml/src/gopkg.in/yaml.v2 \
+					kubernetes:apimachinery:def12e6:apimachinery/src/k8s.io/apimachinery \
+					coreos:go-systemd:v16:go_systemd/src/github.com/coreos/go-systemd \
+					docker:go-connections:v0.3.0:connections/src/github.com/docker/go-connections \
+					samuel:go-zookeeper:c4fab1a:go_zookeeper/src/github.com/samuel/go-zookeeper \
+					ugorji:go:8c0409f:ugorji_go/src/github.com/ugorji/go \
+					coreos:pkg:v4:coreos_pkg/src/github.com/coreos/pkg \
+					DataDog:datadog-go:2.1.0:datadog_go/src/github.com/DataDog/datadog-go \
+					DataDog:gopsutil:3ca45fa:datadog_gopsutil/src/github.com/DataDog/gopsutil \
+					pkg:errors:v0.8.0:errors/src/github.com/pkg/errors \
+					tinylib:msgp:v1.1.0:msgp/src/github.com/tinylib/msgp \
+					philhofer:fwd:v1.0.0:fwd/src/github.com/philhofer/fwd \
+					benesch:cgosymbolizer:bec6fe6:cgosymbolizer/src/github.com/benesch/cgosymbolizer \
+					blabber:go-freebsd-sysctl:dcd5a22:go_freebsd_sysctl/src/github.com/blabber/go-freebsd-sysctl
 USE_RC_SUBR=	${PORTNAME}-agent-process ${PORTNAME}-agent-trace ${PORTNAME}-agent
 
 GID_FILES=	${PATCHDIR}/GIDs
@@ -162,59 +163,10 @@ LD_FLAG_STRING=		-s ${LD_FLAG_X_PREFIX}.AgentVersion=${DISTVERSION}
 DATADOG_BINARIES=	agent dogstatsd process-agent trace-agent
 
 # find integrations-core -name setup.py | awk -F\/ '{print $2}' | sort | uniq | grep -v datadog_checks_dev | tr '\n' ' '
-INTEGRATIONS=	active_directory activemq activemq_xml aerospike \
-			agent_metrics ambari apache aspdotnet btrfs cacti \
-			cassandra cassandra_nodetool ceph cisco_aci \
-			cockroachdb consul coredns couch couchbase crio \
-			datadog_checks_base datadog_checks_downloader \
-			datadog_checks_tests_helper directory disk \
-			dns_check dotnetclr ecs_fargate \
-			elastic envoy etcd exchange_server fluentd \
-			gearmand gitlab gitlab_runner go-metro go_expvar \
-			gunicorn haproxy harbor hdfs_datanode hdfs_namenode \
-			hive http_check hyperv ibm_db2 ibm_mq ibm_was iis \
-			istio jboss_wildfly kafka kafka_consumer kong \
-			kube_apiserver_metrics kube_controller_manager \
-			kube_dns kube_metrics_server kube_proxy \
-			kube_scheduler kubelet kubernetes kubernetes_state \
-			kyototycoon lighttpd linkerd linux_proc_extras \
-			mapreduce marathon mcache mesos_master mesos_slave \
-			mongo mysql nagios network nfsstat nginx \
-			nginx_ingress_controller ntp openldap openmetrics \
-			openstack openstack_controller oracle pdh_check \
-			pgbouncer php_fpm postfix postgres powerdns_recursor \
-			presto process prometheus rabbitmq redisdb riak \
-			riakcs snmp solr spark sqlserver squid ssh_check \
-			statsd supervisord system_core system_swap tcp_check \
-			teamcity tls tokumx tomcat twemproxy twistlock \
-			varnish vault vsphere win32_event_log windows_service \
-			wmi_check yarn zk
+INTEGRATIONS=	active_directory activemq activemq_xml aerospike amazon_msk ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cilium cisco_aci clickhouse cockroachdb consul coredns couch couchbase crio datadog_checks_base datadog_checks_downloader datadog_checks_tests_helper directory disk dns_check docker_daemon dotnetclr druid ecs_fargate elastic envoy etcd exchange_server external_dns fluentd gearmand gitlab gitlab_runner go_expvar go-metro gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapr mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios network nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs sap_hana snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vertica vsphere win32_event_log windows_service wmi_check yarn zk	
 
 # find integrations-core -name conf.yaml.example | awk -F\/ '{print $2}' | sort | uniq | grep -v datadog_checks_dev | tr '\n' ' '
-CONFFILES=	active_directory activemq activemq_xml aerospike ambari \
-			apache aspdotnet btrfs cacti cassandra \
-			cassandra_nodetool ceph cisco_aci cockroachdb consul \
-			coredns couch couchbase crio directory dns_check \
-			dotnetclr ecs_fargate elastic envoy etcd \
-			exchange_server fluentd gearmand gitlab gitlab_runner \
-			go-metro go_expvar gunicorn haproxy harbor \
-			hdfs_datanode hdfs_namenode hive http_check hyperv \
-			ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka \
-			kafka_consumer kong kube_apiserver_metrics \
-			kube_controller_manager kube_dns kube_metrics_server \
-			kube_proxy kube_scheduler kubelet kubernetes \
-			kubernetes_state kyototycoon lighttpd linkerd \
-			linux_proc_extras mapreduce marathon mcache \
-			mesos_master mesos_slave mongo mysql nagios \
-			nfsstat nginx nginx_ingress_controller openldap \
-			openmetrics openstack openstack_controller oracle \
-			pdh_check pgbouncer php_fpm postfix postgres \
-			powerdns_recursor presto process prometheus rabbitmq \
-			redisdb riak riakcs snmp solr spark sqlserver squid \
-			ssh_check statsd supervisord system_core system_swap \
-			tcp_check teamcity tls tokumx tomcat twemproxy \
-			twistlock varnish vault vsphere win32_event_log \
-			windows_service wmi_check yarn zk
+CONFFILES=	active_directory activemq activemq_xml aerospike amazon_msk ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cilium cisco_aci clickhouse cockroachdb consul coredns couch couchbase crio directory dns_check docker_daemon dotnetclr druid ecs_fargate elastic envoy etcd exchange_server external_dns fluentd gearmand gitlab gitlab_runner go_expvar go-metro gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapr mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs sap_hana snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vertica vsphere win32_event_log windows_service wmi_check yarn zk	
 
 #post-extract:
 #	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda

@@ -1,6 +1,6 @@
-TIMESTAMP = 1603554852
-SHA256 (datadog-datadog-agent-datadog-7.16.1-7.16.1_GH0.tar.gz) = 6a61281d852e0051b855327f8d8679f70d5dff5021083c6d08d4eab081895b7f
-SIZE (datadog-datadog-agent-datadog-7.16.1-7.16.1_GH0.tar.gz) = 6523607
+TIMESTAMP = 1603652784
+SHA256 (DataDog-datadog-agent-datadog-7.16.1-7.16.1_GH0.tar.gz) = 6a61281d852e0051b855327f8d8679f70d5dff5021083c6d08d4eab081895b7f
+SIZE (DataDog-datadog-agent-datadog-7.16.1-7.16.1_GH0.tar.gz) = 6523607
 SHA256 (DataDog-agent-payload-4.24.0_GH0.tar.gz) = aea4bf48e35cf83576c0d943a729f2e4651eb0017e74093bcc0bdcf16797df8b
 SIZE (DataDog-agent-payload-4.24.0_GH0.tar.gz) = 98994
 SHA256 (DataDog-gohai-master_GH0.tar.gz) = 8d23fb078c982ac45ed840e642474b687ef27a24353f6a738b948a36b3881f8c

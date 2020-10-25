@@ -14,7 +14,7 @@
 # datadog_agent_process_user (user):	Set user to run Datadog Process Agent.
 #				Default is "%%USER%%".
 # datadog_agent_process_conf (path):	Path to Datadog Process Agent configuration file.
-#				Default is %%ETCDIR%%/datadog.yaml
+#				Default is %%ETCDIR%%
 
 . /etc/rc.subr
 
@@ -25,9 +25,9 @@ load_rc_config $name
 
 : ${datadog_agent_process_enable:="NO"}
 : ${datadog_agent_process_user="%%USER%%"}
-: ${datadog_agent_process_conf:="%%ETCDIR%%/datadog.yaml"}
+: ${datadog_agent_process_conf:="%%ETCDIR%%"}
 
-command="%%PREFIX%%/bin/process-agent"
+command="%%DATADOG_PREFIX%%/process-agent"
 command_args="-c ${datadog_agent_process_conf}"
 
 required_files=%%ETCDIR%%/datadog.yaml

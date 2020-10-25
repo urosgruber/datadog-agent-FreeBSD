@@ -7,8 +7,8 @@
 -	defaultConfdPath            = "/etc/datadog-agent/conf.d"
 -	defaultAdditionalChecksPath = "/etc/datadog-agent/checks.d"
 -	defaultRunPath              = "/opt/datadog-agent/run"
-+	defaultConfdPath            = "/usr/local/etc/datadog-agent/conf.d"
-+	defaultAdditionalChecksPath = "/usr/local/etc/datadog-agent/checks.d"
++	defaultConfdPath            = "/usr/local/etc/datadog/conf.d"
++	defaultAdditionalChecksPath = "/usr/local/etc/datadog/checks.d"
 +	defaultRunPath              = "/var/run/datadog"
  	defaultSyslogURI            = "unixgram:///dev/log"
  	defaultGuiPort              = -1

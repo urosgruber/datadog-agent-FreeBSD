@@ -17,11 +17,11 @@ BUILD_DEPENDS=	go>=1.15:lang/go \
 
 USES=		go python:3.7+
 
-#DATADOG_PREFIX=	${PREFIX}/datadog
+DATADOG_PREFIX=	${PREFIX}/bin/${PORTNAME}
 LOGDIR=		/var/log/${PORTNAME}
 
 USE_GITHUB=	yes
-GH_ACCOUNT=	${PORTNAME}
+GH_ACCOUNT=	DataDog
 GH_PROJECT=	datadog-agent
 GO_PKGNAME=	github.com/${GH_ACCOUNT}/${GH_PROJECT}
 GH_SUBDIR=	src/github.com/DataDog/datadog-agent
@@ -91,7 +91,7 @@ GH_TUPLE=	DataDog:agent-payload:4.24.0:agent_payload/src/github.com/DataDog/agen
 					philhofer:fwd:v1.0.0:fwd/src/github.com/philhofer/fwd \
 					benesch:cgosymbolizer:bec6fe6:cgosymbolizer/src/github.com/benesch/cgosymbolizer \
 					blabber:go-freebsd-sysctl:dcd5a22:go_freebsd_sysctl/src/github.com/blabber/go-freebsd-sysctl
-USE_RC_SUBR=	${PORTNAME}-agent-process ${PORTNAME}-agent-trace ${PORTNAME}-agent
+USE_RC_SUBR=	${PORTNAME}-process-agent ${PORTNAME}-trace-agent ${PORTNAME}-agent
 
 GID_FILES=	${PATCHDIR}/GIDs
 UID_FILES=	${PATCHDIR}/UIDs
@@ -105,13 +105,15 @@ SUB_LIST=	RUNDIR=${RUNDIR} \
 		PYTHON_SITELIBDIR=${PYTHON_SITELIBDIR} \
 		PYTHON_CMD=${PYTHON_CMD} \
 		USER=${USERS} \
-		PORTNAME=${PORTNAME}
+		PORTNAME=${PORTNAME} \
+		DATADOG_PREFIX=${DATADOG_PREFIX}
 
 PLIST_SUB+=	RUNDIR=${RUNDIR} \
 		LOGDIR=${LOGDIR} \
 		USER=${USERS} \
 		GROUP=${GROUPS} \
-		PORTNAME=${PORTNAME}
+		PORTNAME=${PORTNAME} \
+		DATADOG_PREFIX=${DATADOG_PREFIX}
 
 OPTIONS_DEFINE=	DOCS APM CONSUL PYTHON EC2 ETCD GCE JMX LOG PROCESS ZK ZLIB
 OPTIONS_DEFAULT=	DOCS EC2 GCE LOG PYTHON PROCESS ZLIB
@@ -152,12 +154,7 @@ PYTHON_BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}invoke>=1.2.0_1:devel/py-invoke \
 			${PYTHON_PKGNAMEPREFIX}requests>=2.21.0:www/py-requests \
 			${PYTHON_PKGNAMEPREFIX}toml>=0.9.4:textproc/py-toml
 
-BUILD_USER?=	${USER}
-
-LD_FLAG_X_PREFIX=	-X ${GO_WRKSRC}/pkg/version
-LD_FLAG_STRING=		-s ${LD_FLAG_X_PREFIX}.Version=${DISTVERSION}
-LD_FLAG_X_PREFIX=	-X ${GO_PKGNAME}/pkg/version
-LD_FLAG_STRING=		-s ${LD_FLAG_X_PREFIX}.AgentVersion=${DISTVERSION}
+LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}'
 
 DATADOG_BINARIES=	agent dogstatsd process-agent trace-agent
 
@@ -193,6 +190,7 @@ do-build:
 	${GO_WRKSRC}/cmd/agent/dist/datadog.yaml
 
 do-install:
+	${MKDIR} ${STAGEDIR}${DATADOG_PREFIX}
 	${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d
 	${MKDIR} ${STAGEDIR}${LOGDIR}
 	${MKDIR} ${STAGEDIR}${DOCSDIR}
@@ -203,22 +201,22 @@ do-install:
 .endfor
 
 	# Install binaries
-	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/process-agent/process-agent ${STAGEDIR}${PREFIX}/bin/${PORTNAME}-process-agent
-	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/trace-agent/trace-agent ${STAGEDIR}${PREFIX}/bin/${PORTNAME}-trace-agent
-	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/agent/agent	${STAGEDIR}${PREFIX}/bin/${PORTNAME}-agent
-	cd ${GO_WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${PREFIX}/bin/${PORTNAME}
-	cd ${GO_WRKSRC}/pkg/status/dist && ${COPYTREE_SHARE} templates ${STAGEDIR}${PREFIX}/bin/${PORTNAME}/dist
+	#${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/process-agent/process-agent ${STAGEDIR}${DATADOG_PREFIX}/process-agent
+	#${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/trace-agent/trace-agent ${STAGEDIR}${DATADOG_PREFIX}/trace-agent
+	${INSTALL_PROGRAM} ${GO_WRKSRC}/cmd/agent/agent	${STAGEDIR}${DATADOG_PREFIX}/agent
+	cd ${GO_WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}
+	cd ${GO_WRKSRC}/pkg/status/dist && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
 
 	# Install core-integrations
 .for dir in ${CONFFILES}
-#	(cd ${WRKSRC_integrations}/${dir}; \
-#	${MV} datadog_checks/${dir}/data ${STAGEDIR}${ETCDIR}/conf.d/${dir}.d)
+	(cd ${WRKSRC_integrations}/${dir}; \
+	${MV} datadog_checks/${dir}/data ${STAGEDIR}${ETCDIR}/conf.d/${dir}.d)
 .endfor
 
 .for dir in ${INTEGRATIONS}
-#	(cd ${WRKSRC_integrations}/${dir}; \
-#	${PYTHON_CMD} setup.py bdist; \
-#	${TAR} -xzf dist/*.tar.gz -C ${STAGEDIR})
+	(cd ${WRKSRC_integrations}/${dir}; \
+	${PYTHON_CMD} setup.py bdist; \
+	${TAR} -xzf dist/*.tar.gz -C ${STAGEDIR})
 .endfor
 
 	# Install rtloader library

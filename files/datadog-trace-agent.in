@@ -14,7 +14,7 @@
 # datadog_agent_trace_user (user):	Set user to run Datadog trace Agent.
 #				Default is "%%USER%%".
 # datadog_agent_trace_conf (path):	Path to Datadog trace Agent configuration file.
-#				Default is %%ETCDIR%%
+#				Default is %%ETCDIR%%/datadog.yaml
 
 . /etc/rc.subr
 
@@ -25,16 +25,16 @@ load_rc_config $name
 
 : ${datadog_agent_trace_enable:="NO"}
 : ${datadog_agent_trace_user:="%%USER%%"}
-: ${datadog_agent_trace_conf:="%%ETCDIR%%"}
+: ${datadog_agent_trace_conf:="%%ETCDIR%%/datadog.yaml"}
 
 command="%%DATADOG_PREFIX%%/trace-agent"
-command_args="-c ${datadog_agent_trace_conf}"
+command_args="-config ${datadog_agent_trace_conf}"
 
 required_files=%%ETCDIR%%/datadog.yaml
 pidfile="%%RUNDIR%%/datadog-agent-trace.pid"
 
-start_cmd="${name}_command start $@"
-stop_cmd="${name}_command stop $@"
+start_cmd="${name}_start start $@"
+stop_cmd="${name}_stop stop $@"
 status_cmd="${name}_status"
 
 datadog_agent_trace_status()
@@ -49,7 +49,7 @@ datadog_agent_trace_status()
 }
 
 datadog_agent_trace_start() {
-	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_user} ${command} ${command_args}
+	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_trace_user} ${command} ${command_args}
 	return $?
 }
 

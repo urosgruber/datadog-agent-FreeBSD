@@ -1,1 +1,1 @@
-datadog:*:480:480::0:0:DataDog Agent:/opt/datadog-agent:/usr/sbin/nologin
+datadog:*:480:480::0:0:DataDog Agent:/var/db/datadog:/usr/sbin/nologin

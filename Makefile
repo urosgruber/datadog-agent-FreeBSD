@@ -19,6 +19,7 @@ USES=		go:modules python:3.7+
 
 DATADOG_PREFIX=	${PREFIX}/bin/${PORTNAME}
 LOGDIR=		/var/log/${PORTNAME}
+RUNDIR=		/var/run/${PORTNAME}
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	DataDog

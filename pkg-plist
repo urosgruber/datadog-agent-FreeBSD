@@ -2366,4 +2366,5 @@ lib/lib%%USER%%-agent-three.so
 %%PORTDOCS%%%%DOCSDIR%%/CONTRIBUTING.md
 %%PORTDOCS%%%%DOCSDIR%%/LICENSE
 %%PORTDOCS%%%%DOCSDIR%%/README.md
-@dir %%LOGDIR%%
+@dir(%%USER%%,%%GROUP%%,0750) %%LOGDIR%%
+@dir(%%USER%%,%%GROUP%%,0750) %%RUNDIR%%

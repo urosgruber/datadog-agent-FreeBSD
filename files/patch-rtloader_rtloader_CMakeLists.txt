@@ -1,9 +1,9 @@
---- rtloader/rtloader/CMakeLists.txt.orig	2019-07-22 03:15:50 UTC
+--- rtloader/rtloader/CMakeLists.txt.orig	2020-05-11 15:38:36 UTC
 +++ rtloader/rtloader/CMakeLists.txt
-@@ -27,6 +27,12 @@ add_library(datadog-agent-rtloader SHARE
+@@ -29,6 +29,12 @@ add_library(datadog-agent-rtloader SHARED
  )
  endif()
-
+ 
 +## Backtrace
 +if(${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
 +  find_package(Backtrace REQUIRED)

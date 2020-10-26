@@ -2,7 +2,7 @@
 
 PORTNAME=	datadog
 DISTVERSIONPREFIX=	${PORTNAME}-
-DISTVERSION=	7.16.1
+DISTVERSION=	7.19.2
 CATEGORIES=	sysutils
 
 MAINTAINER=	uros@gruber.si
@@ -33,7 +33,7 @@ GH_TUPLE=	DataDog:agent-payload:4.24.0:agent_payload/src/github.com/DataDog/agen
 					DataDog:gohai:master:gohai/src/github.com/DataDog/gohai \
 					DataDog:zstd:v1.3.0:zstd/src/github.com/DataDog/zstd \
 					DataDog:zstd:2b373cb:zstd_v0_5/src/github.com/DataDog/zstd.v0.5 \
-					DataDog:integrations-core:7.16.0:integrations \
+					DataDog:integrations-core:7.18.0:integrations \
 					hashicorp:consul:v1.0.7:consul/src/github.com/hashicorp/consul \
 					beevik:ntp:v0.2.0:ntp/src/github.com/beevik/ntp \
 					cihub:seelog:v2.6:seelog/src/github.com/cihub/seelog \
@@ -78,7 +78,9 @@ GH_TUPLE=	DataDog:agent-payload:4.24.0:agent_payload/src/github.com/DataDog/agen
 					golang:sys:61b9204:sys/src/golang.org/x/sys \
 					golang:text:v0.3.0:text/src/golang.org/x/text \
 					go-yaml:yaml:v2.2.2:yaml/src/gopkg.in/yaml.v2 \
+					go-inf:inf:v0.9.1:inf/src/gopkg.in/inf.v0 \
 					kubernetes:apimachinery:def12e6:apimachinery/src/k8s.io/apimachinery \
+					kubernetes:api:e14a4b1:api/src/k8s.io/api \
 					coreos:go-systemd:v16:go_systemd/src/github.com/coreos/go-systemd \
 					docker:go-connections:v0.3.0:connections/src/github.com/docker/go-connections \
 					samuel:go-zookeeper:c4fab1a:go_zookeeper/src/github.com/samuel/go-zookeeper \
@@ -90,7 +92,22 @@ GH_TUPLE=	DataDog:agent-payload:4.24.0:agent_payload/src/github.com/DataDog/agen
 					tinylib:msgp:v1.1.0:msgp/src/github.com/tinylib/msgp \
 					philhofer:fwd:v1.0.0:fwd/src/github.com/philhofer/fwd \
 					benesch:cgosymbolizer:bec6fe6:cgosymbolizer/src/github.com/benesch/cgosymbolizer \
-					blabber:go-freebsd-sysctl:dcd5a22:go_freebsd_sysctl/src/github.com/blabber/go-freebsd-sysctl
+					blabber:go-freebsd-sysctl:dcd5a22:go_freebsd_sysctl/src/github.com/blabber/go-freebsd-sysctl \
+					twmb:murmur3:v1.0.0:murmur3/src/github.com/twmb/murmur3 \
+					hashicorp:golang-lru:v0.5.3:golang_lru/src/github.com/hashicorp/golang-lru \
+					prometheus:client_golang:v0.9.2:client_golang/src/github.com/prometheus/client_golang \
+					golang:protobuf:v1.3.2:golang_protobuf/src/github.com/golang/protobuf \
+					prometheus:common:v0.6.0:common/src/github.com/prometheus/common \
+					prometheus:procfs:v0.0.4:procfs/src/github.com/prometheus/procfs \
+					prometheus:client_model:14fe0d1:client_model/src/github.com/prometheus/client_model \
+					gogo:protobuf:v1.3.0:gogo_protobuf/src/github.com/gogo/protobuf \
+					beorn7:perks:v1.0.1:perks/src/github.com/beorn7/perks \
+					matttproud:golang_protobuf_extensions:v1.0.1:golang_protobuf_extensions/src/github.com/matttproud/golang_protobuf_extensions \
+					golang:glog:23def4e:glog/src/github.com/golang/glog \
+					google:gofuzz:v1.0.0:gofuzz/src/github.com/google/gofuzz \
+					go-bindata:go-bindata:v3.1.1:go_bindata/src/github.com/go-bindata/go-bindata \
+					shuLhan:go-bindata:v3.4.0:shulhan_go_bindata/src/github.com/shuLhan/go-bindata
+
 USE_RC_SUBR=	${PORTNAME}-process-agent ${PORTNAME}-trace-agent ${PORTNAME}-agent
 
 GID_FILES=	${PATCHDIR}/GIDs

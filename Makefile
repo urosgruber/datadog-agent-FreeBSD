@@ -2,7 +2,7 @@
 
 PORTNAME=	datadog
 DISTVERSIONPREFIX=	${PORTNAME}-
-DISTVERSION=	7.16.1
+DISTVERSION=	7.17.1
 CATEGORIES=	sysutils
 
 MAINTAINER=	uros@gruber.si
@@ -33,7 +33,7 @@ GH_TUPLE=	DataDog:agent-payload:4.24.0:agent_payload/src/github.com/DataDog/agen
 					DataDog:gohai:master:gohai/src/github.com/DataDog/gohai \
 					DataDog:zstd:v1.3.0:zstd/src/github.com/DataDog/zstd \
 					DataDog:zstd:2b373cb:zstd_v0_5/src/github.com/DataDog/zstd.v0.5 \
-					DataDog:integrations-core:7.16.0:integrations \
+					DataDog:integrations-core:7.17.1:integrations \
 					hashicorp:consul:v1.0.7:consul/src/github.com/hashicorp/consul \
 					beevik:ntp:v0.2.0:ntp/src/github.com/beevik/ntp \
 					cihub:seelog:v2.6:seelog/src/github.com/cihub/seelog \
@@ -90,7 +90,18 @@ GH_TUPLE=	DataDog:agent-payload:4.24.0:agent_payload/src/github.com/DataDog/agen
 					tinylib:msgp:v1.1.0:msgp/src/github.com/tinylib/msgp \
 					philhofer:fwd:v1.0.0:fwd/src/github.com/philhofer/fwd \
 					benesch:cgosymbolizer:bec6fe6:cgosymbolizer/src/github.com/benesch/cgosymbolizer \
-					blabber:go-freebsd-sysctl:dcd5a22:go_freebsd_sysctl/src/github.com/blabber/go-freebsd-sysctl
+					blabber:go-freebsd-sysctl:dcd5a22:go_freebsd_sysctl/src/github.com/blabber/go-freebsd-sysctl \
+					twmb:murmur3:v1.0.0:murmur3/src/github.com/twmb/murmur3 \
+					hashicorp:golang-lru:v0.5.3:golang_lru/src/github.com/hashicorp/golang-lru \
+					prometheus:client_golang:v0.9.2:client_golang/src/github.com/prometheus/client_golang \
+					golang:protobuf:v1.3.2:golang_protobuf/src/github.com/golang/protobuf \
+					prometheus:common:v0.6.0:common/src/github.com/prometheus/common \
+					prometheus:procfs:v0.0.4:procfs/src/github.com/prometheus/procfs \
+					prometheus:client_model:14fe0d1:client_model/src/github.com/prometheus/client_model \
+					gogo:protobuf:v1.3.0:gogo_protobuf/src/github.com/gogo/protobuf \
+					beorn7:perks:v1.0.1:perks/src/github.com/beorn7/perks \
+					matttproud:golang_protobuf_extensions:v1.0.1:golang_protobuf_extensions/src/github.com/matttproud/golang_protobuf_extensions \
+
 USE_RC_SUBR=	${PORTNAME}-process-agent ${PORTNAME}-trace-agent ${PORTNAME}-agent
 
 GID_FILES=	${PATCHDIR}/GIDs
@@ -159,10 +170,10 @@ LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}'
 DATADOG_BINARIES=	agent dogstatsd process-agent trace-agent
 
 # find integrations-core -name setup.py | awk -F\/ '{print $2}' | sort | uniq | grep -v datadog_checks_dev | tr '\n' ' '
-INTEGRATIONS=	active_directory activemq activemq_xml aerospike amazon_msk ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cilium cisco_aci clickhouse cockroachdb consul coredns couch couchbase crio datadog_checks_base datadog_checks_downloader datadog_checks_tests_helper directory disk dns_check docker_daemon dotnetclr druid ecs_fargate elastic envoy etcd exchange_server external_dns fluentd gearmand gitlab gitlab_runner go_expvar go-metro gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapr mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios network nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs sap_hana snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vertica vsphere win32_event_log windows_service wmi_check yarn zk
+INTEGRATIONS=	active_directory activemq activemq_xml aerospike airflow amazon_msk ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cilium cisco_aci clickhouse cockroachdb consul coredns couch couchbase crio datadog_checks_base datadog_checks_downloader datadog_checks_tests_helper directory disk dns_check docker_daemon dotnetclr druid ecs_fargate eks_fargate elastic envoy etcd exchange_server external_dns fluentd gearmand gitlab gitlab_runner go-metro go_expvar gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapr mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios network nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs sap_hana snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vertica vsphere win32_event_log windows_service wmi_check yarn zk
 
 # find integrations-core -name conf.yaml.example | awk -F\/ '{print $2}' | sort | uniq | grep -v datadog_checks_dev | tr '\n' ' '
-CONFFILES=	active_directory activemq activemq_xml aerospike amazon_msk ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cilium cisco_aci clickhouse cockroachdb consul coredns couch couchbase crio directory dns_check docker_daemon dotnetclr druid ecs_fargate elastic envoy etcd exchange_server external_dns fluentd gearmand gitlab gitlab_runner go_expvar go-metro gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapr mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs sap_hana snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vertica vsphere win32_event_log windows_service wmi_check yarn zk
+CONFFILES=	active_directory activemq activemq_xml aerospike airflow amazon_msk ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cilium cisco_aci clickhouse cockroachdb consul coredns couch couchbase crio directory dns_check docker_daemon dotnetclr druid ecs_fargate eks_fargate elastic envoy etcd exchange_server external_dns fluentd gearmand gitlab gitlab_runner go-metro go_expvar gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapr mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs sap_hana snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vertica vsphere win32_event_log windows_service wmi_check yarn zk
 
 #post-extract:
 #	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda

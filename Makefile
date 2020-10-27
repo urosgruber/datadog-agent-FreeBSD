@@ -376,7 +376,7 @@ do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/cmd/trace-agent/trace-agent ${STAGEDIR}${DATADOG_PREFIX}/trace-agent
 	${INSTALL_PROGRAM} ${WRKSRC}/cmd/agent/agent	${STAGEDIR}${DATADOG_PREFIX}/agent
 	cd ${WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}
-	#cd ${WRKSRC}/pkg/status/dist && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
+	cd ${WRKSRC}/pkg/status/dist && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
 
 	# Install core-integrations
 .for dir in ${CONFFILES}

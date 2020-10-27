@@ -11,7 +11,6 @@ COMMENT=	Datadog Agent
 LICENSE=	BSD4CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 BUILD_DEPENDS=	go>=1.15:lang/go \
 		cmake>=3.18:devel/cmake \
 		go-bindata>0:devel/go-bindata
@@ -308,14 +307,16 @@ ZLIB_VARS=	agent_build_tags+=zlib
 
 USE_LDCONFIG=	yes
 
-PYTHON_BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}invoke>=1.2.0_1:devel/py-invoke \
-			${PYTHON_PKGNAMEPREFIX}reno>=2.9.2:textproc/py-reno \
-			${PYTHON_PKGNAMEPREFIX}docker>=3.0.1:sysutils/py-docker \
-			${PYTHON_PKGNAMEPREFIX}yaml>=5.1:devel/py-yaml \
-			${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.5:devel/py-simplejson \
-			${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:www/py-tornado \
-			${PYTHON_PKGNAMEPREFIX}requests>=2.21.0:www/py-requests \
-			${PYTHON_PKGNAMEPREFIX}toml>=0.9.4:textproc/py-toml
+PYTHON_BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}invoke>=1.2.0_1:devel/py-invoke@${PY_FLAVOR} \
+			${PYTHON_PKGNAMEPREFIX}reno>=2.9.2:textproc/py-reno@${PY_FLAVOR} \
+			${PYTHON_PKGNAMEPREFIX}docker>=3.0.1:sysutils/py-docker@${PY_FLAVOR} \
+			${PYTHON_PKGNAMEPREFIX}yaml>=5.1:devel/py-yaml@${PY_FLAVOR} \
+			${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.5:devel/py-simplejson@${PY_FLAVOR} \
+			${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:www/py-tornado@${PY_FLAVOR} \
+			${PYTHON_PKGNAMEPREFIX}requests>=2.21.0:www/py-requests@${PY_FLAVOR} \
+			${PYTHON_PKGNAMEPREFIX}toml>=0.9.4:textproc/py-toml@${PY_FLAVOR}
+
+PYTHON_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 
 LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}'
 
@@ -332,17 +333,33 @@ post-extract:
 	@${RLN} ${WRKSRC_mdlayher_netlink} ${WRKSRC}/vendor/github.com/vishvananda/netlink
 	@${RM} ${WRKSRC}/go.mod
 
+post-patch:
+	@${REINPLACE_CMD} -e 's|/etc/datadog-agent|${ETCDIR}|g' \
+		${WRKSRC}/pkg/config/config_template.yaml \
+		${WRKSRC}/cmd/agent/common/common_nix.go \
+		${WRKSRC}/pkg/config/config_nix.go \
+		${WRKSRC}/cmd/system-probe/main_linux.go \
+		${WRKSRC}/cmd/process-agent/main.go \
+		${WRKSRC}/pkg/config/config.go
+
+	@${REINPLACE_CMD} -e 's|/opt/datadog-agent/run|${RUNDIR}|g' \
+		${WRKSRC}/pkg/config/config.go \
+		${WRKSRC}/pkg/config/config_nix.go  \
+		${WRKSRC}/pkg/config/config_template.yaml
+
+	@${REINPLACE_CMD} -e 's|/opt/datadog-agent/etc|${ETCDIR}|g' \
+		${WRKSRC}/pkg/trace/flags/flags_nix.go
+
 pre-build:
 # Build rtloader (Previously called six)
 	(cd ${WRKSRC}/rtloader && ${SETENV} ${MAKE_ENV} ${BUILD_ENV} \
-                cmake -DBUILD_DEMO:BOOL=OFF \
-                -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
-                -DDISABLE_PYTHON2=ON && make -C .)
+		cmake -DBUILD_DEMO:BOOL=OFF \
+		-DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
+		-DDISABLE_PYTHON2=ON && make -C .)
 
 # Generate go source from templates
 	${GO_CMD} generate ${WRKSRC}/pkg/status/render.go
 	${GO_CMD} generate ${WRKSRC}/cmd/agent/gui/gui.go
-	
 
 do-build:
 # Build go binaries
@@ -359,6 +376,10 @@ post-build:
 	${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go agent-py3 \
 	${WRKSRC}/pkg/config/config_template.yaml \
 	${WRKSRC}/cmd/agent/dist/datadog.yaml
+
+	${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go system-probe \
+	${WRKSRC}/pkg/config/config_template.yaml \
+	${WRKSRC}/cmd/agent/dist/system-probe.yaml
 
 do-install:
 	${MKDIR} ${STAGEDIR}${DATADOG_PREFIX}

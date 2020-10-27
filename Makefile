@@ -373,11 +373,11 @@ do-build:
 
 post-build:
 # Generate config files
-	${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go agent-py3 \
+	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go agent-py3 \
 	${WRKSRC}/pkg/config/config_template.yaml \
 	${WRKSRC}/cmd/agent/dist/datadog.yaml
 
-	${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go system-probe \
+	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go system-probe \
 	${WRKSRC}/pkg/config/config_template.yaml \
 	${WRKSRC}/cmd/agent/dist/system-probe.yaml
 

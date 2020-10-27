@@ -2,33 +2,33 @@
 
 # $FreeBSD$
 #
-# PROVIDE: datadog_agent_trace
+# PROVIDE: datadog_trace_agent
 # REQUIRE: LOGIN
 # KEYWORD: shutdown
 #
 # Add the following lines to /etc/rc.conf.local or /etc/rc.conf
 # to enable this service:
 #
-# datadog_agent_trace_enable (bool):	Set to NO by default.
+# datadog_trace_agent_enable (bool):	Set to NO by default.
 #				Set it to YES to enable Datadog trace Agent.
-# datadog_agent_trace_user (user):	Set user to run Datadog trace Agent.
+# datadog_trace_agent_user (user):	Set user to run Datadog trace Agent.
 #				Default is "%%USER%%".
-# datadog_agent_trace_conf (path):	Path to Datadog trace Agent configuration file.
+# datadog_trace_agent_conf (path):	Path to Datadog trace Agent configuration file.
 #				Default is %%ETCDIR%%/datadog.yaml
 
 . /etc/rc.subr
 
-name=datadog_agent_trace
-rcvar=datadog_agent_trace_enable
+name=datadog_trace_agent
+rcvar=datadog_trace_agent_enable
 
 load_rc_config $name
 
-: ${datadog_agent_trace_enable:="NO"}
-: ${datadog_agent_trace_user:="%%USER%%"}
-: ${datadog_agent_trace_conf:="%%ETCDIR%%/datadog.yaml"}
+: ${datadog_trace_agent_enable:="NO"}
+: ${datadog_trace_agent_user:="%%USER%%"}
+: ${datadog_trace_agent_conf:="%%ETCDIR%%/datadog.yaml"}
 
 command="%%DATADOG_PREFIX%%/trace-agent"
-command_args="-config ${datadog_agent_trace_conf}"
+command_args="-config ${datadog_trace_agent_conf}"
 
 required_files=%%ETCDIR%%/datadog.yaml
 pidfile="%%RUNDIR%%/datadog-agent-trace.pid"
@@ -37,7 +37,7 @@ start_cmd="${name}_start start $@"
 stop_cmd="${name}_stop stop $@"
 status_cmd="${name}_status"
 
-datadog_agent_trace_status()
+datadog_trace_agent_status()
 {
 	rc_pid=`check_pidfile ${pidfile} ${command}`
 	if [ -n "${rc_pid}" ]; then
@@ -48,12 +48,12 @@ datadog_agent_trace_status()
 	fi
 }
 
-datadog_agent_trace_start() {
-	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_agent_trace_user} ${command} ${command_args}
+datadog_trace_agent_start() {
+	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_trace_agent_user} ${command} ${command_args}
 	return $?
 }
 
-datadog_agent_trace_stop() {
+datadog_trace_agent_stop() {
 	rc_pid=`check_pidfile ${pidfile} ${command}`
 	if [ -n "${rc_pid}" ]; then
 		kill ${rc_pid}

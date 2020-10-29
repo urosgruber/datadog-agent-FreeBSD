@@ -39,7 +39,6 @@ GH_TUPLE=		DataDog:agent-payload:v4.44.0:datadog_agent_payload/src/github.com/Da
 		DataDog:gobpf:5f8313cb4d71:datadog_gobpf/src/github.com/iovisor/gobpf \
 		DataDog:gohai:e17d616e422a:datadog_gohai/src/github.com/DataDog/gohai \
 		DataDog:gopsutil:1b53412ef321:datadog_gopsutil/src/github.com/DataDog/gopsutil \
-		DataDog:integrations-core:7.23.0:integrations \
 		DataDog:mmh3:f5b682d8c981:datadog_mmh3/src/github.com/DataDog/mmh3 \
 		DataDog:viper:v1.8.0:datadog_viper/src/github.com/spf13/viper \
 		DataDog:watermarkpodautoscaler:v0.1.0:datadog_watermarkpodautoscaler/src/github.com/DataDog/watermarkpodautoscaler \
@@ -322,12 +321,6 @@ LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -
 
 DATADOG_BINARIES=	agent dogstatsd trace-agent process-agent
 
-# find integrations-core -name setup.py | awk -F\/ '{print $2}' | sort | uniq | grep -v datadog_checks_dev | tr '\n' ' '
-INTEGRATIONS=	active_directory activemq activemq_xml aerospike amazon_msk ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cilium cisco_aci clickhouse cockroachdb consul coredns couch couchbase crio datadog_checks_base datadog_checks_downloader datadog_checks_tests_helper directory disk dns_check dotnetclr druid ecs_fargate elastic envoy etcd exchange_server external_dns fluentd gearmand gitlab gitlab_runner go_expvar go-metro gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapr mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios network nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs sap_hana snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vertica vsphere win32_event_log windows_service wmi_check yarn zk
-
-# find integrations-core -name conf.yaml.example | awk -F\/ '{print $2}' | sort | uniq | grep -v datadog_checks_dev | tr '\n' ' '
-CONFFILES=	active_directory activemq activemq_xml aerospike amazon_msk ambari apache aspdotnet btrfs cacti cassandra cassandra_nodetool ceph cilium cisco_aci clickhouse cockroachdb consul coredns couch couchbase crio directory dns_check dotnetclr druid ecs_fargate elastic envoy etcd exchange_server external_dns fluentd gearmand gitlab gitlab_runner go_expvar go-metro gunicorn haproxy harbor hdfs_datanode hdfs_namenode hive http_check hyperv ibm_db2 ibm_mq ibm_was iis istio jboss_wildfly kafka kafka_consumer kong kube_apiserver_metrics kube_controller_manager kube_dns kube_metrics_server kube_proxy kube_scheduler kubelet  kubernetes_state kyototycoon lighttpd linkerd linux_proc_extras mapr mapreduce marathon mcache mesos_master mesos_slave mongo mysql nagios nfsstat nginx nginx_ingress_controller openldap openmetrics openstack openstack_controller oracle pdh_check pgbouncer php_fpm postfix postgres powerdns_recursor presto process prometheus rabbitmq redisdb riak riakcs sap_hana snmp solr spark sqlserver squid ssh_check statsd supervisord system_core system_swap tcp_check teamcity tls tokumx tomcat twemproxy twistlock varnish vault vertica vsphere win32_event_log windows_service wmi_check yarn zk
-
 post-extract:
 	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda
 	@${RLN} ${WRKSRC_mdlayher_netlink} ${WRKSRC}/vendor/github.com/vishvananda/netlink
@@ -399,27 +392,15 @@ do-install:
 	cd ${WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}
 	cd ${WRKSRC}/pkg/status && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
 
-.for dir in ${INTEGRATIONS}
-	(cd ${WRKSRC_integrations}/${dir}; \
-	${PYTHON_CMD} setup.py bdist; \
-	${TAR} -xzf dist/*.tar.gz -C ${STAGEDIR})
-.endfor
-
 	# Install rtloader library
 	cd ${WRKSRC}/rtloader && make -C . ${INSTALL} DESTDIR=${STAGEDIR}
 
 post-install:
-	# Install core-integrations
-.for dir in ${CONFFILES}
-	(cd ${WRKSRC_integrations}/${dir}; \
-	${MV} datadog_checks/${dir}/data ${STAGEDIR}${ETCDIR}/conf.d/${dir}.d)
-.endfor
-
 	# Install configuration files
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/datadog.yaml \
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
-	${SED} -ie 's/^# confd_path\: ""/confd_path: "\/usr\/local\/etc\/datadog\/conf.d"/g' \
-		${STAGEDIR}${ETCDIR}/datadog.yaml.example
+	#${SED} -ie 's/^# confd_path\: ""/confd_path: "\/usr\/local\/etc\/datadog\/conf.d"/g' \
+	#	${STAGEDIR}${ETCDIR}/datadog.yaml.example
 
 	# Strip binaries
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libdatadog-agent-rtloader.so.0.1.0

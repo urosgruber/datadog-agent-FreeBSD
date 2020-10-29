@@ -306,15 +306,6 @@ ZLIB_VARS=	agent_build_tags+=zlib
 
 USE_LDCONFIG=	yes
 
-PYTHON_BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}invoke>=1.2.0_1:devel/py-invoke@${PY_FLAVOR} \
-			${PYTHON_PKGNAMEPREFIX}reno>=2.9.2:textproc/py-reno@${PY_FLAVOR} \
-			${PYTHON_PKGNAMEPREFIX}docker>=3.0.1:sysutils/py-docker@${PY_FLAVOR} \
-			${PYTHON_PKGNAMEPREFIX}yaml>=5.1:devel/py-yaml@${PY_FLAVOR} \
-			${PYTHON_PKGNAMEPREFIX}simplejson>=3.6.5:devel/py-simplejson@${PY_FLAVOR} \
-			${PYTHON_PKGNAMEPREFIX}tornado>=3.2.2:www/py-tornado@${PY_FLAVOR} \
-			${PYTHON_PKGNAMEPREFIX}requests>=2.21.0:www/py-requests@${PY_FLAVOR} \
-			${PYTHON_PKGNAMEPREFIX}toml>=0.9.4:textproc/py-toml@${PY_FLAVOR}
-
 PYTHON_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 
 LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'
@@ -399,8 +390,6 @@ post-install:
 	# Install configuration files
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/datadog.yaml \
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
-	#${SED} -ie 's/^# confd_path\: ""/confd_path: "\/usr\/local\/etc\/datadog\/conf.d"/g' \
-	#	${STAGEDIR}${ETCDIR}/datadog.yaml.example
 
 	# Strip binaries
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libdatadog-agent-rtloader.so.0.1.0

@@ -318,7 +318,7 @@ PYTHON_BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}invoke>=1.2.0_1:devel/py-invoke@${P
 
 PYTHON_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 
-LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}'
+LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'
 
 DATADOG_BINARIES=	agent dogstatsd trace-agent process-agent
 
@@ -355,7 +355,7 @@ pre-build:
 	(cd ${WRKSRC}/rtloader && ${SETENV} ${MAKE_ENV} ${BUILD_ENV} \
 		cmake -DBUILD_DEMO:BOOL=OFF \
 		-DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
-		-DDISABLE_PYTHON2=ON && make -C .)
+		-DDISABLE_PYTHON2:BOOL=ON -DDISABLE_PYTHON3:BOOL=OFF && make -C .)
 
 # Generate go source from templates
 	${GO_CMD} generate ${WRKSRC}/pkg/status/render.go
@@ -399,12 +399,6 @@ do-install:
 	cd ${WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}
 	cd ${WRKSRC}/pkg/status && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
 
-	# Install core-integrations
-.for dir in ${CONFFILES}
-	(cd ${WRKSRC_integrations}/${dir}; \
-	${COPYTREE_SHARE} datadog_checks/${dir}/data ${STAGEDIR}${ETCDIR}/conf.d/${dir}.d)
-.endfor
-
 .for dir in ${INTEGRATIONS}
 	(cd ${WRKSRC_integrations}/${dir}; \
 	${PYTHON_CMD} setup.py bdist; \
@@ -414,13 +408,20 @@ do-install:
 	# Install rtloader library
 	cd ${WRKSRC}/rtloader && make -C . ${INSTALL} DESTDIR=${STAGEDIR}
 
+post-install:
+	# Install core-integrations
+.for dir in ${CONFFILES}
+	(cd ${WRKSRC_integrations}/${dir}; \
+	${MV} datadog_checks/${dir}/data ${STAGEDIR}${ETCDIR}/conf.d/${dir}.d)
+.endfor
+
 	# Install configuration files
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/datadog.yaml \
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
 	${SED} -ie 's/^# confd_path\: ""/confd_path: "\/usr\/local\/etc\/datadog\/conf.d"/g' \
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
 
-post-install:
+	# Strip binaries
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libdatadog-agent-rtloader.so.0.1.0
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libdatadog-agent-three.so
 

@@ -276,32 +276,32 @@ PLIST_SUB+=	RUNDIR=${RUNDIR} \
 		PORTNAME=${PORTNAME} \
 		DATADOG_PREFIX=${DATADOG_PREFIX}
 
-OPTIONS_DEFINE=	DOCS APM CONSUL PYTHON EC2 ETCD GCE JMX LOG PROCESS ZK ZLIB
+OPTIONS_DEFINE=	DOCS APM CONSUL PYTHON EC2 ETCD GCE JMX LOG PROCESS DOGSTATS ZK ZLIB
 OPTIONS_DEFAULT=	DOCS EC2 GCE LOG PYTHON PROCESS ZLIB
 
 DOCS_DESC=	Install documentation
-APM_DESC=	Make the APM agent execution available
-CONSUL_DESC=	Enable consul as a configuration store
 PYTHON_DESC=	Embed the Python interpreter
-EC2_DESC=	Enable EC2 hostname detection and metadata collection
+CONSUL_DESC=	Enable consul as a configuration store
+ZK_DESC=	Enable Zookeeper as a configuration store
 ETCD_DESC=	Enable Etcd as a configuration store
+EC2_DESC=	Enable EC2 hostname detection and metadata collection
 GCE_DESC=	Enable GCE hostname detection and metadata collection
 JMX_DESC=	Enable the JMX-fetch bridge
-LOG_DESC=	Enable the log agent
-PROCESS_DESC=	Enable the process agent
-ZK_DESC=	Enable Zookeeper as a configuration store
+APM_DESC=	Build the APM agent
+PROCESS_DESC=	Build the process agent
+DOGSTATS_DESC=	Build the dogstatsd agent
 ZLIB_DESC=	Use zlib
 
-APM_VARS=	agent_build_tags+=apm
-CONSUL_VARS=	agent_build_tags+=consul
+
 PYTHON_VARS=	agent_build_tags+=python
-EC2_VARS=	agent_build_tags+=ec2
+CONSUL_VARS=	agent_build_tags+=consul
+ZK_VARS=	agent_build_tags+=zk
 ETCD_VARS=	agent_build_tags+=etcd
+EC2_VARS=	agent_build_tags+=ec2
 GCE_VARS=	agent_build_tags+=gce
 JMX_VARS=	agent_build_tags+=jmx
-LOG_VARS=	agent_build_tags+=log
+APM_VARS=	agent_build_tags+=apm
 PROCESS_VARS=	agent_build_tags+=process
-ZK_VARS=	agent_build_tags+=zk
 ZLIB_VARS=	agent_build_tags+=zlib
 
 USE_LDCONFIG=	yes
@@ -310,7 +310,10 @@ PYTHON_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 
 LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'
 
-DATADOG_BINARIES=	agent dogstatsd trace-agent process-agent
+DATADOG_BINARIES=	agent
+DOGSTAT_DATADOG_BINARIES+=	dogstatsd
+APM_DATADOG_BINARIES+=	trace-agent
+PROCESS_DATADOG_BINARIES+=	process-agent
 
 post-extract:
 	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda
@@ -377,9 +380,11 @@ do-install:
 .endfor
 
 	# Install binaries
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/process-agent/process-agent ${STAGEDIR}${DATADOG_PREFIX}/process-agent
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/trace-agent/trace-agent ${STAGEDIR}${DATADOG_PREFIX}/trace-agent
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/agent/agent	${STAGEDIR}${DATADOG_PREFIX}/agent
+.for bin in ${DATADOG_BINARIES}
+	${INSTALL_PROGRAM} ${WRKSRC}/cmd/${bin}/${bin} ${STAGEDIR}${DATADOG_PREFIX}/${bin}
+.endfor
+	
+	# Install legacy
 	cd ${WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}
 	cd ${WRKSRC}/pkg/status && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
 

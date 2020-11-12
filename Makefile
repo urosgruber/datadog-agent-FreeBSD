@@ -252,7 +252,7 @@ GH_TUPLE=		DataDog:agent-payload:v4.44.0:datadog_agent_payload/src/github.com/Da
 		vmihailenco:tagparser:v0.1.1:vmihailenco_tagparser/src/github.com/vmihailenco/tagparser \
 		zorkian:go-datadog-api:v2.29.0:zorkian_go_datadog_api/src/gopkg.in/zorkian/go-datadog-api.v2
 
-USE_RC_SUBR=	${PORTNAME}-process-agent ${PORTNAME}-trace-agent ${PORTNAME}-agent
+#USE_RC_SUBR=	${PORTNAME}-process-agent ${PORTNAME}-trace-agent ${PORTNAME}-agent
 
 GID_FILES=	${PATCHDIR}/GIDs
 UID_FILES=	${PATCHDIR}/UIDs
@@ -276,8 +276,13 @@ PLIST_SUB+=	RUNDIR=${RUNDIR} \
 		PORTNAME=${PORTNAME} \
 		DATADOG_PREFIX=${DATADOG_PREFIX}
 
-OPTIONS_DEFINE=	DOCS APM CONSUL PYTHON EC2 ETCD GCE JMX LOG PROCESS DOGSTATS ZK ZLIB
-OPTIONS_DEFAULT=	DOCS EC2 GCE LOG PYTHON PROCESS ZLIB
+OPTIONS_DEFINE=	DOCS PYTHON JMX ZLIB
+OPTIONS_DEFAULT=	PYTHON PROCESS ZLIB
+
+OPTIONS_GROUP=		AGENTS STORE META
+OPTIONS_GROUP_AGENTS=	APM PROCESS DOGSTATS
+OPTIONS_GROUP_STORE=	CONSUL ZK ETCD
+OPTIONS_GROUP_META=	EC2 GCE
 
 DOCS_DESC=	Install documentation
 PYTHON_DESC=	Embed the Python interpreter
@@ -292,17 +297,19 @@ PROCESS_DESC=	Build the process agent
 DOGSTATS_DESC=	Build the dogstatsd agent
 ZLIB_DESC=	Use zlib
 
-
 PYTHON_VARS=	agent_build_tags+=python
 CONSUL_VARS=	agent_build_tags+=consul
+ZLIB_VARS=	agent_build_tags+=zlib
 ZK_VARS=	agent_build_tags+=zk
 ETCD_VARS=	agent_build_tags+=etcd
 EC2_VARS=	agent_build_tags+=ec2
 GCE_VARS=	agent_build_tags+=gce
 JMX_VARS=	agent_build_tags+=jmx
-APM_VARS=	agent_build_tags+=apm
-PROCESS_VARS=	agent_build_tags+=process
-ZLIB_VARS=	agent_build_tags+=zlib
+APM_VARS=	agent_build_tags+=apm also_build+=trace-agent
+PROCESS_VARS=	agent_build_tags+=process also_build+=process-agent
+DOGSTATS_VARS=	also_build+=dogstatsd
+
+OPTIONS_SUB=	yes
 
 USE_LDCONFIG=	yes
 
@@ -310,10 +317,8 @@ PYTHON_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 
 LD_FLAG_STRING=		-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'
 
-DATADOG_BINARIES=	agent
-DOGSTAT_DATADOG_BINARIES+=	dogstatsd
-APM_DATADOG_BINARIES+=	trace-agent
-PROCESS_DATADOG_BINARIES+=	process-agent
+ALSO_BUILD=	agent
+DATADOG_BINARIES=	agent trace-agent process-agent dogstatsd
 
 post-extract:
 	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda

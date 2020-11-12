@@ -54,8 +54,8 @@ bin/%%USER%%/dist/utils/py_mem.py
 bin/%%USER%%/dist/utils/subprocess_output.py
 bin/%%USER%%/dist/utils/tailfile.py
 bin/%%USER%%/dist/utils/timeout.py
-bin/%%USER%%/process-agent
-bin/%%USER%%/trace-agent
+%%PROCESS%%bin/%%USER%%/process-agent
+%%APM%%bin/%%USER%%/trace-agent
 %%ETCDIR%%/%%USER%%.yaml.example
 etc/rc.d/%%USER%%-agent
 etc/rc.d/%%USER%%-process-agent

@@ -8,9 +8,9 @@
 @dir(%%USER%%,%%GROUP%%,0750) %%RUNDIR%%
 @sample(%%PORTNAME%%,%%PORTNAME%%,640) %ETCDIR%%/%%PORTNAME%%.yaml.example
 bin/%%PORTNAME%%/agent
-bin/%%PORTNAME%%/process-agent
-bin/%%PORTNAME%%/trace-agent
-bin/%%PORTNAME%%/dogstatsd
+%%PROCESS%%bin/%%PORTNAME%%/process-agent
+%%APM%%bin/%%PORTNAME%%/trace-agent
+%%DOGSTATS%%bin/%%PORTNAME%%/dogstatsd
 bin/%%PORTNAME%%/dist/%%PORTNAME%%.yaml
 bin/%%PORTNAME%%/dist/checks/__init__.py
 bin/%%PORTNAME%%/dist/checks/libs/__init__.py

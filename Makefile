@@ -15,14 +15,12 @@ BUILD_DEPENDS=	cmake>=3.18:devel/cmake \
 		go>=1.15:lang/go \
 		go-bindata>0:devel/go-bindata
 
-USES=		go python:3.7+
 USES=		go:modules python:3.7+
 
 USE_LDCONFIG=	yes
 
 USE_GITHUB=	yes
 GH_PROJECT=	datadog-agent
-GO_PKGNAME=	github.com/${GH_ACCOUNT}/${GH_PROJECT}
 GH_TAGNAME=	${DISTVERSION}
 
 GH_TUPLE=		\
@@ -38,7 +36,7 @@ GH_TUPLE=		\
 		DataDog:mmh3:f5b682d8c981:datadog_mmh3/vendor/github.com/DataDog/mmh3 \
 		DataDog:viper:v1.8.0:datadog_viper/vendor/github.com/spf13/viper \
 		DataDog:watermarkpodautoscaler:v0.1.0:datadog_watermarkpodautoscaler/vendor/github.com/DataDog/watermarkpodautoscaler \
-		DataDog:zstd:2bf71ec48360:datadog_zstd/vendor/github.com/DataDog/zstd \
+		DataDog:zstd:4b8fdba:datadog_zstd/vendor/github.com/DataDog/zstd \
 		Knetic:govaluate:v3.0.0:knetic_govaluate/vendor/gopkg.in/Knetic/govaluate.v3 \
 		Masterminds:goutils:v1.1.0:masterminds_goutils/vendor/github.com/Masterminds/goutils \
 		Masterminds:semver:v1.5.0:masterminds_semver/vendor/github.com/Masterminds/semver \
@@ -256,7 +254,6 @@ DATADOG_PREFIX=	${PREFIX}/bin/${PORTNAME}
 LOGDIR=		/var/log/${PORTNAME}
 RUNDIR=		/var/run/${PORTNAME}
 
-
 GID_FILES=	${PATCHDIR}/GIDs
 UID_FILES=	${PATCHDIR}/UIDs
 
@@ -308,26 +305,23 @@ ETCD_VARS=	agent_build_tags+=etcd
 EC2_VARS=	agent_build_tags+=ec2
 GCE_VARS=	agent_build_tags+=gce
 JMX_VARS=	agent_build_tags+=jmx
-APM_VARS=	agent_build_tags+=apm also_build+=trace-agent
-PROCESS_VARS=	agent_build_tags+=process also_build+=process-agent
-DOGSTATS_VARS=	also_build+=dogstatsd
+APM_VARS=	agent_build_tags+=apm
+PROCESS_VARS=	agent_build_tags+=process
 
 OPTIONS_SUB=	yes
 
 PYTHON_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 
-GO_TARGET=	./cmd/agent \
-		./cmd/dogstatsd \
-		./cmd/trace-agent \
-		./cmd/process-agent
+ALL_TARGET=	./cmd/agent
+APM_ALL_TARGET=	./cmd/trace-agent
+PROCESS_ALL_TARGET=	./cmd/process-agent
+DOGSTATS_ALL_TARGET=	./cmd/dogstatsd
+
+GO_TARGET=	${ALL_TARGET}
 
 CGO_CFLAGS=	-w -I${WRKSRC}/rtloader/include -I${WRKSRC}/rtloader/common
 CGO_LDFLAGS=	-L${WRKSRC}/rtloader/rtloader
 GO_BUILDFLAGS=	-tags '${AGENT_BUILD_TAGS}' -ldflags="-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'"
- 
-
-ALSO_BUILD=	agent
-DATADOG_BINARIES=	agent trace-agent process-agent dogstatsd
 
 post-extract:
 	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda
@@ -361,16 +355,6 @@ pre-build:
 	${GO_CMD} generate ${WRKSRC}/pkg/status/render.go
 	${GO_CMD} generate ${WRKSRC}/cmd/agent/gui/gui.go
 
-do-build:
-# Build go binaries
-.for bin in ${DATADOG_BINARIES}
-	(cd ${WRKSRC}/cmd/${bin}; \
-		${SETENV} ${MAKE_ENV} ${BUILD_ENV} GOPATH=${WRKSRC} \
-		CGO_CFLAGS="-w -I${WRKSRC}/rtloader/include -I${WRKSRC}/rtloader/common" \
-		CGO_LDFLAGS="-L${WRKSRC}/rtloader/rtloader" ${GO_CMD} build -tags \
-		'${AGENT_BUILD_TAGS}' -o ${WRKSRC}/cmd/${bin}/${bin} -ldflags "${LD_FLAG_STRING}")
-.endfor
-
 post-build:
 # Generate config files
 	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go agent-py3 \
@@ -392,17 +376,21 @@ do-install:
 	(${INSTALL_MAN} ${WRKSRC}/${doc} ${STAGEDIR}${DOCSDIR})
 .endfor
 
-	# Install binaries
-.for bin in ${DATADOG_BINARIES}
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/${bin}/${bin} ${STAGEDIR}${DATADOG_PREFIX}/${bin}
-.endfor
-	
 	# Install legacy
 	cd ${WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}
 	cd ${WRKSRC}/pkg/status && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
 
 	# Install rtloader library
-	cd ${WRKSRC}/rtloader && make -C . ${INSTALL} DESTDIR=${STAGEDIR}
+	make -C ${WRKSRC}/rtloader ${INSTALL} DESTDIR=${STAGEDIR}
+
+do-install-APM-on:
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/trace-agent ${STAGEDIR}${DATADOG_PREFIX}/trace-agent
+
+do-install-PROCESS-on:
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/process-agent ${STAGEDIR}${DATADOG_PREFIX}/process-agent
+
+do-install-DOGSTATS-on:
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/dogstatsd ${STAGEDIR}${DATADOG_PREFIX}/dogstatsd
 
 post-install:
 	# Install configuration files

@@ -8,6 +8,9 @@
 @dir(%%USER%%,%%GROUP%%,0750) %%RUNDIR%%
 @sample(%%PORTNAME%%,%%PORTNAME%%,640) %ETCDIR%%/%%PORTNAME%%.yaml.example
 bin/%%PORTNAME%%/agent
+bin/%%PORTNAME%%/process-agent
+bin/%%PORTNAME%%/trace-agent
+bin/%%PORTNAME%%/dogstatsd
 bin/%%PORTNAME%%/dist/%%PORTNAME%%.yaml
 bin/%%PORTNAME%%/dist/checks/__init__.py
 bin/%%PORTNAME%%/dist/checks/libs/__init__.py
@@ -63,8 +66,6 @@ bin/%%PORTNAME%%/dist/utils/py_mem.py
 bin/%%PORTNAME%%/dist/utils/subprocess_output.py
 bin/%%PORTNAME%%/dist/utils/tailfile.py
 bin/%%PORTNAME%%/dist/utils/timeout.py
-bin/%%PORTNAME%%/process-agent
-bin/%%PORTNAME%%/trace-agent
 etc/rc.d/%%PORTNAME%%-agent
 etc/rc.d/%%PORTNAME%%-process-agent
 etc/rc.d/%%PORTNAME%%-trace-agent

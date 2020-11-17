@@ -248,8 +248,6 @@ GH_TUPLE=		\
 		vmihailenco:tagparser:v0.1.1:vmihailenco_tagparser/vendor/github.com/vmihailenco/tagparser \
 		zorkian:go-datadog-api:v2.29.0:zorkian_go_datadog_api/vendor/gopkg.in/zorkian/go-datadog-api.v2
 
-#USE_RC_SUBR=	${PORTNAME}-process-agent ${PORTNAME}-trace-agent ${PORTNAME}-agent
-
 DATADOG_PREFIX=	${PREFIX}/bin/${PORTNAME}
 LOGDIR=		/var/log/${PORTNAME}
 RUNDIR=		/var/run/${PORTNAME}
@@ -305,8 +303,9 @@ ETCD_VARS=	agent_build_tags+=etcd
 EC2_VARS=	agent_build_tags+=ec2
 GCE_VARS=	agent_build_tags+=gce
 JMX_VARS=	agent_build_tags+=jmx
-APM_VARS=	agent_build_tags+=apm
-PROCESS_VARS=	agent_build_tags+=process
+APM_VARS=	agent_build_tags+=apm use_rc_subr+=${PORTNAME}-trace-agent
+PROCESS_VARS=	agent_build_tags+=process use_rc_subr+=${PORTNAME}-process-agent
+DOGSTATS_VARS=	use_rc_subr+=${PORTNAME}-dogstatsd
 
 OPTIONS_SUB=	yes
 
@@ -316,8 +315,9 @@ ALL_TARGET=	./cmd/agent
 APM_ALL_TARGET=	./cmd/trace-agent
 PROCESS_ALL_TARGET=	./cmd/process-agent
 DOGSTATS_ALL_TARGET=	./cmd/dogstatsd
-
 GO_TARGET=	${ALL_TARGET}
+
+USE_RC_SUBR=	${PORTNAME}-agent
 
 CGO_CFLAGS=	-w -I${WRKSRC}/rtloader/include -I${WRKSRC}/rtloader/common
 CGO_LDFLAGS=	-L${WRKSRC}/rtloader/rtloader
@@ -382,6 +382,8 @@ do-install:
 
 	# Install rtloader library
 	make -C ${WRKSRC}/rtloader ${INSTALL} DESTDIR=${STAGEDIR}
+	
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/agent ${STAGEDIR}${DATADOG_PREFIX}/agent
 
 do-install-APM-on:
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/trace-agent ${STAGEDIR}${DATADOG_PREFIX}/trace-agent

@@ -6,7 +6,7 @@
 @dir(%%USER%%,%%GROUP%%,0750) %%ETCDIR%%/conf.d
 @dir(%%USER%%,%%GROUP%%,0750) %%LOGDIR%%
 @dir(%%USER%%,%%GROUP%%,0750) %%RUNDIR%%
-@sample(%%PORTNAME%%,%%PORTNAME%%,640) %ETCDIR%%/%%PORTNAME%%.yaml.example
+@sample(%%PORTNAME%%,%%PORTNAME%%,640) %%ETCDIR%%/%%PORTNAME%%.yaml.example
 bin/%%PORTNAME%%/agent
 %%PROCESS%%bin/%%PORTNAME%%/process-agent
 %%APM%%bin/%%PORTNAME%%/trace-agent
@@ -66,9 +66,6 @@ bin/%%PORTNAME%%/dist/utils/py_mem.py
 bin/%%PORTNAME%%/dist/utils/subprocess_output.py
 bin/%%PORTNAME%%/dist/utils/tailfile.py
 bin/%%PORTNAME%%/dist/utils/timeout.py
-etc/rc.d/%%PORTNAME%%-agent
-etc/rc.d/%%PORTNAME%%-process-agent
-etc/rc.d/%%PORTNAME%%-trace-agent
 include/%%PORTNAME%%_agent_rtloader.h
 include/rtloader_mem.h
 include/rtloader_types.h

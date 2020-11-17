@@ -274,35 +274,39 @@ PLIST_SUB+=	RUNDIR=${RUNDIR} \
 		PORTNAME=${PORTNAME} \
 		DATADOG_PREFIX=${DATADOG_PREFIX}
 
-OPTIONS_DEFINE=	DOCS PYTHON JMX ZLIB
-OPTIONS_DEFAULT=	PYTHON PROCESS ZLIB
+OPTIONS_DEFINE=	DOCS PYTHON SECRETS JMX ZSTD
+OPTIONS_DEFAULT=	PYTHON PROCESS LOG
 
 OPTIONS_GROUP=		AGENTS STORE META
-OPTIONS_GROUP_AGENTS=	APM PROCESS DOGSTATS
+OPTIONS_GROUP_AGENTS=	LOG APM PROCESS DOGSTATS
 OPTIONS_GROUP_STORE=	CONSUL ZK ETCD
 OPTIONS_GROUP_META=	EC2 GCE
 
 DOCS_DESC=	Install documentation
 PYTHON_DESC=	Embed the Python interpreter
+SECRETS_DESC=	Enable secrets support in configuration files
 CONSUL_DESC=	Enable consul as a configuration store
 ZK_DESC=	Enable Zookeeper as a configuration store
 ETCD_DESC=	Enable Etcd as a configuration store
 EC2_DESC=	Enable EC2 hostname detection and metadata collection
 GCE_DESC=	Enable GCE hostname detection and metadata collection
 JMX_DESC=	Enable the JMX-fetch bridge
+LOG_DESC=	Enable the log agent
 APM_DESC=	Build the APM agent
 PROCESS_DESC=	Build the process agent
 DOGSTATS_DESC=	Build the dogstatsd agent
-ZLIB_DESC=	Use zlib
+ZSTD_DESC=	Use Zstandard instead of Zlib
 
 PYTHON_VARS=	agent_build_tags+=python
+SECRETS_VARS=	agent_build_tags+=secrets
 CONSUL_VARS=	agent_build_tags+=consul
-ZLIB_VARS=	agent_build_tags+=zlib
+ZSTD_VARS=	agent_build_tags+=zstd
 ZK_VARS=	agent_build_tags+=zk
 ETCD_VARS=	agent_build_tags+=etcd
 EC2_VARS=	agent_build_tags+=ec2
 GCE_VARS=	agent_build_tags+=gce
 JMX_VARS=	agent_build_tags+=jmx
+LOG_VARS=	agent_build_tags+=log
 APM_VARS=	agent_build_tags+=apm use_rc_subr+=${PORTNAME}-trace-agent
 PROCESS_VARS=	agent_build_tags+=process use_rc_subr+=${PORTNAME}-process-agent
 DOGSTATS_VARS=	use_rc_subr+=${PORTNAME}-dogstatsd

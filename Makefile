@@ -3,7 +3,8 @@
 PORTNAME=	datadog
 DISTVERSIONPREFIX=	${PORTNAME}-
 DISTVERSION=	7.23.1
-CATEGORIES=	sysutils
+PORTREVISION=	1
+CATEGORIES=	sysutils net www
 
 MAINTAINER=	uros@gruber.si
 COMMENT=	Datadog Agent

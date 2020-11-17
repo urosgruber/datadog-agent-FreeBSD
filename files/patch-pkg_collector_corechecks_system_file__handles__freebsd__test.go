@@ -5,15 +5,17 @@
 +// under the Apache License Version 2.0.
 +// This product includes software developed at Datadog (https://www.datadoghq.com/).
 +// Copyright 2016-2019 Datadog, Inc.
-+// +build !freebsd
++// +build freebsd
 +
 +package system
 +
 +import (
++	"reflect"
 +	"testing"
 +
 +	"github.com/DataDog/datadog-agent/pkg/aggregator/mocksender"
 +	"github.com/DataDog/datadog-agent/pkg/util/log"
++	"github.com/blabber/go-freebsd-sysctl/sysctl"
 +
 +	"bou.ke/monkey"
 +)
@@ -23,8 +25,10 @@
 +	fileHandleCheck := new(fhCheck)
 +	fileHandleCheck.Configure(nil, nil, "test")
 +
-+	monkey.PatchInstanceMethod(sysctl.GetInt64, (name string, err error)) {
-+		return (65534, nil)
++	monkey.PatchInstanceMethod(reflect.TypeOf(sysctl), "GetInt64", func(name string) (value int64, err error) {
++		value = 65534
++		err = nil
++		return
 +	})
 +
 +	mock := mocksender.NewMockSender(fileHandleCheck.ID())
@@ -39,3 +43,4 @@
 +	mock.AssertNumberOfCalls(t, "Commit", 1)
 +
 +}
++

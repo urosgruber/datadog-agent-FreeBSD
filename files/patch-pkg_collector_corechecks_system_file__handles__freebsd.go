@@ -43,7 +43,7 @@
 +	}
 +	log.Debugf("Submitting kern.openfiles %v", openFh)
 +	log.Debugf("Submitting kern.maxfiles %v", maxFh)
-+	sender.Gauge("system.fs.file_handles.in_use", float64(openFh), "", nil)
++	sender.Gauge("system.fs.file_handles.used", float64(openFh), "", nil)
 +	sender.Gauge("system.fs.file_handles.max", float64(maxFh), "", nil)
 +	sender.Commit()
 +

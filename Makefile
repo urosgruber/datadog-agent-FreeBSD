@@ -326,7 +326,7 @@ USE_RC_SUBR=	${PORTNAME}-agent
 
 CGO_CFLAGS=	-w -I${WRKSRC}/rtloader/include -I${WRKSRC}/rtloader/common
 CGO_LDFLAGS=	-L${WRKSRC}/rtloader/rtloader
-GO_BUILDFLAGS=	-tags '${AGENT_BUILD_TAGS}' -ldflags="-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'"
+GO_BUILDFLAGS=	-tags '${AGENT_BUILD_TAGS}' -ldflags="-s -X 'github.com/DataDog/${GH_PROJECT}/pkg/version.AgentVersion=${DISTVERSION}' -X 'github.com/DataDog/${GH_PROJECT}/pkg/config.DefaultPython=3'"
 
 post-extract:
 	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda

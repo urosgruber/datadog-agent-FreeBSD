@@ -1,13 +1,11 @@
 # $FreeBSD$
 
-PORTNAME=	datadog
-DISTVERSIONPREFIX=	${PORTNAME}-
+PORTNAME=	datadog-agent
 DISTVERSION=	7.23.1
-PORTREVISION=	1
 CATEGORIES=	sysutils net www
 
 MAINTAINER=	uros@gruber.si
-COMMENT=	Datadog Agent
+COMMENT=	Datadog Agent: collect metrics and events from your systems and apps
 
 LICENSE=	BSD4CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
@@ -21,10 +19,8 @@ USES=		go:modules python:3.7+
 USE_LDCONFIG=	yes
 
 USE_GITHUB=	yes
-GH_PROJECT=	datadog-agent
-GH_TAGNAME=	${DISTVERSION}
-
-GH_TUPLE=		\
+GH_ACCOUNT=	datadog
+GH_TUPLE=	\
 		DataDog:agent-payload:v4.44.0:datadog_agent_payload/vendor/github.com/DataDog/agent-payload \
 		DataDog:cast:1ee8c8bd14a3:datadog_cast/vendor/github.com/spf13/cast \
 		DataDog:datadog-go:v3.5.0:datadog_datadog_go/vendor/github.com/DataDog/datadog-go \
@@ -190,7 +186,6 @@ GH_TUPLE=		\
 		mattn:go-colorable:v0.1.6:mattn_go_colorable/vendor/github.com/mattn/go-colorable \
 		mattn:go-isatty:v0.0.12:mattn_go_isatty/vendor/github.com/mattn/go-isatty \
 		matttproud:golang_protobuf_extensions:v1.0.1:matttproud_golang_protobuf_extensions/vendor/github.com/matttproud/golang_protobuf_extensions \
-		mdlayher:netlink:v1.1.0:mdlayher_netlink/vendor/github.com/mdlayher/netlink \
 		mholt:archiver:26cf5bb32d07:mholt_archiver/vendor/github.com/mholt/archiver \
 		miekg:dns:v1.1.31:miekg_dns/vendor/github.com/miekg/dns \
 		mitchellh:copystructure:v1.0.0:mitchellh_copystructure/vendor/github.com/mitchellh/copystructure \
@@ -308,32 +303,29 @@ EC2_VARS=	agent_build_tags+=ec2
 GCE_VARS=	agent_build_tags+=gce
 JMX_VARS=	agent_build_tags+=jmx
 LOG_VARS=	agent_build_tags+=log
-APM_VARS=	agent_build_tags+=apm use_rc_subr+=${PORTNAME}-trace-agent
-PROCESS_VARS=	agent_build_tags+=process use_rc_subr+=${PORTNAME}-process-agent
-DOGSTATS_VARS=	use_rc_subr+=${PORTNAME}-dogstatsd
+APM_VARS=	agent_build_tags+=apm use_rc_subr+=datadog-trace-agent
+PROCESS_VARS=	agent_build_tags+=process use_rc_subr+=datadog-process-agent
+DOGSTATS_VARS=	use_rc_subr+=datadog-dogstatsd
 
 OPTIONS_SUB=	yes
 
 PYTHON_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 
-ALL_TARGET=	./cmd/agent
-APM_ALL_TARGET=	./cmd/trace-agent
+ALL_TARGET=		./cmd/agent
+APM_ALL_TARGET=		./cmd/trace-agent
 PROCESS_ALL_TARGET=	./cmd/process-agent
 DOGSTATS_ALL_TARGET=	./cmd/dogstatsd
 GO_TARGET=	${ALL_TARGET}
 
-USE_RC_SUBR=	${PORTNAME}-agent
+USE_RC_SUBR=	${PORTNAME}
 
 CGO_CFLAGS=	-w -I${WRKSRC}/rtloader/include -I${WRKSRC}/rtloader/common
 CGO_LDFLAGS=	-L${WRKSRC}/rtloader/rtloader
-GO_BUILDFLAGS=	-tags '${AGENT_BUILD_TAGS}' -ldflags="-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'"
-
-post-extract:
-	@${MKDIR} ${WRKSRC}/vendor/github.com/vishvananda
-	@${RLN} ${WRKSRC_mdlayher_netlink} ${WRKSRC}/vendor/github.com/vishvananda/netlink
+GO_BUILDFLAGS=	-tags '${AGENT_BUILD_TAGS}' \
+		-ldflags="-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'"
 
 post-patch:
-	@${REINPLACE_CMD} -e 's|/etc/datadog-agent|${ETCDIR}|g' \
+	@${REINPLACE_CMD} 's|/etc/datadog-agent|${ETCDIR}|g' \
 		${WRKSRC}/pkg/config/config_template.yaml \
 		${WRKSRC}/cmd/agent/common/common_nix.go \
 		${WRKSRC}/pkg/config/config_nix.go \
@@ -341,20 +333,21 @@ post-patch:
 		${WRKSRC}/cmd/process-agent/main.go \
 		${WRKSRC}/pkg/config/config.go
 
-	@${REINPLACE_CMD} -e 's|/opt/datadog-agent/run|${RUNDIR}|g' \
+	@${REINPLACE_CMD} 's|/opt/datadog-agent/run|${RUNDIR}|g' \
 		${WRKSRC}/pkg/config/config.go \
 		${WRKSRC}/pkg/config/config_nix.go  \
 		${WRKSRC}/pkg/config/config_template.yaml
 
-	@${REINPLACE_CMD} -e 's|/opt/datadog-agent/etc|${ETCDIR}|g' \
+	@${REINPLACE_CMD} 's|/opt/datadog-agent/etc|${ETCDIR}|g' \
 		${WRKSRC}/pkg/trace/flags/flags_nix.go
 
 pre-build:
 # Build rtloader (Previously called six)
-	(cd ${WRKSRC}/rtloader && ${SETENV} ${MAKE_ENV} ${BUILD_ENV} \
-		cmake -DBUILD_DEMO:BOOL=OFF \
-		-DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
-		-DDISABLE_PYTHON2:BOOL=ON -DDISABLE_PYTHON3:BOOL=OFF && make -C .)
+	(cd ${WRKSRC}/rtloader && \
+		${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${LOCALBASE}/bin/cmake \
+		-DBUILD_DEMO:BOOL=OFF -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
+		-DDISABLE_PYTHON2:BOOL=ON -DDISABLE_PYTHON3:BOOL=OFF && \
+		${MAKE_CMD} -C .)
 
 # Generate go source from templates
 	${GO_CMD} generate ${WRKSRC}/pkg/status/render.go
@@ -363,19 +356,20 @@ pre-build:
 post-build:
 # Generate config files
 	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go agent-py3 \
-	${WRKSRC}/pkg/config/config_template.yaml \
-	${WRKSRC}/cmd/agent/dist/datadog.yaml
+		${WRKSRC}/pkg/config/config_template.yaml \
+		${WRKSRC}/cmd/agent/dist/datadog.yaml
 
 	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go system-probe \
-	${WRKSRC}/pkg/config/config_template.yaml \
-	${WRKSRC}/cmd/agent/dist/system-probe.yaml
+		${WRKSRC}/pkg/config/config_template.yaml \
+		${WRKSRC}/cmd/agent/dist/system-probe.yaml
 
 do-install:
-	${MKDIR} ${STAGEDIR}${DATADOG_PREFIX}
-	${MKDIR} ${STAGEDIR}${ETCDIR}/conf.d
-	${MKDIR} ${STAGEDIR}${LOGDIR}
-	${MKDIR} ${STAGEDIR}${DOCSDIR}
-	${MKDIR} ${STAGEDIR}${RUNDIR}
+	${MKDIR} \
+		${STAGEDIR}${DATADOG_PREFIX} \
+		${STAGEDIR}${ETCDIR}/conf.d \
+		${STAGEDIR}${LOGDIR} \
+		${STAGEDIR}${DOCSDIR} \
+		${STAGEDIR}${RUNDIR}
 
 .for doc in README.md CHANGELOG.rst CONTRIBUTING.md LICENSE
 	(${INSTALL_MAN} ${WRKSRC}/${doc} ${STAGEDIR}${DOCSDIR})
@@ -386,8 +380,8 @@ do-install:
 	cd ${WRKSRC}/pkg/status && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
 
 	# Install rtloader library
-	make -C ${WRKSRC}/rtloader ${INSTALL} DESTDIR=${STAGEDIR}
-	
+	${MAKE_CMD} -C ${WRKSRC}/rtloader ${INSTALL} DESTDIR=${STAGEDIR}
+
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/agent ${STAGEDIR}${DATADOG_PREFIX}/agent
 
 do-install-APM-on:
@@ -405,7 +399,6 @@ post-install:
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
 
 	# Strip binaries
-	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libdatadog-agent-rtloader.so.0.1.0
-	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libdatadog-agent-three.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/*so*
 
 .include <bsd.port.mk>

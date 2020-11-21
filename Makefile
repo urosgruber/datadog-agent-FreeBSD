@@ -404,6 +404,9 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/datadog.yaml \
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
 
+	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/system-probe.yaml \
+		${STAGEDIR}${ETCDIR}/system-probe.yaml.example
+
 	# Strip binaries
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libdatadog-agent-rtloader.so.0.1.0
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libdatadog-agent-three.so

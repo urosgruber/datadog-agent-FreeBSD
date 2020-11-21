@@ -6,11 +6,19 @@
 @dir(%%USER%%,%%GROUP%%,0750) %%ETCDIR%%/conf.d
 @dir(%%USER%%,%%GROUP%%,0750) %%LOGDIR%%
 @dir(%%USER%%,%%GROUP%%,0750) %%RUNDIR%%
-@sample(%%PORTNAME%%,%%PORTNAME%%,640) %%ETCDIR%%/%%PORTNAME%%.yaml.example
+@sample(%%PORTNAME%%,%%PORTNAME%%,640) %%ETCDIR%%/datadog.yaml.example
+@sample(%%PORTNAME%%,%%PORTNAME%%,640) %%ETCDIR%%/system-probe.yaml.example
 bin/%%PORTNAME%%/agent
 %%PROCESS%%bin/%%PORTNAME%%/process-agent
 %%APM%%bin/%%PORTNAME%%/trace-agent
 %%DOGSTATS%%bin/%%PORTNAME%%/dogstatsd
+include/%%PORTNAME%%_agent_rtloader.h
+include/rtloader_mem.h
+include/rtloader_types.h
+lib/lib%%PORTNAME%%-agent-rtloader.so
+lib/lib%%PORTNAME%%-agent-rtloader.so.0.1.0
+lib/lib%%PORTNAME%%-agent-rtloader.so.1
+lib/lib%%PORTNAME%%-agent-three.so
 bin/%%PORTNAME%%/dist/%%PORTNAME%%.yaml
 bin/%%PORTNAME%%/dist/checks/__init__.py
 bin/%%PORTNAME%%/dist/checks/libs/__init__.py
@@ -66,10 +74,3 @@ bin/%%PORTNAME%%/dist/utils/py_mem.py
 bin/%%PORTNAME%%/dist/utils/subprocess_output.py
 bin/%%PORTNAME%%/dist/utils/tailfile.py
 bin/%%PORTNAME%%/dist/utils/timeout.py
-include/%%PORTNAME%%_agent_rtloader.h
-include/rtloader_mem.h
-include/rtloader_types.h
-lib/lib%%PORTNAME%%-agent-rtloader.so
-lib/lib%%PORTNAME%%-agent-rtloader.so.0.1.0
-lib/lib%%PORTNAME%%-agent-rtloader.so.1
-lib/lib%%PORTNAME%%-agent-three.so

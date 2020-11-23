@@ -385,9 +385,8 @@ do-install:
 	(${INSTALL_MAN} ${WRKSRC}/${doc} ${STAGEDIR}${DOCSDIR})
 .endfor
 
-	# Install legacy
-	cd ${WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}
-	cd ${WRKSRC}/pkg/status && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
+	# Install dist config
+	cd ${WRKSRC}/cmd/agent/dist && ${COPYTREE_SHARE} conf.d ${STAGEDIR}${ETCDIR}/conf.d
 
 	# Install rtloader library
 	make -C ${WRKSRC}/rtloader ${INSTALL} DESTDIR=${STAGEDIR}

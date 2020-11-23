@@ -349,6 +349,10 @@ post-patch:
 	@${REINPLACE_CMD} -e 's|/opt/datadog-agent/etc|${ETCDIR}|g' \
 		${WRKSRC}/pkg/trace/flags/flags_nix.go
 
+	@${REINPLACE_CMD} -e 's|/opt/datadog-agent/embedded/bin|${DATADOG_PREFIX}|g' \
+		${WRKSRC}/cmd/agent/dist/conf.d/process_agent.yaml.default \
+		${WRKSRC}/cmd/agent/dist/conf.d/apm.yaml.default
+
 pre-build:
 # Build rtloader (Previously called six)
 	(cd ${WRKSRC}/rtloader && ${SETENV} ${MAKE_ENV} ${BUILD_ENV} \

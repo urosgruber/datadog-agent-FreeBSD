@@ -19,7 +19,8 @@ lib/lib%%PORTNAME%%-agent-rtloader.so
 lib/lib%%PORTNAME%%-agent-rtloader.so.0.1.0
 lib/lib%%PORTNAME%%-agent-rtloader.so.1
 lib/lib%%PORTNAME%%-agent-three.so
-%%ETCDIR%%/conf.d/apm.yaml.default
+@owner %%USER%%
+@group %%GROUP%%
 %%ETCDIR%%/conf.d/cpu.d/conf.yaml.default
 %%ETCDIR%%/conf.d/disk.d/conf.yaml.default
 %%ETCDIR%%/conf.d/file_handle.d/conf.yaml.default
@@ -28,8 +29,6 @@ lib/lib%%PORTNAME%%-agent-three.so
 %%ETCDIR%%/conf.d/jmx.d/conf.yaml.example
 %%ETCDIR%%/conf.d/load.d/conf.yaml.default
 %%ETCDIR%%/conf.d/memory.d/conf.yaml.default
-%%ETCDIR%%/conf.d/network.d/conf.yaml.default
 %%ETCDIR%%/conf.d/ntp.d/conf.yaml.default
-%%ETCDIR%%/conf.d/process_agent.yaml.default
 %%ETCDIR%%/conf.d/tcp_queue_length.d/conf.yaml.example
 %%ETCDIR%%/conf.d/uptime.d/conf.yaml.default

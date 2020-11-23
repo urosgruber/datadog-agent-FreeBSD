@@ -386,7 +386,7 @@ do-install:
 .endfor
 
 	# Install dist config
-	cd ${WRKSRC}/cmd/agent/dist && ${COPYTREE_SHARE} conf.d ${STAGEDIR}${ETCDIR}/conf.d
+	cd ${WRKSRC}/cmd/agent/dist && ${COPYTREE_SHARE} conf.d ${STAGEDIR}${ETCDIR}
 
 	# Install rtloader library
 	make -C ${WRKSRC}/rtloader ${INSTALL} DESTDIR=${STAGEDIR}

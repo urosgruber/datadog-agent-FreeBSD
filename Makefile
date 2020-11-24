@@ -322,7 +322,7 @@ USE_RC_SUBR=	${PORTNAME}
 CGO_CFLAGS=	-w -I${WRKSRC}/rtloader/include -I${WRKSRC}/rtloader/common
 CGO_LDFLAGS=	-L${WRKSRC}/rtloader/rtloader
 GO_BUILDFLAGS=	-tags '${AGENT_BUILD_TAGS}' \
-		-ldflags="-s -X '${GO_PKGNAME}/pkg/version.AgentVersion=${DISTVERSION}' -X '${GO_PKGNAME}/pkg/config.DefaultPython=3'"
+    -ldflags="-s -X 'github.com/DataDog/${GH_PROJECT}/pkg/version.AgentVersion=${DISTVERSION}' -X 'github.com/DataDog/${GH_PROJECT}/pkg/config.DefaultPython=3'"
 
 post-patch:
 	@${REINPLACE_CMD} 's|/etc/datadog-agent|${ETCDIR}|g' \
@@ -340,6 +340,10 @@ post-patch:
 
 	@${REINPLACE_CMD} 's|/opt/datadog-agent/etc|${ETCDIR}|g' \
 		${WRKSRC}/pkg/trace/flags/flags_nix.go
+
+	@${REINPLACE_CMD} -e 's|/opt/datadog-agent/embedded/bin|${DATADOG_PREFIX}|g' \
+		${WRKSRC}/cmd/agent/dist/conf.d/process_agent.yaml.default \
+		${WRKSRC}/cmd/agent/dist/conf.d/apm.yaml.default
 
 pre-build:
 # Build rtloader (Previously called six)
@@ -375,9 +379,8 @@ do-install:
 	(${INSTALL_MAN} ${WRKSRC}/${doc} ${STAGEDIR}${DOCSDIR})
 .endfor
 
-	# Install legacy
-	cd ${WRKSRC}/cmd/agent && ${COPYTREE_SHARE} dist ${STAGEDIR}${DATADOG_PREFIX}
-	cd ${WRKSRC}/pkg/status && ${COPYTREE_SHARE} templates ${STAGEDIR}${DATADOG_PREFIX}/dist
+	# Install dist config
+	cd ${WRKSRC}/cmd/agent/dist && ${COPYTREE_SHARE} conf.d ${STAGEDIR}${ETCDIR}
 
 	# Install rtloader library
 	${MAKE_CMD} -C ${WRKSRC}/rtloader ${INSTALL} DESTDIR=${STAGEDIR}
@@ -397,6 +400,9 @@ post-install:
 	# Install configuration files
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/datadog.yaml \
 		${STAGEDIR}${ETCDIR}/datadog.yaml.example
+
+	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/system-probe.yaml \
+		${STAGEDIR}${ETCDIR}/system-probe.yaml.example
 
 	# Strip binaries
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/*so*

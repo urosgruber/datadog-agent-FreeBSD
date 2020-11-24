@@ -22,7 +22,6 @@ lib/lib%%PORTNAME%%-agent-three.so
 @owner %%USER%%
 @group %%GROUP%%
 %%ETCDIR%%/conf.d/cpu.d/conf.yaml.default
-%%ETCDIR%%/conf.d/disk.d/conf.yaml.default
 %%ETCDIR%%/conf.d/file_handle.d/conf.yaml.default
 %%ETCDIR%%/conf.d/go_expvar.d/agent_stats.yaml.example
 %%ETCDIR%%/conf.d/io.d/conf.yaml.default

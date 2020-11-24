@@ -18,6 +18,9 @@
 +	"github.com/blabber/go-freebsd-sysctl/sysctl"
 +)
 +
++// For testing purpose
++var getInt64 = sysctl.GetInt64
++
 +const fileHandlesCheckName = "file_handle"
 +
 +type fhCheck struct {
@@ -31,12 +34,12 @@
 +	if err != nil {
 +		return err
 +	}
-+	openFh, err := sysctl.GetInt64("kern.openfiles")
++	openFh, err := getInt64("kern.openfiles")
 +	if err != nil {
 +		log.Warnf("Error getting kern.openfiles value %v", err)
 +		return err
 +	}
-+	maxFh, err := sysctl.GetInt64("kern.maxfiles")
++	maxFh, err := getInt64("kern.maxfiles")
 +	if err != nil {
 +		log.Warnf("Error getting kern.maxfiles value %v", err)
 +		return err

@@ -2,6 +2,7 @@
 
 PORTNAME=	datadog-agent
 DISTVERSION=	7.23.1
+PORTREVISION=	1
 CATEGORIES=	sysutils net www
 
 MAINTAINER=	uros@gruber.si

@@ -6,8 +6,8 @@
 @dir(%%USER%%,%%GROUP%%,0750) %%ETCDIR%%/conf.d
 @dir(%%USER%%,%%GROUP%%,0750) %%LOGDIR%%
 @dir(%%USER%%,%%GROUP%%,0750) %%RUNDIR%%
-@sample(%%PORTNAME%%,%%PORTNAME%%,640) %%ETCDIR%%/datadog.yaml.example
-@sample(%%PORTNAME%%,%%PORTNAME%%,640) %%ETCDIR%%/system-probe.yaml.example
+@sample(%%USER%%,%%GROUP%%,640) %%ETCDIR%%/datadog.yaml.example %%ETCDIR%%/datadog.yaml
+@sample(%%USER%%,%%GROUP%%,640) %%ETCDIR%%/system-probe.yaml.example %%ETCDIR%%/system-probe.yaml
 bin/%%PORTNAME%%/agent
 %%PROCESS%%bin/%%PORTNAME%%/process-agent
 %%APM%%bin/%%PORTNAME%%/trace-agent

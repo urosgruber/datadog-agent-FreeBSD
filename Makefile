@@ -347,6 +347,10 @@ post-patch:
 		${WRKSRC}/cmd/agent/dist/conf.d/process_agent.yaml.default \
 		${WRKSRC}/cmd/agent/dist/conf.d/apm.yaml.default
 
+	@${REINPLACE_CMD} -e 's|/opt/datadog-agent/bin/agent|${DATADOG_PREFIX}|g' \
+		${WRKSRC}/pkg/trace/config/config_nix.go \
+		${WRKSRC}/pkg/process/config/config_nix.go
+
 pre-build:
 # Build rtloader (Previously called six)
 	(cd ${WRKSRC}/rtloader && \

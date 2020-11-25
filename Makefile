@@ -246,8 +246,9 @@ GH_TUPLE=	\
 		zorkian:go-datadog-api:v2.29.0:zorkian_go_datadog_api/vendor/gopkg.in/zorkian/go-datadog-api.v2
 
 DATADOG_PREFIX=	${PREFIX}/bin/${PORTNAME}
-LOGDIR=		/var/log/${PORTNAME}
-RUNDIR=		/var/run/${PORTNAME}
+ETCDIR=		${PREFIX}/etc/datadog
+LOGDIR=		/var/log/datadog
+RUNDIR=		/var/run/datadog
 
 GID_FILES=	${PATCHDIR}/GIDs
 UID_FILES=	${PATCHDIR}/UIDs
@@ -400,10 +401,10 @@ do-install-DOGSTATS-on:
 post-install:
 	# Install configuration files
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/datadog.yaml \
-		${STAGEDIR}${ETCDIR}/datadog.yaml.example
+		${STAGEDIR}${ETCDIR}/datadog.yaml.sample
 
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/system-probe.yaml \
-		${STAGEDIR}${ETCDIR}/system-probe.yaml.example
+		${STAGEDIR}${ETCDIR}/system-probe.yaml.sample
 
 	# Strip binaries
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/*so*

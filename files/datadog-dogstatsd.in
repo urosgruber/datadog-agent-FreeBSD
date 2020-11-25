@@ -28,7 +28,7 @@ load_rc_config $name
 : ${datadog_dogstatsd_conf:="%%ETCDIR%%/datadog.yaml"}
 
 command="%%DATADOG_PREFIX%%/dogstatsd"
-command_args="-config ${datadog_dogstatsd_conf}"
+command_args="-c ${datadog_dogstatsd_conf}"
 
 required_files=%%ETCDIR%%/datadog.yaml
 pidfile="%%RUNDIR%%/datadog-dogstatsd.pid"
@@ -49,7 +49,7 @@ datadog_dogstatsd_status()
 }
 
 datadog_dogstatsd_start() {
-	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_dogstatsd_user} ${command} ${command_args}
+	/usr/sbin/daemon -f -p ${pidfile} -u ${datadog_dogstatsd_user} ${command} start ${command_args}
 	return $?
 }
 

@@ -372,6 +372,10 @@ post-build:
 	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go system-probe \
 		${WRKSRC}/pkg/config/config_template.yaml \
 		${WRKSRC}/cmd/agent/dist/system-probe.yaml
+	
+	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go dogstatsd \
+		${WRKSRC}/pkg/config/config_template.yaml \
+		${WRKSRC}/cmd/agent/dist/dogstatsd.yaml		
 
 do-install:
 	${MKDIR} \
@@ -409,6 +413,9 @@ post-install:
 
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/system-probe.yaml \
 		${STAGEDIR}${ETCDIR}/system-probe.yaml.sample
+
+	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/system-probe.yaml \
+		${STAGEDIR}${ETCDIR}/dogstatsd.yaml.sample		
 
 	# Strip binaries
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/*so*

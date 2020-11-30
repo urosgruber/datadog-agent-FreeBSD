@@ -32,14 +32,4 @@ lib/lib%%PORTNAME%%-three.so
 %%ETCDIR%%/conf.d/ntp.d/conf.yaml.default
 %%ETCDIR%%/conf.d/tcp_queue_length.d/conf.yaml.example
 %%ETCDIR%%/conf.d/uptime.d/conf.yaml.default
-%%ETCDIR%%/conf.d/apm.yaml.default
-%%ETCDIR%%/conf.d/containerd.d/conf.yaml.example
-%%ETCDIR%%/conf.d/cri.d/conf.yaml.example
-%%ETCDIR%%/conf.d/disk.d/conf.yaml.default
-%%ETCDIR%%/conf.d/docker.d/conf.yaml.example
-%%ETCDIR%%/conf.d/kubernetes_apiserver.d/conf.yaml.example
-%%ETCDIR%%/conf.d/network.d/conf.yaml.default
-%%ETCDIR%%/conf.d/oom_kill.d/conf.yaml.example
-%%ETCDIR%%/conf.d/process_agent.yaml.default
-%%ETCDIR%%/conf.d/systemd.d/conf.yaml.example
-%%ETCDIR%%/conf.d/winproc.d/conf.yaml.default
+%%APM%%%%ETCDIR%%/conf.d/apm.yaml.default

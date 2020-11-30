@@ -18,7 +18,6 @@ BUILD_DEPENDS=	cmake>=3.18:devel/cmake \
 USES=		go:modules python:3.7+
 
 USE_LDCONFIG=	yes
-
 USE_GITHUB=	yes
 GH_ACCOUNT=	datadog
 GH_TUPLE=	\
@@ -34,7 +33,7 @@ GH_TUPLE=	\
 		DataDog:mmh3:f5b682d8c981:datadog_mmh3/vendor/github.com/DataDog/mmh3 \
 		DataDog:viper:v1.8.0:datadog_viper/vendor/github.com/spf13/viper \
 		DataDog:watermarkpodautoscaler:v0.1.0:datadog_watermarkpodautoscaler/vendor/github.com/DataDog/watermarkpodautoscaler \
-		DataDog:zstd:4b8fdba:datadog_zstd/vendor/github.com/DataDog/zstd \
+		DataDog:zstd:2bf71ec48360:datadog_zstd/vendor/github.com/DataDog/zstd \
 		Knetic:govaluate:v3.0.0:knetic_govaluate/vendor/gopkg.in/Knetic/govaluate.v3 \
 		Masterminds:goutils:v1.1.0:masterminds_goutils/vendor/github.com/Masterminds/goutils \
 		Masterminds:semver:v1.5.0:masterminds_semver/vendor/github.com/Masterminds/semver \
@@ -53,10 +52,9 @@ GH_TUPLE=	\
 		benesch:cgosymbolizer:bec6fe6e597b:benesch_cgosymbolizer/vendor/github.com/benesch/cgosymbolizer \
 		beorn7:perks:v1.0.1:beorn7_perks/vendor/github.com/beorn7/perks \
 		bhmj:jsonslice:92c3edaad8e2:bhmj_jsonslice/vendor/github.com/bhmj/jsonslice \
-		blabber:go-freebsd-sysctl:30a4aca6b547:blabber_go_freebsd_sysctl/vendor/github.com/blabber/go-freebsd-sysctl \
+		blabber:go-freebsd-sysctl:503969f39d8f:blabber_go_freebsd_sysctl/vendor/github.com/blabber/go-freebsd-sysctl \
 		blang:semver:v3.5.1:blang_semver/vendor/github.com/blang/semver \
 		bmizerany:pat:6226ea591a40:bmizerany_pat/vendor/github.com/bmizerany/pat \
-		bouk:monkey:v1.0.1:bouk_monkey/vendor/bou.ke/monkey \
 		cenkalti:backoff:v2.2.1:cenkalti_backoff/vendor/github.com/cenkalti/backoff \
 		census-instrumentation:opencensus-go:v0.22.2:census_instrumentation_opencensus_go/vendor/go.opencensus.io \
 		cespare:xxhash:v1.1.0:cespare_xxhash/vendor/github.com/cespare/xxhash \
@@ -81,7 +79,6 @@ GH_TUPLE=	\
 		dgraph-io:ristretto:v0.0.3:dgraph_io_ristretto/vendor/github.com/dgraph-io/ristretto \
 		dgryski:go-jump:e1f439676b57:dgryski_go_jump/vendor/github.com/dgryski/go-jump \
 		docker:distribution:0ac367fd6bee:docker_distribution/vendor/github.com/docker/distribution \
-		moby:moby:v17.12.0-ce:moby_moby/vendor/github.com/docker/docker \
 		docker:go-connections:v0.4.0:docker_go_connections/vendor/github.com/docker/go-connections \
 		docker:go-events:e31b211e4f1c:docker_go_events/vendor/github.com/docker/go-events \
 		docker:go-units:v0.4.0:docker_go_units/vendor/github.com/docker/go-units \
@@ -187,6 +184,7 @@ GH_TUPLE=	\
 		mattn:go-colorable:v0.1.6:mattn_go_colorable/vendor/github.com/mattn/go-colorable \
 		mattn:go-isatty:v0.0.12:mattn_go_isatty/vendor/github.com/mattn/go-isatty \
 		matttproud:golang_protobuf_extensions:v1.0.1:matttproud_golang_protobuf_extensions/vendor/github.com/matttproud/golang_protobuf_extensions \
+		mdlayher:netlink:v1.1.0:mdlayher_netlink/vendor/github.com/mdlayher/netlink \
 		mholt:archiver:26cf5bb32d07:mholt_archiver/vendor/github.com/mholt/archiver \
 		miekg:dns:v1.1.31:miekg_dns/vendor/github.com/miekg/dns \
 		mitchellh:copystructure:v1.0.0:mitchellh_copystructure/vendor/github.com/mitchellh/copystructure \
@@ -238,7 +236,6 @@ GH_TUPLE=	\
 		uber-go:zap:v1.14.1:uber_go_zap/vendor/go.uber.org/zap \
 		ulikunitz:xz:v0.5.7:ulikunitz_xz/vendor/github.com/ulikunitz/xz \
 		urfave:negroni:v1.0.0:urfave_negroni/vendor/github.com/urfave/negroni \
- 		vishvananda:netlink:v1.1.0:vishvananda_netlink \
 		vishvananda:netns:0a2b9b5464df:vishvananda_netns/vendor/github.com/vishvananda/netns \
 		vito:go-sse:v1.0.0:vito_go_sse/vendor/github.com/vito/go-sse \
 		vmihailenco:msgpack:v4.3.11:vmihailenco_msgpack_v4/vendor/github.com/vmihailenco/msgpack/v4 \
@@ -249,9 +246,6 @@ DATADOG_PREFIX=	${PREFIX}/bin/${PORTNAME}
 ETCDIR=		${PREFIX}/etc/datadog
 LOGDIR=		/var/log/datadog
 RUNDIR=		/var/run/datadog
-
-GID_FILES=	${PATCHDIR}/GIDs
-UID_FILES=	${PATCHDIR}/UIDs
 
 USERS=	datadog
 GROUPS=	${USERS}
@@ -276,7 +270,7 @@ OPTIONS_DEFINE=	DOCS PYTHON SECRETS JMX ZSTD
 OPTIONS_DEFAULT=	PYTHON PROCESS LOG
 
 OPTIONS_GROUP=		AGENTS STORE META
-OPTIONS_GROUP_AGENTS=	LOG APM PROCESS DOGSTATS
+OPTIONS_GROUP_AGENTS=	LOG APM PROCESS DOGSTATSD
 OPTIONS_GROUP_STORE=	CONSUL ZK ETCD
 OPTIONS_GROUP_META=	EC2 GCE
 
@@ -292,7 +286,7 @@ JMX_DESC=	Enable the JMX-fetch bridge
 LOG_DESC=	Enable the log agent
 APM_DESC=	Build the APM agent
 PROCESS_DESC=	Build the process agent
-DOGSTATS_DESC=	Build the dogstatsd agent
+DOGSTATSD_DESC=	Build the dogstatsd agent
 ZSTD_DESC=	Use Zstandard instead of Zlib
 
 PYTHON_VARS=	agent_build_tags+=python
@@ -307,7 +301,7 @@ JMX_VARS=	agent_build_tags+=jmx
 LOG_VARS=	agent_build_tags+=log
 APM_VARS=	agent_build_tags+=apm use_rc_subr+=datadog-trace-agent
 PROCESS_VARS=	agent_build_tags+=process use_rc_subr+=datadog-process-agent
-DOGSTATS_VARS=	use_rc_subr+=datadog-dogstatsd
+DOGSTATSD_VARS=	use_rc_subr+=datadog-dogstatsd
 
 OPTIONS_SUB=	yes
 
@@ -316,7 +310,7 @@ PYTHON_RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}yaml>0:devel/py-yaml@${PY_FLAVOR}
 ALL_TARGET=		./cmd/agent
 APM_ALL_TARGET=		./cmd/trace-agent
 PROCESS_ALL_TARGET=	./cmd/process-agent
-DOGSTATS_ALL_TARGET=	./cmd/dogstatsd
+DOGSTATSD_ALL_TARGET=	./cmd/dogstatsd
 GO_TARGET=	${ALL_TARGET}
 
 USE_RC_SUBR=	${PORTNAME}
@@ -360,20 +354,20 @@ pre-build:
 		${MAKE_CMD} -C .)
 
 # Generate go source from templates
-	${GO_CMD} generate ${WRKSRC}/pkg/status/render.go
-	${GO_CMD} generate ${WRKSRC}/cmd/agent/gui/gui.go
+	${SETENV} ${GO_ENV} GOFLAGS="-mod=vendor" ${GO_CMD} generate ${WRKSRC}/pkg/status/render.go
+	${SETENV} ${GO_ENV} GOFLAGS="-mod=vendor" ${GO_CMD} generate ${WRKSRC}/cmd/agent/gui/gui.go
 
 post-build:
 # Generate config files
-	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go agent-py3 \
+	${SETENV} ${GO_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go agent-py3 \
 		${WRKSRC}/pkg/config/config_template.yaml \
 		${WRKSRC}/cmd/agent/dist/datadog.yaml
 
-	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go system-probe \
+	${SETENV} ${GO_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go system-probe \
 		${WRKSRC}/pkg/config/config_template.yaml \
 		${WRKSRC}/cmd/agent/dist/system-probe.yaml
 	
-	${SETENV} ${MAKE_ENV} ${BUILD_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go dogstatsd \
+	${SETENV} ${GO_ENV} ${GO_CMD} run ${WRKSRC}/pkg/config/render_config.go dogstatsd \
 		${WRKSRC}/pkg/config/config_template.yaml \
 		${WRKSRC}/cmd/agent/dist/dogstatsd.yaml		
 
@@ -403,7 +397,7 @@ do-install-APM-on:
 do-install-PROCESS-on:
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/process-agent ${STAGEDIR}${DATADOG_PREFIX}/process-agent
 
-do-install-DOGSTATS-on:
+do-install-DOGSTATSD-on:
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/dogstatsd ${STAGEDIR}${DATADOG_PREFIX}/dogstatsd
 
 post-install:
@@ -417,7 +411,6 @@ post-install:
 	${INSTALL_DATA} ${WRKSRC}/cmd/agent/dist/system-probe.yaml \
 		${STAGEDIR}${ETCDIR}/dogstatsd.yaml.sample		
 
-	# Strip binaries
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/*so*
 
 .include <bsd.port.mk>

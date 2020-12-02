@@ -384,7 +384,12 @@ do-install:
 .endfor
 
 	# Install dist config
-	cd ${WRKSRC}/cmd/agent/dist && ${COPYTREE_SHARE} conf.d ${STAGEDIR}${ETCDIR}
+.for conf in cpu.d file_handle.d go_expvar.d io.d jmx.d load.d memory.d ntp.d tcp_queue_length.d uptime.d
+	(cd ${WRKSRC}/cmd/agent/dist/conf.d && ${COPYTREE_SHARE} ${conf} ${STAGEDIR}${ETCDIR}/conf.d)
+.endfor
+
+	cd ${WRKSRC}/cmd/agent/dist/conf.d && \
+		${CP} apm.yaml.default process_agent.yaml.default ${STAGEDIR}${ETCDIR}/conf.d
 
 	# Install rtloader library
 	${MAKE_CMD} -C ${WRKSRC}/rtloader ${INSTALL} DESTDIR=${STAGEDIR}

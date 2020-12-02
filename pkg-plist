@@ -32,4 +32,5 @@ lib/lib%%PORTNAME%%-three.so
 %%ETCDIR%%/conf.d/ntp.d/conf.yaml.default
 %%ETCDIR%%/conf.d/tcp_queue_length.d/conf.yaml.example
 %%ETCDIR%%/conf.d/uptime.d/conf.yaml.default
+%%PROCESS%%%%ETCDIR%%/conf.d/process_agent.yaml.default
 %%APM%%%%ETCDIR%%/conf.d/apm.yaml.default

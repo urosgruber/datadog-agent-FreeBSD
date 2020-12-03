@@ -33,7 +33,7 @@ GH_TUPLE=	\
 		DataDog:mmh3:f5b682d8c981:datadog_mmh3/vendor/github.com/DataDog/mmh3 \
 		DataDog:viper:v1.8.0:datadog_viper/vendor/github.com/spf13/viper \
 		DataDog:watermarkpodautoscaler:v0.1.0:datadog_watermarkpodautoscaler/vendor/github.com/DataDog/watermarkpodautoscaler \
-		DataDog:zstd:2bf71ec48360:datadog_zstd/vendor/github.com/DataDog/zstd \
+		DataDog:zstd:4b8fdba:datadog_zstd/vendor/github.com/DataDog/zstd \
 		Knetic:govaluate:v3.0.0:knetic_govaluate/vendor/gopkg.in/Knetic/govaluate.v3 \
 		Masterminds:goutils:v1.1.0:masterminds_goutils/vendor/github.com/Masterminds/goutils \
 		Masterminds:semver:v1.5.0:masterminds_semver/vendor/github.com/Masterminds/semver \

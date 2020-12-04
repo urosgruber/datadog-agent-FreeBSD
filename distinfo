@@ -1,4 +1,4 @@
-TIMESTAMP = 1606940675
+TIMESTAMP = 1607081211
 SHA256 (datadog-datadog-agent-7.23.1_GH0.tar.gz) = c5af3d3686e691178ae3327ab76cf5269bf0c4a785da6aec27ecff4d854c0af8
 SIZE (datadog-datadog-agent-7.23.1_GH0.tar.gz) = 17094861
 SHA256 (DataDog-agent-payload-v4.44.0_GH0.tar.gz) = 2973cc263df1e2812fc1a2d60a602f52cfe57688c760a3fe97ff4b84a7836105
@@ -25,8 +25,8 @@ SHA256 (DataDog-viper-v1.8.0_GH0.tar.gz) = 99741e1b749517779d40321057e20a61b27a4
 SIZE (DataDog-viper-v1.8.0_GH0.tar.gz) = 50566
 SHA256 (DataDog-watermarkpodautoscaler-v0.1.0_GH0.tar.gz) = 73ba57c4b5570b51279fe25d7b649b93bbc1b4bc8f7020f73628126ffb62970d
 SIZE (DataDog-watermarkpodautoscaler-v0.1.0_GH0.tar.gz) = 5567158
-SHA256 (DataDog-zstd-4b8fdba_GH0.tar.gz) = 570f0502ae4724fdd7fb010b874a5b357dba7e6be9c61b7c5bc60e0480ac69c4
-SIZE (DataDog-zstd-4b8fdba_GH0.tar.gz) = 515789
+SHA256 (DataDog-zstd-2bf71ec48360_GH0.tar.gz) = 88bdc6cb4da26805984d8d8d0f4e3e0fa36d05f159acb23302ca1344b63a912e
+SIZE (DataDog-zstd-2bf71ec48360_GH0.tar.gz) = 99763
 SHA256 (Knetic-govaluate-v3.0.0_GH0.tar.gz) = 3800c76ba83d7e5cff279ca5981d06a2c449b102644aa57861eb5958c8e0ae0c
 SIZE (Knetic-govaluate-v3.0.0_GH0.tar.gz) = 39399
 SHA256 (Masterminds-goutils-v1.1.0_GH0.tar.gz) = 053a61c4b0d78e6978600c99562f04d053993c428d549a20b627151cf1aabbae

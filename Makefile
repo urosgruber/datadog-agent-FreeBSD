@@ -10,7 +10,7 @@ COMMENT=	Datadog Agent: collect metrics and events from your systems and apps
 LICENSE=	BSD4CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-BUILD_DEPENDS=	cmake>=3.18:devel/cmake \
+BUILD_DEPENDS=	cmake>=3.12:devel/cmake \
 		go>=1.15:lang/go \
 		go-bindata>0:devel/go-bindata
 

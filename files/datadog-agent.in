@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $FreeBSD$
+# $FreeBSD: head/sysutils/datadog-agent/files/datadog-agent.in 554912 2020-11-11 20:25:33Z dch $
 #
 # PROVIDE: datadog_agent
 # REQUIRE: LOGIN

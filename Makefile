@@ -1,4 +1,4 @@
-# $FreeBSD$
+# $FreeBSD: head/sysutils/datadog-agent/Makefile 560793 2021-01-08 16:33:56Z mikael $
 
 PORTNAME=	datadog-agent
 DISTVERSION=	7.24.1
@@ -358,8 +358,8 @@ pre-build:
 		${MAKE_CMD} -C .)
 
 # Generate go source from templates
-	${SETENV} ${GO_ENV} GOCACHE=${TMPDIR} GOFLAGS="-mod=vendor" ${GO_CMD} generate ${WRKSRC}/pkg/status/render.go
-	${SETENV} ${GO_ENV} GOCACHE=${TMPDIR} GOFLAGS="-mod=vendor" ${GO_CMD} generate ${WRKSRC}/cmd/agent/gui/gui.go
+	${SETENV} ${GO_ENV} GOCACHE=${TMPDIR} GO111MODULE=off GOFLAGS="-mod=vendor" ${GO_CMD} generate ${WRKSRC}/pkg/status/render.go
+	${SETENV} ${GO_ENV} GOCACHE=${TMPDIR} GO111MODULE=off GOFLAGS="-mod=vendor" ${GO_CMD} generate ${WRKSRC}/cmd/agent/gui/gui.go
 
 post-build:
 # Generate config files

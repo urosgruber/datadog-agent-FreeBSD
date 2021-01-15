@@ -1,4 +1,4 @@
-# $FreeBSD: head/sysutils/datadog-agent/Makefile 560793 2021-01-08 16:33:56Z mikael $
+# $FreeBSD: head/sysutils/datadog-agent/Makefile 561215 2021-01-11 13:44:29Z dmgk $
 
 PORTNAME=	datadog-agent
 DISTVERSION=	7.24.1
@@ -11,7 +11,6 @@ LICENSE=	BSD4CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 BUILD_DEPENDS=	cmake>=3.12:devel/cmake \
-		go>=1.15:lang/go \
 		go-bindata>0:devel/go-bindata
 
 USES=		go:modules python:3.7+
